@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>CSS Compatibility Assignment</title>
+  <style>
+    :root { --accent:#7c6ef7; --muted:#666; --card:#fff; --bg:#f4f6f9; }
+
+    body {
+      margin:0;
+      font-family:Inter,system-ui,Arial;
+      background:var(--bg);
+      color:#111;
+      padding:24px;
+    }
+    .wrap { max-width:1000px; margin:0 auto; display:grid; gap:18px; }
+
+    .card { background:var(--card); border-radius:10px; padding:16px; box-shadow:0 8px 24px rgba(0,0,0,.06); }
+
+    h2 { margin:0 0 8px; color:var(--accent); font-size:18px; }
+
+    /* 1. Table layout fixed vs none */
+    table { width:100%; border-collapse:collapse; margin-top:8px; }
+    th,td { border:1px solid #333; padding:8px; text-align:left; }
+    .fixed { table-layout:fixed; }
+    .none { table-layout:auto; } /* default (none) */
+
+    /* 2. List style types */
+    ul.square { list-style-type:square; }
+    ul.circle { list-style-type:circle; }
+    ul.upperroman { list-style-type:upper-roman; }
+
+    /* 3. Grid examples */
+    .grid-demo { display:grid; gap:8px; margin-top:8px; }
+    .grid-cols-3 { grid-template-columns:repeat(3,1fr); }
+    .grid-rows-2 { grid-template-rows:repeat(2,80px); }
+    .grid-item { background:#eef2ff; padding:12px; border-radius:6px; text-align:center; }
+
+    /* 4. Hero image */
+    .hero {
+      position:relative;
+      background:url('images/speaker.jpg') center/cover no-repeat;
+      height:240px;
+      border-radius:10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      font-size:24px;
+      font-weight:700;
+      text-shadow:0 4px 12px rgba(0,0,0,.6);
+    }
+
+    /* 5. Viewport + media queries */
+    .viewport-demo { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:8px; }
+    .viewport-demo img, .viewport-demo video {
+      width:100%; height:auto; border-radius:8px; border:1px solid #eee;
+    }
+
+    @media (max-width:768px) {
+      .viewport-demo { grid-template-columns:1fr; }
+      .hero { font-size:18px; }
+    }
+
+    footer { margin-top:12px; font-size:13px; color:var(--muted); text-align:center; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="card">
+      <h1>CSS Compatibility Assignment</h1>
+      <p class="muted">Demonstrates table layouts, list styles, grids, hero image, viewport/media queries</p>
+    </header>
+
+    <!-- 1. Table layout -->
+    <section class="card">
+      <h2>1. Table Layout Fixed vs None</h2>
+      <p class="muted">Fixed layout: equal column widths; None: auto sizing.</p>
+      <table class="fixed">
+        <thead><tr><th>Item</th><th>Description</th><th>Price</th></tr></thead>
+        <tbody>
+          <tr><td>Headphones</td><td>Wireless over-ear</td><td>$99</td></tr>
+          <tr><td>Notebook</td><td>Stationery item</td><td>$5</td></tr>
+        </tbody>
+      </table>
+
+      <table class="none" style="margin-top:12px;">
+        <thead><tr><th>Item</th><th>Description</th><th>Price</th></tr></thead>
+        <tbody>
+          <tr><td>Course Subscription</td><td>Full stack training program with job guarantee</td><td>$199</td></tr>
+          <tr><td>USB-C Cable</td><td>Fast charging cable</td><td>$9</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 2. List style types -->
+    <section class="card">
+      <h2>2. List Style Types</h2>
+      <ul class="square"><li>Square bullets</li><li>Example item</li></ul>
+      <ul class="circle"><li>Circle bullets</li><li>Example item</li></ul>
+      <ul class="upperroman"><li>Upper Roman</li><li>Example item</li></ul>
+    </section>
+
+    <!-- 3. Grid examples -->
+    <section class="card">
+      <h2>3. Grid Examples</h2>
+      <div class="grid-demo grid-cols-3">
+        <div class="grid-item">1</div><div class="grid-item">2</div><div class="grid-item">3</div>
+      </div>
+      <div class="grid-demo grid-rows-2" style="margin-top:12px;">
+        <div class="grid-item">A</div><div class="grid-item">B</div><div class="grid-item">C</div><div class="grid-item">D</div>
+      </div>
+    </section>
+
+    <!-- 4. Hero image -->
+    <section class="card">
+      <h2>4. Hero Image</h2>
+      <div class="hero">Hero Section</div>
+    </section>
+
+    <!-- 5. Viewport + media queries -->
+    <section class="card">
+      <h2>5. Viewport, Media Queries, Image & Video</h2>
+      <p class="muted">Resize the browser to see responsive behavior.</p>
+      <div class="viewport-demo">
+        <img src="images/speaker.jpg" alt="Sample responsive image"/>
+       <!-- Correct way to embed YouTube -->
+<iframe 
+  width="560" 
+  height="315" 
+  src="https://www.youtube.com/embed/EngW7tLk6R8?origin=*"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen>
+</iframe>
+
+      </div>
+    </section>
+
+    <footer>
+      &copy; 2026 JALA Academy • CSS Compatibility Assignment
+    </footer>
+  </div>
+</body>
+</html>

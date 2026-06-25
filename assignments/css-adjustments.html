@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CSS Page Adjustments — Assignment</title>
+  <style>
+    /*
+      CSS Page Adjustments
+      - Table with black border + hover changes page color (JS toggles class)
+      - Visibility vs display interactive demo
+      - Smooth scroll top/bottom links
+      - Padding vs margin visual demo
+      - Multiple backgrounds with adjustable sizes
+    */
+
+    /* Universal box-sizing for predictable layout */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root{
+      --bg: #f4f6f9;
+      --accent: #7c6ef7;
+      --muted: #6b7280;
+      --page-hover-bg: #fffbe6; /* page color when table hovered */
+      --max-width: 1100px;
+      --multi-bg-size-1: 120px;
+      --multi-bg-size-2: 80px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      background: var(--bg);
+      color: #111827;
+      padding: 24px;
+      transition: background-color .25s ease;
+    }
+    /* toggled when table hovered */
+    body.table-hovered { background-color: var(--page-hover-bg); }
+
+    .wrap { max-width: var(--max-width); margin: 0 auto; display: grid; gap: 18px; }
+
+    header { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+    header h1 { margin:0; font-size:20px; color:#0f172a; }
+    header p { margin:0; color:var(--muted); font-size:13px; }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,.06);
+    }
+
+    /* 1. Table with black border and hover color change */
+    .table-wrap { overflow:auto; }
+    table.demo-table {
+      width:100%;
+      border-collapse: collapse;
+      border: 3px solid #000; /* black border for table */
+      table-layout: fixed;
+    }
+    table.demo-table th, table.demo-table td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+      word-wrap: break-word;
+    }
+    table.demo-table tbody tr:hover { background: #f1f5f9; } /* row hover */
+    /* small caption */
+    .table-caption { font-size:13px; color:var(--muted); margin-bottom:8px; }
+
+    /* 2. Visibility vs Display demo */
+    .demo-row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:8px; }
+    .box {
+      width:140px;
+      height:80px;
+      background:#eef2ff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:8px;
+      border:1px solid #dbeafe;
+    }
+    .controls { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+    button { background:var(--accent); color:#fff; border:none; padding:8px 10px; border-radius:8px; cursor:pointer; font-weight:700; }
+    button.secondary { background:#e6e6ff; color:#111; font-weight:600; }
+
+    /* classes toggled by JS */
+    .vis-hidden { visibility: hidden; }
+    .vis-visible { visibility: visible; }
+    .vis-collapse { visibility: collapse; } /* mostly for table rows/columns in some UAs */
+
+    .disp-none { display: none; }
+    .disp-inline { display: inline; }
+    .disp-block { display: block; }
+    .disp-contents { display: contents; }
+    .disp-listitem { display: list-item; }
+
+    /* 3. Smooth scroll anchors (already enabled via html {scroll-behavior:smooth}) */
+    .anchors { display:flex; gap:10px; margin-bottom:8px; }
+    .anchors a { color:var(--accent); text-decoration:none; font-weight:600; }
+
+    /* 4. Padding vs Margin demo */
+    .pm-demo { display:flex; gap:12px; flex-wrap:wrap; margin-top:8px; }
+    .pm-box {
+      background:#fff7f0;
+      border:1px dashed #f59e0b;
+      border-radius:8px;
+      padding:18px; /* internal spacing */
+      width:220px;
+    }
+    .pm-box .inner {
+      background:#fff;
+      border:1px solid #fde68a;
+      padding:8px;
+      margin:12px; /* external spacing inside the outer box */
+      border-radius:6px;
+    }
+    .pm-note { font-size:13px; color:var(--muted); margin-top:8px; }
+
+    /* 5. Multiple backgrounds demo */
+    .multi-bg {
+      height:160px;
+      border-radius:8px;
+      padding:12px;
+      color:#111;
+      background-image:
+        url('images/HTML_image.jpg'),
+        url('images/backgroundimage.jpg'),
+        linear-gradient(180deg, rgba(124,110,247,0.06), rgba(124,110,247,0.02));
+      background-repeat: no-repeat, no-repeat, no-repeat;
+      background-position: left top, right bottom, center;
+      background-size: var(--multi-bg-size-1) var(--multi-bg-size-1), var(--multi-bg-size-2) var(--multi-bg-size-2), cover;
+      border:1px solid #eee;
+    }
+    .multi-controls { display:flex; gap:8px; align-items:center; margin-top:10px; flex-wrap:wrap; }
+    input[type="range"] { width:180px; }
+
+    /* Footer */
+    footer { margin-top:12px; font-size:13px; color:var(--muted); display:flex; justify-content:space-between; align-items:center; }
+
+    /* Responsive */
+    @media (max-width:820px) {
+      .pm-box, .box { width:100%; max-width:320px; }
+      .multi-bg { height:120px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>CSS Page Adjustments — Interactive Demos</h1>
+        <p>Author: Veena • Demonstrates table hover, visibility/display, smooth scroll, padding/margin, multiple backgrounds</p>
+      </div>
+
+      <div class="anchors" aria-hidden="false">
+        <a href="#top" id="toTopLink">Go to Top</a>
+        <a href="#bottom" id="toBottomLink">Go to Bottom</a>
+      </div>
+    </header>
+
+    <!-- 1. Table with black border and hover changes page color -->
+    <section id="top" class="card" aria-labelledby="tableTitle">
+      <h2 id="tableTitle">1. Table with Black Border — Hover changes page color</h2>
+      <p class="table-caption">Hover the table to change the page background color; hover rows to highlight them.</p>
+
+      <div class="table-wrap" role="region" aria-label="Demo table">
+        <table class="demo-table" id="demoTable">
+          <thead>
+            <tr><th>Item</th><th>Category</th><th>Price</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Wireless Headphones</td><td>Electronics</td><td>$99</td></tr>
+            <tr><td>Notebook</td><td>Stationery</td><td>$5</td></tr>
+            <tr><td>Course Subscription</td><td>Education</td><td>$199</td></tr>
+            <tr><td>USB-C Cable</td><td>Accessories</td><td>$9</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="pm-note">Implementation note: the page color toggles via JavaScript on table mouseenter/mouseleave to ensure cross-browser reliability.</p>
+    </section>
+
+    <!-- 2. Visibility vs Display -->
+    <section class="card" aria-labelledby="visTitle">
+      <h2 id="visTitle">2. Visibility vs Display</h2>
+      <p>Use the controls to apply different <code>visibility</code> and <code>display</code> values to the example boxes and observe layout changes.</p>
+
+      <div class="demo-row" id="visDemo">
+        <div id="boxA" class="box" role="img" aria-label="Box A">Box A</div>
+        <div id="boxB" class="box" role="img" aria-label="Box B">Box B</div>
+        <div id="boxC" class="box" role="img" aria-label="Box C">Box C</div>
+      </div>
+
+      <div style="margin-top:10px;">
+        <strong>Visibility</strong>
+        <div class="controls" aria-hidden="false">
+          <button type="button" onclick="setVisibility('vis-hidden')">visibility: hidden</button>
+          <button type="button" onclick="setVisibility('vis-visible')">visibility: visible</button>
+          <button type="button" onclick="setVisibility('vis-collapse')">visibility: collapse</button>
+        </div>
+      </div>
+
+      <div style="margin-top:10px;">
+        <strong>Display</strong>
+        <div class="controls">
+          <button type="button" onclick="setDisplay('disp-none')">display: none</button>
+          <button type="button" onclick="setDisplay('disp-inline')">display: inline</button>
+          <button type="button" onclick="setDisplay('disp-block')">display: block</button>
+          <button type="button" onclick="setDisplay('disp-contents')">display: contents</button>
+          <button type="button" onclick="setDisplay('disp-listitem')">display: list-item</button>
+          <button type="button" class="secondary" onclick="resetBoxes()">Reset</button>
+        </div>
+      </div>
+
+      <p class="pm-note">Tip: <code>visibility:hidden</code> keeps the element's space; <code>display:none</code> removes it from the layout flow.</p>
+    </section>
+
+    <!-- 3. Long page anchors (top/bottom) -->
+    <section class="card" aria-labelledby="longTitle">
+      <h2 id="longTitle">3. Smooth Scroll — Top / Bottom Links</h2>
+      <p>Click the links at the top or bottom to jump smoothly. This section includes filler content to create a long page.</p>
+
+      <div style="height:520px; overflow:auto; padding:12px; border-radius:8px; border:1px solid #eee; margin-top:8px;">
+        <p style="margin:0 0 8px 0;">This area simulates long content. Scroll or use the top/bottom links to navigate the page.</p>
+        <!-- repeated paragraphs to create length -->
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
+        <p>Suspendisse potenti. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam.</p>
+        <p>Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.</p>
+        <p>Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.</p>
+        <p>More content... (repeat as needed to test scrolling)</p>
+      </div>
+    </section>
+
+    <!-- 4. Padding vs Margin -->
+    <section class="card" aria-labelledby="pmTitle">
+      <h2 id="pmTitle">4. Padding vs Margin</h2>
+      <p>Visual demonstration: padding is inside the element; margin is outside the element.</p>
+
+      <div class="pm-demo">
+        <div class="pm-box" aria-label="Padding box">
+          <strong>Outer box (padding demo)</strong>
+          <div class="inner">Inner box (shows padding inside outer box)</div>
+        </div>
+
+        <div class="pm-box" style="background:#eefcf3; border:1px dashed #10b981;" aria-label="Margin box">
+          <strong>Outer box (margin demo)</strong>
+          <div class="inner" style="background:#fff; border:1px solid #d1fae5; padding:8px; margin:0;">Inner box (outer box uses margin to separate from others)</div>
+        </div>
+      </div>
+
+      <p class="pm-note">Observe the space created by <code>padding</code> (inside) vs <code>margin</code> (outside).</p>
+    </section>
+
+    <!-- 5. Multiple backgrounds with adjustable sizes -->
+    <section class="card" aria-labelledby="multiTitle">
+      <h2 id="multiTitle">5. Multiple Backgrounds and Adjustable Sizes</h2>
+      <p>Two decorative images layered over a gradient. Use the sliders to adjust their sizes (CSS variables updated by JS).</p>
+
+      <div class="multi-bg" id="multiBg" role="img" aria-label="Multiple background demo">
+        <div style="background:rgba(255,255,255,0.85); padding:8px; border-radius:6px; display:inline-block;">
+          <strong>Multi-background element</strong>
+          <div style="font-size:13px; color:var(--muted); margin-top:6px;">Adjust sizes below</div>
+        </div>
+      </div>
+
+      <div class="multi-controls">
+        <label style="font-size:13px; color:var(--muted);">Shape 1 size:
+          <input id="size1" type="range" min="40" max="300" value="120" />
+        </label>
+
+        <label style="font-size:13px; color:var(--muted);">Shape 2 size:
+          <input id="size2" type="range" min="40" max="300" value="80" />
+        </label>
+
+        <button type="button" class="secondary" id="resetBg">Reset sizes</button>
+      </div>
+
+      <p class="pm-note">Place decorative images at <code>images/shape-1.svg</code> and <code>images/shape-2.svg</code>. If SVGs are not available, use PNGs with the same names.</p>
+    </section>
+
+    <footer class="card" id="bottom">
+      <div>End of demos — use the top link to return to the top of the page.</div>
+      <div style="color:var(--muted)">JALA Academy • CSS Page Adjustments</div>
+    </footer>
+  </div>
+
+  <script>
+    // 1. Table hover toggles page background class
+    const demoTable = document.getElementById('demoTable');
+    demoTable.addEventListener('mouseenter', () => document.body.classList.add('table-hovered'));
+    demoTable.addEventListener('mouseleave', () => document.body.classList.remove('table-hovered'));
+
+    // 2. Visibility vs Display functions
+    const boxes = ['boxA','boxB','boxC'].map(id => document.getElementById(id));
+
+    function clearVisibilityClasses(el) {
+      el.classList.remove('vis-hidden','vis-visible','vis-collapse');
+    }
+    function clearDisplayClasses(el) {
+      el.classList.remove('disp-none','disp-inline','disp-block','disp-contents','disp-listitem');
+    }
+
+    function setVisibility(mode) {
+      // apply to boxB only for demonstration; others remain visible
+      const el = document.getElementById('boxB');
+      clearVisibilityClasses(el);
+      if (mode === 'vis-hidden') el.classList.add('vis-hidden');
+      else if (mode === 'vis-visible') el.classList.add('vis-visible');
+      else if (mode === 'vis-collapse') el.classList.add('vis-collapse');
+    }
+
+    function setDisplay(mode) {
+      // apply to boxC only for demonstration
+      const el = document.getElementById('boxC');
+      clearDisplayClasses(el);
+      if (mode === 'disp-none') el.classList.add('disp-none');
+      else if (mode === 'disp-inline') el.classList.add('disp-inline');
+      else if (mode === 'disp-block') el.classList.add('disp-block');
+      else if (mode === 'disp-contents') el.classList.add('disp-contents');
+      else if (mode === 'disp-listitem') el.classList.add('disp-listitem');
+    }
+
+    function resetBoxes() {
+      boxes.forEach(el => { clearVisibilityClasses(el); clearDisplayClasses(el); });
+    }
+
+    // 3. Top/Bottom links already use smooth scroll via CSS; ensure anchors exist
+    // (No JS required for smooth scroll; included for completeness)
+    document.getElementById('toTopLink').addEventListener('click', (e) => {
+      // default anchor behavior with smooth scroll is fine; prevent default only if custom behavior needed
+    });
+
+    // 5. Multiple backgrounds adjustable sizes
+    const size1 = document.getElementById('size1');
+    const size2 = document.getElementById('size2');
+    const multiBg = document.getElementById('multiBg');
+
+    function updateBgSizes() {
+      const s1 = size1.value + 'px';
+      const s2 = size2.value + 'px';
+      // update CSS variables on document root
+      document.documentElement.style.setProperty('--multi-bg-size-1', s1);
+      document.documentElement.style.setProperty('--multi-bg-size-2', s2);
+    }
+
+    size1.addEventListener('input', updateBgSizes);
+    size2.addEventListener('input', updateBgSizes);
+
+    document.getElementById('resetBg').addEventListener('click', () => {
+      size1.value = 120;
+      size2.value = 80;
+      updateBgSizes();
+    });
+
+    // Initialize sizes on load
+    updateBgSizes();
+
+    // Accessibility: keyboard support for display/visibility toggles (optional)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') resetBoxes();
+    });
+  </script>
+</body>
+</html>

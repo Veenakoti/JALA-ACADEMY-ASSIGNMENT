@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HTML5 Input Attributes — Assignment</title>
+  <style>
+    :root { --bg:#f4f6f9; --card:#fff; --accent:#7c6ef7; --muted:#666; }
+    body { margin:0; font-family:Inter,system-ui,Arial; background:var(--bg); color:#222; padding:28px; }
+    .wrap { max-width:900px; margin:0 auto; }
+    header { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+    h1 { margin:0; font-size:20px; color:#111; }
+    form { background:var(--card); padding:18px; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,.06); }
+    label { display:block; margin:10px 0 6px; font-weight:600; }
+    .row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    input[type="text"], input[type="email"], input[type="password"],
+    input[type="number"], select, textarea, input[type="file"] {
+      padding:8px; border:1px solid #ddd; border-radius:8px; font-size:14px; width:100%;
+      box-sizing:border-box;
+    }
+    .small { max-width:220px; }
+    .inline { display:inline-flex; align-items:center; gap:8px; margin-right:12px; }
+    .controls { margin-top:12px; display:flex; gap:10px; align-items:center; }
+    button { background:var(--accent); color:#fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:700; }
+    button.secondary { background:#e6e6ff; color:#222; font-weight:600; }
+    .note { font-size:13px; color:var(--muted); margin-top:8px; }
+    .demo { margin-top:18px; background:#fff; padding:12px; border-radius:8px; border:1px solid #eee; }
+    iframe { width:100%; height:220px; border:1px solid #ddd; border-radius:8px; }
+    .marquee-wrap { margin-top:10px; padding:8px; background:#fff7e6; border-radius:6px; }
+    footer { margin-top:14px; font-size:13px; color:var(--muted); display:flex; justify-content:space-between; align-items:center; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>HTML5 Input Attributes — Demo Form</h1>
+      <div>Author: Veena</div>
+    </header>
+
+    <form id="assignmentForm" novalidate>
+      <!-- Basic inputs -->
+      <label for="fullname">Full Name (text) <small style="font-weight:400;color:var(--muted)">(required, maxlength=60)</small></label>
+      <input id="fullname" name="fullname" type="text" placeholder="Enter full name" required maxlength="60" value="Veena Kumar" />
+
+      <label for="email">Email (email)</label>
+      <input id="email" name="email" type="email" placeholder="you@example.com" required />
+
+      <label for="pwd">Password (password)</label>
+      <input id="pwd" name="pwd" type="password" minlength="6" placeholder="At least 6 characters" required />
+
+      <!-- Number, range, color -->
+      <div class="row">
+        <div style="flex:1; min-width:180px;">
+          <label for="years">Years of Experience (number)</label>
+          <input id="years" name="years" type="number" min="0" max="40" value="2" class="small" />
+        </div>
+
+        <div style="flex:1; min-width:180px;">
+          <label for="confidence">Confidence (range)</label>
+          <input id="confidence" name="confidence" type="range" min="0" max="10" value="7" />
+          <div class="note">Current: <span id="confVal">7</span>/10</div>
+        </div>
+
+        <div style="flex:1; min-width:140px;">
+          <label for="favColor">Favorite Color (color)</label>
+          <input id="favColor" name="favColor" type="color" value="#7c6ef7" />
+        </div>
+      </div>
+
+      <!-- Date, time, month, week -->
+      <div class="row" style="margin-top:8px;">
+        <div style="flex:1; min-width:160px;">
+          <label for="startDate">Available From (date)</label>
+          <input id="startDate" name="startDate" type="date" />
+        </div>
+        <div style="flex:1; min-width:160px;">
+          <label for="time">Preferred Time (time)</label>
+          <input id="time" name="time" type="time" />
+        </div>
+        <div style="flex:1; min-width:160px;">
+          <label for="month">Available Month (month)</label>
+          <input id="month" name="month" type="month" />
+        </div>
+        <div style="flex:1; min-width:160px;">
+          <label for="week">Available Week (week)</label>
+          <input id="week" name="week" type="week" />
+        </div>
+      </div>
+
+      <!-- File upload with accept and size note -->
+      <label for="resume">Resume (file) <small style="font-weight:400;color:var(--muted)">(accepts .pdf, max 2MB)</small></label>
+      <input id="resume" name="resume" type="file" accept=".pdf,application/pdf" />
+
+      <!-- Radio and checkbox -->
+      <label>Gender (radio)</label>
+      <div class="row" role="radiogroup" aria-label="Gender">
+        <label class="inline"><input type="radio" name="gender" value="male" checked /> Male</label>
+        <label class="inline"><input type="radio" name="gender" value="female" /> Female</label>
+        <label class="inline"><input type="radio" name="gender" value="other" /> Other</label>
+      </div>
+
+      <label>Skills (checkbox)</label>
+      <div class="row" role="group" aria-label="Skills">
+        <label class="inline"><input type="checkbox" name="skills" value="HTML" checked /> HTML</label>
+        <label class="inline"><input type="checkbox" name="skills" value="CSS" checked /> CSS</label>
+        <label class="inline"><input type="checkbox" name="skills" value="JS" /> JavaScript</label>
+        <label class="inline"><input type="checkbox" name="skills" value="React" /> React</label>
+      </div>
+
+      <!-- Select -->
+      <label for="role">Preferred Role (select)</label>
+      <select id="role" name="role" required>
+        <option value="">Select a role</option>
+        <option value="developer">Developer</option>
+        <option value="tester">Tester</option>
+        <option value="designer">Designer</option>
+        <option value="devops">DevOps</option>
+      </select>
+
+      <!-- Textarea with maxlength and readonly example -->
+      <label for="experience">Explain Your Experience (textarea)</label>
+      <textarea id="experience" name="experience" rows="4" maxlength="1000" placeholder="Describe projects or internships..."></textarea>
+
+      <label for="note">Read-only Note (readonly)</label>
+      <input id="note" type="text" value="This field is readonly" readonly />
+
+      <label for="disabledField">Disabled Field (disabled)</label>
+      <input id="disabledField" type="text" value="Disabled example" disabled />
+
+      <!-- Size and value demo -->
+      <label for="short">Short input (size attribute)</label>
+      <input id="short" type="text" size="20" value="Short value" class="small" />
+
+      <!-- Buttons: submit, reset, button -->
+      <div class="controls">
+        <button type="submit">Submit Application</button>
+        <button type="reset" class="secondary">Reset Form</button>
+        <button type="button" id="demoBtn" class="secondary">Demo Button</button>
+      </div>
+
+      <div id="formMsg" class="note" aria-live="polite"></div>
+    </form>
+
+    <!-- Additional demos: target attribute, iframe, marquee -->
+    <div class="demo">
+      <h3>Target attribute demo</h3>
+      <p>
+        <a href="https://jalaacademy.example.com" target="_blank" rel="noopener">Open JALA Academy (new tab)</a>
+        &nbsp;|&nbsp;
+        <a href="https://jalaacademy.example.com" target="_self">Open in same tab</a>
+      </p>
+
+      <h3 style="margin-top:12px;">iframe embed (example)</h3>
+      <p class="note">Embedded page (example.com used as placeholder).</p>
+      <iframe src="https://example.com" title="Embedded example"></iframe>
+
+      <h3 style="margin-top:12px;">marquee (legacy) with accessible fallback</h3>
+      <div class="marquee-wrap" aria-hidden="false">
+        <marquee behavior="scroll" direction="left" scrollamount="6">🔔 New cohort starting soon — enroll now at JALA Academy!</marquee>
+      </div>
+      <div class="note">Note: &lt;marquee&gt; is legacy; use CSS animations for production. Fallback content should be provided for accessibility.</div>
+    </div>
+
+    <footer>
+      <div>Assignment demo • HTML5 Input Attributes</div>
+      <div style="color:var(--muted)">Tip: test required, min/max, maxlength, readonly, disabled behaviors</div>
+    </footer>
+  </div>
+
+  <script>
+    // Range display
+    const range = document.getElementById('confidence');
+    const confVal = document.getElementById('confVal');
+    if (range && confVal) {
+      range.addEventListener('input', () => confVal.textContent = range.value);
+    }
+
+    // Simple client-side validation and demo behaviors
+    const form = document.getElementById('assignmentForm');
+    const formMsg = document.getElementById('formMsg');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      formMsg.textContent = '';
+      // Basic checks (HTML5 will also enforce)
+      const fullname = document.getElementById('fullname').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const role = document.getElementById('role').value;
+      if (!fullname) { formMsg.textContent = 'Please enter your full name.'; return; }
+      if (!email) { formMsg.textContent = 'Please enter your email.'; return; }
+      if (!role) { formMsg.textContent = 'Please select a preferred role.'; return; }
+      formMsg.style.color = 'green';
+      formMsg.textContent = 'Form submitted (demo).';
+      // In a real app, here you would send data to the server
+    });
+
+    // Demo button action
+    document.getElementById('demoBtn').addEventListener('click', () => {
+      alert('Demo button clicked — use this for JS interactions.');
+    });
+
+    // Reset handler clears messages
+    form.addEventListener('reset', () => {
+      formMsg.textContent = '';
+      formMsg.style.color = 'var(--muted)';
+    });
+  </script>
+</body>
+</html>

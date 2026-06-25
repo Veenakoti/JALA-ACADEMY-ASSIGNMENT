@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>JavaScript Basics Assignment</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f4f6f9; padding:20px; }
+    h2 { color:#7c6ef7; }
+    button { padding:8px 12px; margin-top:8px; border:none; border-radius:6px; background:#7c6ef7; color:#fff; cursor:pointer; }
+    pre { background:#111; color:#eee; padding:10px; border-radius:6px; overflow:auto; }
+    .output { margin-top:8px; padding:10px; background:#fff; border:1px solid #ddd; border-radius:6px; }
+    .explain { font-size:13px; color:#555; margin-top:6px; }
+  </style>
+</head>
+<body>
+  <h1>JavaScript Basics Assignment</h1>
+
+  <!-- 1. Comments -->
+  <section>
+    <h2>1. Comments</h2>
+    <p class="explain">JavaScript supports single-line (<code>//</code>) and multi-line (<code>/* ... */</code>) comments.</p>
+    <pre>
+// This is a single-line comment
+
+/*
+  This is a multi-line comment
+  explaining multiple lines of code
+*/
+    </pre>
+  </section>
+
+  <!-- 2. Fruits Array Sort -->
+  <section>
+    <h2>2. Fruits Array Sort (Descending)</h2>
+    <p class="explain">Original array: <code>["Apple","Banana","Mango","Orange","Grapes"]</code></p>
+    <pre>
+let fruits = ["Apple","Banana","Mango","Orange","Grapes"];
+let sorted = fruits.slice().sort().reverse();
+    </pre>
+    <button onclick="sortFruits()">Sort Fruits</button>
+    <div id="fruitsOutput" class="output"></div>
+  </section>
+
+  <!-- 3. For/In loop -->
+  <section>
+    <h2>3. For/In Loop</h2>
+    <p class="explain">The <code>for...in</code> loop iterates over object properties.</p>
+    <pre>
+let car = { brand:"Tesla", model:"Model 3", year:2026 };
+for (let key in car) {
+  console.log(key + ": " + car[key]);
+}
+    </pre>
+    <div id="forInOutput" class="output"></div>
+  </section>
+
+  <!-- 4. Person object -->
+  <section>
+    <h2>4. Person Object</h2>
+    <p class="explain">Objects can be accessed using dot notation (<code>person.firstname</code>) or bracket notation (<code>person["firstname"]</code>).</p>
+    <pre>
+let person = { firstname:"Kunal", lastname:"Sharma" };
+console.log(person.firstname + " " + person.lastname); // dot
+console.log(person["firstname"] + " " + person["lastname"]); // bracket
+    </pre>
+    <div id="personOutput" class="output"></div>
+  </section>
+
+  <!-- 5. Variable hoisting -->
+  <section>
+    <h2>5. Variable Hoisting</h2>
+    <p class="explain">Declarations are hoisted to the top, but initializations are not.</p>
+    <pre>
+function hoistDemo() {
+  console.log(x); // undefined
+  var x = 10;
+  console.log(x); // 10
+}
+    </pre>
+    <div id="hoistOutput" class="output"></div>
+  </section>
+
+  <!-- 6. Strict mode -->
+  <section>
+    <h2>6. Strict Mode Example</h2>
+    <p class="explain">Strict mode prevents using undeclared variables.</p>
+    <pre>
+"use strict";
+undeclaredVar = 5; // Error: not declared
+    </pre>
+    <div id="strictOutput" class="output"></div>
+  </section>
+
+  <script>
+    // 2. Fruits array
+    let fruits = ["Apple","Banana","Mango","Orange","Grapes"];
+    function sortFruits() {
+      let sorted = fruits.slice().sort().reverse(); // descending
+      document.getElementById("fruitsOutput").textContent = "Sorted array: " + sorted.join(", ");
+    }
+
+    // 3. For/In loop
+    let car = { brand:"Tesla", model:"Model 3", year:2026 };
+    let forInText = "";
+    for (let key in car) {
+      forInText += key + ": " + car[key] + " | ";
+    }
+    document.getElementById("forInOutput").textContent = forInText;
+
+    // 4. Person object
+    let person = { firstname:"Kunal", lastname:"Sharma" };
+    let personText = "Dot notation: " + person.firstname + " " + person.lastname;
+    personText += " | Bracket notation: " + person["firstname"] + " " + person["lastname"];
+    document.getElementById("personOutput").textContent = personText;
+
+    // 5. Variable hoisting
+    function hoistDemo() {
+      let output = "Value before declaration: " + x; // undefined
+      var x = 10;
+      output += " | Value after initialization: " + x;
+      document.getElementById("hoistOutput").textContent = output;
+    }
+    hoistDemo();
+
+    // 6. Strict mode
+    function strictDemo() {
+      "use strict";
+      try {
+        undeclaredVar = 5; // error: variable not declared
+        return "No error";
+      } catch (e) {
+        return "Error caught: " + e.message;
+      }
+    }
+    document.getElementById("strictOutput").textContent = strictDemo();
+  </script>
+</body>
+</html>

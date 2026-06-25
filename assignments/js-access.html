@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>JavaScript Access and Properties Assignment</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f4f6f9; padding:20px; }
+    h2 { color:#7c6ef7; }
+    button { padding:8px 12px; margin-top:8px; border:none; border-radius:6px; background:#7c6ef7; color:#fff; cursor:pointer; }
+    pre { background:#111; color:#eee; padding:10px; border-radius:6px; overflow:auto; }
+    .output { margin-top:8px; padding:10px; background:#fff; border:1px solid #ddd; border-radius:6px; }
+    .explain { font-size:13px; color:#555; margin-top:6px; }
+  </style>
+</head>
+<body>
+  <h1>JavaScript Access and Properties Assignment</h1>
+
+  <!-- 1. this keyword -->
+  <section>
+    <h2>1. Using <code>this</code> keyword</h2>
+    <p class="explain">When you click the button, <code>this</code> refers to the button itself, so we can hide it.</p>
+    <pre>
+<button onclick="this.style.display='none'">Click to Disappear</button>
+    </pre>
+    <button onclick="this.style.display='none'">Click to Disappear</button>
+  </section>
+
+  <!-- 2. call() and apply() -->
+  <section>
+    <h2>2. call() vs apply()</h2>
+    <p class="explain">Both invoke a function with a given <code>this</code> value. <code>call()</code> takes arguments individually, <code>apply()</code> takes them as an array.</p>
+    <pre>
+function greet(greeting, punctuation) {
+  return greeting + " " + this.name + punctuation;
+}
+let person = { name: "veena" };
+
+console.log(greet.call(person, "Hello", "!")); // call
+console.log(greet.apply(person, ["Hi", "..."])); // apply
+    </pre>
+    <div id="callApplyOutput" class="output"></div>
+  </section>
+
+  <!-- 3. Counter button -->
+  <section>
+    <h2>3. Counter Button</h2>
+    <p class="explain">Each click increments the counter value.</p>
+    <pre>
+let count = 0;
+function increment() {
+  count++;
+  document.getElementById("counterOutput").textContent = count;
+}
+    </pre>
+    <button onclick="increment()">Count</button>
+    <div id="counterOutput" class="output">0</div>
+  </section>
+
+  <!-- 4. Counter with getter/setter -->
+  <section>
+    <h2>4. Counter with Getter/Setter</h2>
+    <p class="explain">We use accessor properties to control how the counter value is read and updated.</p>
+    <pre>
+let counterObj = {
+  _count: 0,
+  get count() { return this._count; },
+  set count(val) { this._count = val; }
+};
+counterObj.count = counterObj.count + 1;
+console.log(counterObj.count);
+    </pre>
+    <button onclick="incrementAccessor()">Increment via Setter</button>
+    <div id="accessorOutput" class="output">0</div>
+  </section>
+
+  <!-- 5. Add properties via prototype -->
+  <section>
+    <h2>5. Add Properties using Prototype</h2>
+    <p class="explain">We can extend functions with new properties using <code>prototype</code>.</p>
+    <pre>
+function Student(name) {
+  this.name = name;
+}
+Student.prototype.course = "JavaScript";
+
+let s1 = new Student("veena");
+console.log(s1.name + " enrolled in " + s1.course);
+    </pre>
+    <div id="prototypeOutput" class="output"></div>
+  </section>
+
+  <script>
+    // 2. call() and apply()
+    function greet(greeting, punctuation) {
+      return greeting + " " + this.name + punctuation;
+    }
+    let person = { name: "veena" };
+    let callResult = greet.call(person, "Hello", "!");
+    let applyResult = greet.apply(person, ["Hi", "..."]);
+    document.getElementById("callApplyOutput").textContent = "call(): " + callResult + " | apply(): " + applyResult;
+
+    // 3. Counter
+    let count = 0;
+    function increment() {
+      count++;
+      document.getElementById("counterOutput").textContent = count;
+    }
+
+    // 4. Getter/Setter counter
+    let counterObj = {
+      _count: 0,
+      get count() { return this._count; },
+      set count(val) { this._count = val; }
+    };
+    function incrementAccessor() {
+      counterObj.count = counterObj.count + 1;
+      document.getElementById("accessorOutput").textContent = counterObj.count;
+    }
+
+    // 5. Prototype
+    function Student(name) {
+      this.name = name;
+    }
+    Student.prototype.course = "JavaScript";
+    let s1 = new Student("veena");
+    document.getElementById("prototypeOutput").textContent = s1.name + " enrolled in " + s1.course;
+  </script>
+</body>
+</html>

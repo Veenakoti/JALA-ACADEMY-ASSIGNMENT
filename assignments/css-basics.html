@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CSS Basics Assignment — Updated</title>
+  <style>
+    /*
+      CSS Basics Assignment — Updated
+      - Added universal box-sizing, mobile fallback for fixed background,
+        safer flex alignment, and examples for cover vs contain.
+      - Keep images in: images/bg-hero.jpg and images/bg-hero-small.jpg (optional)
+    */
+
+    /* Make sizing predictable across elements */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    :root{
+      --bg-color: #f4f6f9;
+      --card-bg: #ffffff;
+      --accent: #7c6ef7;
+      --muted: #6b7280;
+      --max-width: 1000px;
+    }
+
+    /* Page layout and background (fixed image + color) */
+    html, body { height:100%; margin:0; }
+    body {
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-color); /* page background color */
+
+      /* background-image: gradient + fixed photo; image will not scroll with page */
+      background-image:
+        linear-gradient(rgba(124,110,247,0.06), rgba(124,110,247,0.02)),
+        url('images/backgroundimage.jpg');
+      background-repeat: no-repeat;
+      background-position: center top;
+      background-attachment: fixed; /* image should not scroll with the rest of the page */
+      background-size: cover; /* specify size of background image */
+
+      color: #111827;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding: 28px;
+      box-sizing: border-box;
+    }
+
+    /* Mobile fallback: background-attachment fixed can be problematic on mobile */
+    @media (max-width: 768px) {
+      body {
+        background-image:
+          linear-gradient(rgba(124,110,247,0.04), rgba(124,110,247,0.01)),
+          url('images/bg-hero-small.jpg'); /* smaller image recommended for mobile */
+        background-attachment: scroll;
+        background-size: auto 40%;
+        background-position: center top;
+      }
+    }
+
+    /* Container */
+    .wrap {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 20px;
+      align-items: flex-start; /* use flex-start for broader compatibility */
+    }
+
+    /* Card style */
+    .card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(15,23,42,0.06);
+    }
+
+    /* Header */
+    header.site {
+      grid-column: 1 / -1;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:6px;
+    }
+    header.site h1 { margin:0; font-size:20px; color:#0f172a; }
+    header.site p { margin:0; color:var(--muted); font-size:13px; }
+
+    /* 1. Border styles demo: different border on each side */
+    .border-demo {
+      padding: 14px;
+      border-top: 6px solid #111827;       /* width, style, color */
+      border-right: 6px dashed #7c6ef7;    /* dashed right */
+      border-bottom: 6px dotted #ef4444;   /* dotted bottom */
+      border-left: 6px double #10b981;     /* double left */
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    /* 2. Height and width demo (pixels and percent) */
+    .size-demo {
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:flex-start;
+    }
+    .box-px {
+      width: 300px;   /* width in pixels */
+      height: 180px;  /* height in pixels */
+      background: linear-gradient(180deg, #fff, #f8fafc);
+      border: 1px solid #e6e6e6;
+      border-radius:8px;
+      padding:12px;
+      box-sizing:border-box;
+    }
+    .box-percent {
+      width: 100%;    /* percent width (relative to container) */
+      height: 30vh;   /* viewport-relative height to show percent-like behavior */
+      min-height: 140px;
+      background: linear-gradient(180deg, #fff, #fffaf0);
+      border: 1px solid #e6e6e6;
+      border-radius:8px;
+      padding:12px;
+      box-sizing:border-box;
+    }
+
+    /* 3. Fonts and text styles */
+    .typography p { margin:8px 0; }
+    .font-sample {
+      font-family: "Georgia", "Times New Roman", serif;
+      font-size: 18px;      /* font-size */
+      font-style: italic;   /* font-style */
+      color: #0f172a;       /* color */
+      text-align: left;     /* text-align */
+      line-height: 1.5;
+    }
+    .font-sample-2 {
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 700;     /* bold */
+      color: #7c6ef7;
+      text-align: center;
+    }
+
+    /* 4. Comments demo (visible as code block) */
+    pre.comments {
+      background:#0f172a;
+      color:#e6eef8;
+      padding:12px;
+      border-radius:8px;
+      overflow:auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+      font-size:13px;
+    }
+
+    /* cover vs contain demo boxes */
+    .bg-demo {
+      display:flex;
+      gap:10px;
+      margin-top:12px;
+      flex-wrap:wrap;
+    }
+    .bg-box {
+      width:48%;
+      min-width:200px;
+      height:120px;
+      border-radius:8px;
+      border:1px solid #eee;
+      padding:8px;
+      color:#111;
+      display:flex;
+      align-items:flex-end;
+      justify-content:flex-start;
+      background-repeat:no-repeat;
+      background-position:center;
+      background-size:cover;
+    }
+    .bg-box.contain { background-size:contain; background-color:#fffaf0; }
+
+    /* Responsive */
+    @media (max-width:920px) {
+      .wrap { grid-template-columns: 1fr; }
+      .bg-box { width:100%; }
+    }
+
+    /* Small utilities */
+    .muted { color: var(--muted); font-size:13px; }
+    .label { display:block; font-weight:700; margin-bottom:6px; }
+    code { background:#f3f4f6; padding:2px 6px; border-radius:4px; font-size:13px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="site">
+      <div>
+        <h1>CSS Basics Assignment — Updated</h1>
+        <p>Demonstrates backgrounds, borders, sizing, typography, and best-practice fallbacks</p>
+      </div>
+      <div class="muted">Author: Veena • 24 Jun 2026</div>
+    </header>
+
+    <!-- Left column: main demos -->
+    <main>
+      <section class="card" aria-labelledby="bgTitle">
+        <h2 id="bgTitle">Backgrounds and Comments</h2>
+
+        <p class="muted">This page uses a background color and a fixed background image sized to cover the viewport. A mobile fallback switches to a smaller image and scroll attachment.</p>
+
+        <div class="label">CSS Comments</div>
+        <pre class="comments">
+/* Single-line comment example */
+
+/*
+  Multi-line comment block:
+  Explain sections of your stylesheet here.
+*/
+        </pre>
+
+        <hr style="margin:14px 0; border:none; border-top:1px solid #eee;" />
+
+        <div class="label">Background Example</div>
+        <p>Page background color plus a fixed image (does not scroll with content on desktop). The image size is set with <code>background-size: cover</code>. For mobile the CSS switches to <code>background-attachment: scroll</code> and a smaller image to improve performance.</p>
+
+        <div class="bg-demo" aria-hidden="false">
+          <div class="bg-box" style="background-image:url('images/bg-hero.jpg');">
+            <div style="background:rgba(255,255,255,0.85); padding:6px; border-radius:6px; margin:8px;">
+              cover
+            </div>
+          </div>
+          <div class="bg-box contain" style="background-image:url('images/bg-hero.jpg');">
+            <div style="background:rgba(255,255,255,0.85); padding:6px; border-radius:6px; margin:8px;">
+              contain
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="borderTitle" style="margin-top:16px;">
+        <h2 id="borderTitle">Different Border Styles on Each Side</h2>
+        <div class="border-demo" role="region" aria-label="Border styles demo">
+          <strong>Product Card</strong>
+          <p style="margin:8px 0 0 0;">Top solid, right dashed, bottom dotted, left double — each side uses a different style, width, and color.</p>
+        </div>
+
+        <div class="label">How to set</div>
+        <pre class="comments">/* Example:
+border-top: 6px solid #111;
+border-right: 6px dashed #7c6ef7;
+border-bottom: 6px dotted #ef4444;
+border-left: 6px double #10b981;
+*/</pre>
+      </section>
+
+      <section class="card" aria-labelledby="sizeTitle" style="margin-top:16px;">
+        <h2 id="sizeTitle">Height and Width Examples</h2>
+        <p class="muted">Demonstrates width/height in pixels and percent/viewport units.</p>
+
+        <div class="size-demo" style="margin-top:10px;">
+          <div class="box-px" aria-label="Fixed pixel box">
+            <strong>Fixed size (pixels)</strong>
+            <p style="margin-top:8px;">Width: <code>300px</code> • Height: <code>180px</code></p>
+          </div>
+
+          <div class="box-percent" aria-label="Responsive percent box">
+            <strong>Responsive size (percent / viewport)</strong>
+            <p style="margin-top:8px;">Width: <code>100%</code> (container) • Height: <code>30vh</code> (viewport relative)</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="typeTitle" style="margin-top:16px;">
+        <h2 id="typeTitle">Fonts and Text Styles</h2>
+        <div class="typography">
+          <p class="font-sample">This paragraph uses a serif font-family, larger font-size, and italic style to show variation.</p>
+          <p class="font-sample-2">This line uses a sans-serif family, bold weight, accent color, and centered alignment.</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- Right column: notes and quick reference -->
+    <aside class="card" aria-labelledby="notesTitle">
+      <h2 id="notesTitle">Quick Notes & Checklist</h2>
+
+      <p class="muted"><strong>Importance of DOCTYPE</strong></p>
+      <p>Include <code>&lt;!DOCTYPE html&gt;</code> at the top of HTML documents to ensure standards mode rendering in browsers.</p>
+
+      <p class="muted" style="margin-top:10px;"><strong>Link external stylesheet</strong></p>
+      <p>Use the syntax: <code>&lt;link rel="stylesheet" href="styles.css"&gt;</code> inside the document <code>&lt;head&gt;</code>.</p>
+
+      <hr style="margin:12px 0; border:none; border-top:1px solid #eee;" />
+
+      <p class="muted"><strong>Files & performance</strong></p>
+      <ul style="padding-left:18px; margin:6px 0;">
+        <li>Place background image at <code>images/bg-hero.jpg</code> (desktop) and <code>images/bg-hero-small.jpg</code> (mobile) or update the URL in CSS.</li>
+        <li>Optimize images (resize and compress) to reduce load time.</li>
+      </ul>
+
+      <hr style="margin:12px 0; border:none; border-top:1px solid #eee;" />
+
+      <p class="muted"><strong>Submission checklist</strong></p>
+      <ul style="padding-left:18px; margin:6px 0;">
+        <li>CSS comments included</li>
+        <li>Background color + fixed image + size demonstrated</li>
+        <li>Four different border styles on each side</li>
+        <li>Height/width examples in px and percent/viewport</li>
+        <li>Font styles, sizes, families, colors, alignment</li>
+      </ul>
+    </aside>
+  </div>
+</body>
+</html>

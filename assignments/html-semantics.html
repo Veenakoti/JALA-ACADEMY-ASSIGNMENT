@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Semantic Elements Assignment</title>
+  <style>
+    :root { --bg:#f6f8fb; --card:#fff; --accent:#7c6ef7; --muted:#666; }
+    body { margin:0; font-family:Inter,system-ui,Arial; background:var(--bg); color:#222; padding:28px; }
+    .container { max-width:1000px; margin:0 auto; background:var(--card); border-radius:10px; padding:20px; box-shadow:0 8px 24px rgba(0,0,0,.06); }
+    header.site { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; }
+    header.site h1 { margin:0; font-size:20px; color:#111; }
+    nav.primary { margin:12px 0; display:flex; gap:10px; flex-wrap:wrap; }
+    nav.primary a { color:var(--accent); text-decoration:none; font-weight:600; }
+    nav.primary a:hover { text-decoration:underline; }
+    .grid { display:grid; grid-template-columns: 1fr 320px; gap:18px; align-items:start; }
+    section.card { background:#fafafa; border:1px solid #eee; padding:14px; border-radius:8px; }
+    article.post { margin-bottom:12px; }
+    hgroup h2 { margin:0; font-size:18px; color:#111; }
+    hgroup p { margin:4px 0 0 0; color:var(--muted); font-size:13px; }
+    table { width:100%; border-collapse:collapse; margin-top:8px; }
+    th, td { border:1px solid #e6e6e6; padding:8px; text-align:left; font-size:13px; }
+    figure { margin:0; }
+    figcaption { font-size:12px; color:var(--muted); margin-top:6px; }
+    .nonsemantic { background:#fff; padding:10px; border-radius:6px; border:1px dashed #ddd; }
+    .inline-span { background:#fff7f7; padding:4px 8px; border-radius:4px; color:#b91c1c; }
+    footer.site { margin-top:14px; display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-size:13px; }
+    .aside { background:#fff; padding:12px; border-radius:8px; border:1px solid #eee; }
+    .form-row { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:8px; }
+    input, select, textarea, button { padding:8px; border-radius:6px; border:1px solid #ddd; font-size:14px; }
+    button.primary { background:var(--accent); color:#fff; border:none; cursor:pointer; padding:8px 12px; border-radius:6px; }
+    mark { background: #fffbcc; padding:0 4px; border-radius:3px; }
+    time { color:var(--muted); font-size:13px; }
+    @media (max-width:880px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Site header -->
+    <header class="site" role="banner">
+      <div>
+        <h1>Semantic Elements — Assignment</h1>
+        <div style="color:var(--muted);font-size:13px">Author: Veena</div>
+      </div>
+      <div style="text-align:right">
+        <time datetime="2026-06-24">24 June 2026</time>
+      </div>
+    </header>
+
+    <!-- Primary navigation -->
+    <nav class="primary" role="navigation" aria-label="Main navigation">
+      <a href="#nonsemantic">Non-semantic</a>
+      <a href="#semantic">Semantic</a>
+      <a href="#examples">All HTML5 Tags</a>
+      <a href="#form">Form</a>
+      <a href="#table">Table</a>
+    </nav>
+
+    <div class="grid">
+      <!-- Main content -->
+      <main>
+        <!-- Non-semantic demo -->
+        <section id="nonsemantic" class="card" aria-labelledby="nonsemanticTitle">
+          <hgroup id="nonsemanticTitle">
+            <h2>1. Non‑semantic elements</h2>
+            <p>Use <code>&lt;div&gt;</code> and <code>&lt;span&gt;</code> for layout and inline styling.</p>
+          </hgroup>
+
+          <div class="nonsemantic" role="region" aria-label="Non semantic demo">
+            <div style="margin-bottom:8px;">
+              <strong>Block container (div):</strong>
+              <div style="background:#eef2ff;padding:10px;border-radius:6px;margin-top:6px;">
+                This is a <code>&lt;div&gt;</code> used as a product card container.
+              </div>
+            </div>
+
+            <div>
+              <strong>Inline element (span):</strong>
+              <p>Price: <span class="inline-span">$99</span> — the <code>&lt;span&gt;</code> highlights inline text.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Semantic elements demo -->
+        <section id="semantic" class="card" aria-labelledby="semanticTitle">
+          <hgroup id="semanticTitle">
+            <h2>2. Semantic elements</h2>
+            <p>Examples of <code>&lt;article&gt;</code>, <code>&lt;aside&gt;</code>, <code>&lt;figure&gt;</code>, <code>&lt;figcaption&gt;</code>, <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;section&gt;</code>.</p>
+          </hgroup>
+
+          <!-- Article example -->
+          <article class="post" aria-labelledby="postTitle">
+            <header>
+              <h3 id="postTitle">Article: How to prepare for interviews</h3>
+              <p style="margin:6px 0 0 0;color:var(--muted);font-size:13px">By <strong>Veena</strong> • <time datetime="2026-06-24">24 Jun 2026</time></p>
+            </header>
+            <p>Use semantic tags to give meaning to content. For example, wrap a standalone piece of content in <code>&lt;article&gt;</code>.</p>
+            <figure style="margin-top:10px;">
+              <img src="images/interview.jpg" alt="Interview preparation" style="width:100%;max-width:420px;border-radius:8px;display:block" />
+              <figcaption>Fig.1 — Mock interview session.</figcaption>
+            </figure>
+            <footer style="margin-top:10px;color:var(--muted);font-size:13px">Article footer: tags, categories, and published time.</footer>
+          </article>
+
+          <!-- Aside example -->
+          <aside class="aside" aria-labelledby="asideTitle">
+            <h4 id="asideTitle">Aside: Quick tips</h4>
+            <ul style="margin:8px 0 0 18px;">
+              <li>Practice coding problems daily.</li>
+              <li>Read documentation and build small projects.</li>
+            </ul>
+          </aside>
+
+          <!-- Section example -->
+          <section style="margin-top:12px;">
+            <h4>Section: Resources</h4>
+            <p>Group related content using <code>&lt;section&gt;</code> for clarity and accessibility.</p>
+          </section>
+        </section>
+
+        <!-- Form example -->
+        <section id="form" class="card" aria-labelledby="formTitle">
+          <h2 id="formTitle">3. Semantic form</h2>
+          <p>Use <code>&lt;form&gt;</code> with labels and fieldsets for accessible forms.</p>
+
+          <form action="#" method="post" aria-describedby="formHelp">
+            <div class="form-row">
+              <label for="fname">Full name</label>
+              <input id="fname" name="fullname" type="text" required placeholder="Your name" />
+            </div>
+
+            <div class="form-row">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" required placeholder="you@example.com" />
+            </div>
+
+            <fieldset style="margin-top:10px;">
+              <legend>Preferred contact</legend>
+              <label class="inline"><input type="radio" name="contact" value="email" checked /> Email</label>
+              <label class="inline"><input type="radio" name="contact" value="phone" /> Phone</label>
+            </fieldset>
+
+            <div class="form-row" style="margin-top:10px;">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="4" placeholder="Write a short message"></textarea>
+            </div>
+
+            <div class="form-row" style="margin-top:10px;">
+              <button type="submit" class="primary">Send</button>
+              <button type="reset">Reset</button>
+            </div>
+
+            <p id="formHelp" class="note" style="color:var(--muted);font-size:13px;margin-top:8px;">This form is a demo — no data is submitted.</p>
+          </form>
+        </section>
+
+        <!-- Table example -->
+        <section id="table" class="card" aria-labelledby="tableTitle">
+          <h2 id="tableTitle">4. Semantic table</h2>
+          <p>Use <code>&lt;table&gt;</code> for tabular data with proper headers.</p>
+          <table role="table" aria-label="Course schedule">
+            <thead>
+              <tr><th>Course</th><th>Duration</th><th>Start</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>HTML Basics</td><td>1 day</td><td><time datetime="2026-07-01">1 Jul 2026</time></td></tr>
+              <tr><td>CSS Fundamentals</td><td>1 day</td><td><time datetime="2026-07-02">2 Jul 2026</time></td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- All HTML5 tags demo -->
+        <section id="examples" class="card" aria-labelledby="examplesTitle">
+          <h2 id="examplesTitle">5. Use of HTML5 tags</h2>
+          <p>Below are short examples of the requested tags:</p>
+
+          <article style="margin-top:8px;">
+            <h3>Article example</h3>
+            <p>An <code>&lt;article&gt;</code> is a self-contained composition in a document.</p>
+          </article>
+
+          <nav aria-label="Article nav" style="margin-top:8px;">
+            <strong>Nav:</strong> <a href="#nonsemantic">Non-semantic</a> • <a href="#semantic">Semantic</a>
+          </nav>
+
+          <hgroup style="margin-top:8px;">
+            <h2>Hgroup example title</h2>
+            <p>Subtitle inside hgroup</p>
+          </hgroup>
+
+          <p style="margin-top:8px;">Use <mark>mark</mark> to highlight text and <time datetime="2026-06-24">24 Jun 2026</time> to mark dates.</p>
+        </section>
+      </main>
+
+      <!-- Right column / aside -->
+      <aside class="aside" aria-labelledby="rightAside">
+        <h4 id="rightAside">Checklist</h4>
+        <ul style="margin:8px 0 0 18px;">
+          <li>Non-semantic: <code>div</code>, <code>span</code></li>
+          <li>Semantic: <code>form</code>, <code>table</code>, <code>article</code></li>
+          <li>HTML5 tags: <code>figure</code>, <code>figcaption</code>, <code>aside</code>, <code>header</code>, <code>footer</code>, <code>nav</code>, <code>section</code>, <code>hgroup</code>, <code>mark</code>, <code>time</code></li>
+        </ul>
+
+        <div style="margin-top:12px;">
+          <strong>Difference (quick):</strong>
+          <p style="font-size:13px;color:var(--muted)">A <code>div</code> is block-level for layout; a <code>span</code> is inline for small text fragments.</p>
+        </div>
+
+        <div style="margin-top:12px;">
+          <a href="#nonsemantic" style="display:inline-block;padding:8px 10px;background:var(--accent);color:#fff;border-radius:6px;text-decoration:none;">Back to top</a>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="site" role="contentinfo">
+      <div>&copy; <time datetime="2026-06-24">2026</time> JALA Academy</div>
+      <div style="color:var(--muted)">Front End — Semantic Elements</div>
+    </footer>
+  </div>
+</body>
+</html>

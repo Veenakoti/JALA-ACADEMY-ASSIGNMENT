@@ -1,1 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Basics — HTML Fundamentals</title>
+  <style>
+    :root {
+      --accent: #7c6ef7;
+      --muted: #666;
+      --card: #fff;
+      --bg: #f4f6f9;
+    }
 
+    /* Page layout */
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: var(--bg);
+      color: #222;
+      line-height: 1.45;
+      padding: 28px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--card);
+      border-radius: 10px;
+      padding: 20px 26px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.06);
+    }
+
+    /* Header / nav */
+    header { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+    header h1 { margin:0; font-size:20px; color:#111; }
+    nav { margin:14px 0; text-align:center; }
+    nav a { margin:0 10px; color:var(--accent); text-decoration:none; font-weight:600; }
+    nav a:hover { text-decoration:underline; }
+
+    /* Sections */
+    section { background:#fafafa; border:1px solid #eee; padding:14px; border-radius:8px; margin-bottom:16px; }
+    h2 { margin:0 0 8px 0; color:var(--accent); font-size:16px; }
+
+    /* Examples */
+    .example { padding:10px; background:#fff; border-radius:6px; border:1px solid #f0f0f0; }
+    .product { display:flex; gap:12px; align-items:center; }
+    .product img { width:120px; height:auto; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,.06); }
+
+    /* Lists */
+    ul { padding-left:18px; margin:8px 0; }
+
+    /* Blockquote */
+    blockquote { margin:8px 0; padding-left:12px; border-left:4px solid var(--accent); color:#444; font-style:italic; }
+
+    /* Pseudo elements demo */
+    .pseudo p::before { content: "Note: "; font-weight:700; color:var(--accent); }
+    .pseudo p::after { content: " • end"; color:#2b8a78; font-weight:600; }
+
+    /* Hover demo */
+    .hover-list li:hover { color:darkblue; cursor:pointer; }
+
+    /* Footer */
+    footer { display:flex; justify-content:space-between; align-items:center; margin-top:12px; font-size:13px; color:var(--muted); }
+
+    /* Small responsive tweak */
+    @media (max-width:560px) {
+      .product { flex-direction:column; align-items:flex-start; }
+      .product img { width:100%; max-width:260px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>HTML Basics — Practical Examples</h1>
+      <div>Author: Veena</div>
+    </header>
+
+    <!-- Internal navigation -->
+    <nav aria-label="Page sections">
+      <a href="#structure">Structure</a>
+      <a href="#text">Text</a>
+      <a href="#lists">Lists</a>
+      <a href="#media">Media</a>
+      <a href="#extras">Extras</a>
+    </nav>
+
+    <!-- Structure -->
+    <section id="structure" aria-labelledby="structureTitle">
+      <h2 id="structureTitle">1 Structure (Html, head, title, body)</h2>
+      <p><strong>What:</strong> Use the standard document skeleton and semantic grouping.</p>
+      <div class="example">
+        <article>
+          <h3>Website Section Example</h3>
+          <p>This <code>&lt;article&gt;</code> contains a short description and demonstrates semantic structure.</p>
+        </article>
+        <hr/>
+        <p><label for="sample">Sample label</label> <input id="sample" type="text" placeholder="Label example" /></p>
+      </div>
+    </section>
+
+    <!-- Text formatting -->
+    <section id="text" aria-labelledby="textTitle">
+      <h2 id="textTitle">2 Text Formatting (Heading, Paragraph, Italic, Bold, Anchor)</h2>
+      <p><strong>Bold:</strong> <b>Important Notice</b></p>
+      <p><em>Italic:</em> <i>Terms and conditions apply</i></p>
+      <p>Inline highlight using <span style="color:crimson; font-weight:700;">span</span> inside a sentence.</p>
+      <p>Read more on the <a href="#extras">Extras section</a> (internal link).</p>
+    </section>
+
+    <!-- Lists -->
+    <section id="lists" aria-labelledby="listsTitle">
+      <h2 id="listsTitle">3 Lists (Unordered List, List Item)</h2>
+      <p>Shopping checklist example:</p>
+      <div class="example">
+        <ul class="hover-list">
+          <li>🛒 Buy milk</li>
+          <li>💳 Pay electricity bill</li>
+          <li>📚 Finish HTML assignment</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Media -->
+    <section id="media" aria-labelledby="mediaTitle">
+      <h2 id="mediaTitle">4 Media (Image, Division, Span, Blockquote, HR)</h2>
+      <p>Product card example using <code>&lt;div&gt;</code> and <code>&lt;span&gt;</code>:</p>
+      <div class="example product" role="group" aria-label="Product card">
+        <figure>
+          <img src="images/Html_image.jpg" alt="Wireless Headphones product image" />
+          <figcaption style="font-size:12px;color:var(--muted);">Product photo</figcaption>
+        </figure>
+        <div>
+          <h4>Wireless Headphones</h4>
+          <p>Price: <span style="color:crimson; font-weight:700;">$99</span></p>
+          <blockquote>“This course helped me land my first IT job!”</blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- Extras: pseudo classes/elements, navigation within page -->
+    <section id="extras" aria-labelledby="extrasTitle">
+      <h2 id="extrasTitle">5 Extras (Navigation, Pseudo classes/elements)</h2>
+
+      <div class="pseudo example">
+        <p>This paragraph demonstrates <code>::before</code> and <code>::after</code> pseudo-elements.</p>
+      </div>
+
+      <p style="margin-top:10px;">Back to <a href="#structure">Structure</a> or go to <a href="#media">Media</a>.</p>
+
+      <h3 style="margin-top:12px;">Accessibility note</h3>
+      <p>Use descriptive <code>alt</code> text for images and semantic tags for better screen reader support.</p>
+    </section>
+
+    <footer>
+      <div>&copy; <time datetime="2026-06-24">2026</time> JALA Academy</div>
+      <div><a href="#top">Back to top</a></div>
+    </footer>
+  </div>
+</body>
+</html>
