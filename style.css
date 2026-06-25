@@ -1,0 +1,123 @@
+/* Global */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f4f6f9; /* soft light background */
+  display: flex;
+  min-height: 100vh;
+  color: #4b5563; /* softer gray for body text */
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 100vh;
+  background: #18181f; /* dark sidebar */
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar h2 {
+  margin-bottom: 30px;
+  font-size: 20px;
+  color: #ffffff; /* crisp white heading */
+}
+.sidebar a {
+  color: #d1d5db; /* light gray links */
+  text-decoration: none;
+  display: block;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  transition: background 0.3s, color 0.3s;
+}
+.sidebar a:hover {
+  color: #7c6ef7; /* purple accent */
+}
+.sidebar a.active {
+  background: #7c6ef7;
+  color: #ffffff;
+}
+
+/* Main content */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 220px; /* offset for fixed sidebar */
+}
+
+/* Topbar */
+.topbar {
+  background: #ffffff;
+  padding: 15px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.topbar h1 {
+  margin: 0;
+  font-size: 22px;
+  color: #1f2937; /* dark gray heading */
+}
+.topbar span {
+  font-size: 14px;
+  color: #9ca3af; /* muted gray */
+}
+
+/* Content grid */
+.content {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Cards */
+.card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+.card h3 {
+  margin-top: 0;
+  color: #7c6ef7; /* purple accent heading */
+  font-size: 18px;
+}
+.card ul {
+  padding-left: 18px;
+  margin: 0;
+}
+.card ul li {
+  margin: 6px 0;
+  color: #374151; /* neutral dark gray */
+}
+.card a {
+  color: #374151; /* neutral link */
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.card a:hover {
+  color: #7c6ef7; /* purple highlight */
+  text-decoration: underline;
+}
+
+/* Iframe content (for dynamic loading) */
+.content-frame {
+  flex: 1;
+  border: none;
+  width: 100%;
+  height: calc(100vh - 60px); /* adjust for topbar height */
+}

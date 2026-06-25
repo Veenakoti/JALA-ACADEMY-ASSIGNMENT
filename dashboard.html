@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard - Assignments</title>
+  <style>
+
+    /* Global */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f4f6f9;
+  display: flex;
+  min-height: 100vh;
+  color: #4b5563; /* softer gray for body text */
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 180px;
+  height: 100vh;
+  background: #18181f; /* black sidebar */
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar h2 {
+  margin-bottom: 30px;
+  font-size: 20px;
+  color: #ffffff; /* crisp white heading */
+}
+.sidebar a {
+  color: #d1d5db; /* light gray links */
+  text-decoration: none;
+  display: block;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  transition: background 0.3s, color 0.3s;
+}
+.sidebar a:hover {
+  color: #7c6ef7; /* purple accent */
+}
+.sidebar a.active {
+  background: #7c6ef7;
+  color: #ffffff;
+}
+
+/* Main content */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 220px;
+}
+
+/* Topbar */
+.topbar {
+  background: #ffffff;
+  padding: 15px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.topbar h1 {
+  margin: 0;
+  font-size: 22px;
+  color: #1f2937; /* dark gray heading */
+}
+.topbar span {
+  font-size: 14px;
+  color: #9ca3af; /* muted gray */
+}
+
+/* Content grid */
+.content {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Cards */
+.card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+.card h3 {
+  margin-top: 0;
+  color: #7c6ef7; /* purple accent heading */
+  font-size: 18px;
+}
+.card ul {
+  padding-left: 18px;
+  margin: 0;
+}
+.card ul li {
+  margin: 6px 0;
+  color: #374151; /* neutral dark gray */
+}
+.card a {
+  color: #374151; /* neutral link */
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.card a:hover {
+  color: #7c6ef7; /* purple highlight */
+  text-decoration: underline;
+}
+
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>MyApp</h2>
+    <a href="#">Dashboard</a>
+    <a href="#">Assignments</a>
+    <a href="#">Reports</a>
+    <a href="#">Logout</a>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <h1>Assignments</h1>
+      <span>Welcome, Veena</span>
+    </div>
+
+    <div class="content">
+      <!-- HTML Assignments -->
+      <div class="card">
+        <h3>HTML Basics</h3>
+        <ul>
+          <li><a href="assignments/html-basics.html">Headings, paragraphs, bold/italic</a></li>
+          <li><a href="assignments/html-basics.html">Anchor, lists, blockquote, hr</a></li>
+          <li><a href="assignments/html-basics.html">Image, div, span</a></li>
+          <li><a href="assignments/html-basics.html">Navigation within page</a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>HTML5 Input Attributes</h3>
+        <ul>
+          <li><a href="assignments/html-inputs.html">Text, password, radio, checkbox</a></li>
+          <li><a href="assignments/html-inputs.html">HTML5 types: number, range, color</a></li>
+          <li><a href="assignments/html-inputs.html">Restrictions: required, readonly, min/max</a></li>
+          <li><a href="assignments/html-inputs.html">Target attribute, iframe, marquee</a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>HTML5 Semantic Elements</h3>
+        <ul>
+          <li><a href="assignments/html-semantics.html">Non-semantic div & span</a></li>
+          <li><a href="assignments/html-semantics.html">Semantic form, table, article</a></li>
+          <li><a href="assignments/html-semantics.html">All HTML5 semantic tags</a></li>
+        </ul>
+      </div>
+
+      <!-- CSS Assignments -->
+      <div class="card">
+        <h3>CSS Basics</h3>
+        <ul>
+          <li><a href="assignments/css-basics.html">CSS comments</a></li>
+          <li><a href="assignments/css-basics.html">Background colors & images</a></li>
+          <li><a href="assignments/css-basics.html">Borders (different styles)</a></li>
+          <li><a href="assignments/css-basics.html">Height & width</a></li>
+          <li><a href="assignments/css-basics.html">Fonts & text styles</a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>CSS Page Adjustments</h3>
+        <ul>
+          <li><a href="assignments/css-adjustments.html">Table border + hover color</a></li>
+          <li><a href="assignments/css-adjustments.html">Visibility vs display</a></li>
+          <li><a href="assignments/css-adjustments.html">Smooth scroll top/bottom</a></li>
+          <li><a href="assignments/css-adjustments.html">Padding vs margin</a></li>
+          <li><a href="assignments/css-adjustments.html">Multiple backgrounds</a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>CSS Effects</h3>
+        <ul>
+          <li><a href="assignments/css-effects.html">Shadow effects</a></li>
+          <li><a href="assignments/css-effects.html">CSS animations & pagination</a></li>
+          <li><a href="assignments/css-effects.html">Positions (static, relative, fixed)</a></li>
+          <li><a href="assignments/css-effects.html">Overflow handling</a></li>
+          <li><a href="assignments/css-effects.html">Image opacity</a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>CSS Compatibility</h3>
+        <ul>
+          <li><a href="assignments/css-compatibility.html">Table layout fixed/none</a></li>
+          <li><a href="assignments/css-compatibility.html">List-style-type</a></li>
+          <li><a href="assignments/css-compatibility.html">CSS grid types</a></li>
+          <li><a href="assignments/css-compatibility.html">Hero image</a></li>
+          <li><a href="assignments/css-compatibility.html">Viewport & media queries</a></li>
+        </ul>
+      </div>
+
+      <!-- JavaScript Assignments -->
+      <div class="card">
+        <h3>JavaScript Basics</h3>
+        <ul>
+          <li><a href="assignments/js-basics.html">Comments</a></li>
+          <li><a href="assignments/js-basics.html">Array sort descending</a></li>
+          <li><a href="assignments/js-basics.html">For/in loop</a></li>
+          <li><a href="assignments/js-basics.html">Object person</a></li>
+          <li><a href="assignments/js-basics.html">Hoisting + strict mode</a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>JavaScript Access & Properties</h3>
+        <ul>
+          <li><a href="assignments/js-access.html">this keyword on button</a></li>
+          <li><a href="assignments/js-access.html">call() vs apply()</a></li>
+          <li><a href="assignments/js-access.html">Counter with button</a></li>
+          <li><a href="assignments/js-access.html">Getter/setter counter</a></li>
+          <li><a href="assignments/js-access.html">Object prototypes</a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>JavaScript Events</h3>
+        <ul>
+          <li><a href="assignments/js-events.html">Event listener → show date/time</a></li>
+          <li><a href="assignments/js-events.html">Validation on submit</a></li>
+          <li><a href="assignments/js-events.html">Debugging with console.log()</a></li>
+          <li><a href="assignments/js-events.html">Cookies (set/get/check)</a></li>
+          <li><a href="assignments/js-events.html">JSON object access</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
