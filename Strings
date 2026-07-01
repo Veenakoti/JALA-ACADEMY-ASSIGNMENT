@@ -1,0 +1,312 @@
+// 1 -  Different ways creating a string
+public class StringCreation {
+
+    public static void main(String[] args) {
+
+        // 1. Using String Literal
+        String str1 = "Hello";
+
+        // 2. Using new Keyword
+        String str2 = new String("Hello");
+
+        // 3. Using Character Array
+        char[] ch = {'H', 'e', 'l', 'l', 'o'};
+        String str3 = new String(ch);
+
+        // 4. Using Byte Array
+        byte[] bytes = {72, 101, 108, 108, 111};
+        String str4 = new String(bytes);
+
+        // 5. Using StringBuilder
+        StringBuilder sb = new StringBuilder("Hello");
+        String str5 = sb.toString();
+
+        // 6. Using StringBuffer
+        StringBuffer sbf = new StringBuffer("Hello");
+        String str6 = sbf.toString();
+
+        // Printing Strings
+        System.out.println("String Literal: " + str1);
+        System.out.println("Using new Keyword: " + str2);
+        System.out.println("Using Character Array: " + str3);
+        System.out.println("Using Byte Array: " + str4);
+        System.out.println("Using StringBuilder: " + str5);
+        System.out.println("Using StringBuffer: " + str6);
+    }
+}
+
+// 2 - Concatenating two strings using + operator
+public class StringConcatenation {
+
+    public static void main(String[] args) {
+
+        String str1 = "Hello";
+        String str2 = "World";
+
+        // Concatenating strings using + operator
+        String result = str1 + " " + str2;
+
+        System.out.println("Concatenated String: " + result);
+    }
+}
+
+// 3 - Finding the length of the string
+import java.util.Scanner;
+
+public class StringLength {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a String: ");
+        String str = sc.nextLine();
+
+        int length = str.length();
+
+        System.out.println("Length of String: " + length);
+
+        
+    }
+}
+
+// 4 - Extract a string using Substring
+import java.util.Scanner;
+
+public class ExtractSubstring {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a String: ");
+        String str = sc.nextLine();
+
+        System.out.print("Enter Start Index: ");
+        int start = sc.nextInt();
+
+        System.out.print("Enter End Index: ");
+        int end = sc.nextInt();
+
+        String sub = str.substring(start, end);
+
+        System.out.println("Extracted String: " + sub);
+
+    }
+}
+
+// 5 - Searching in strings using indexOf()
+import java.util.Scanner;
+
+public class SearchString {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a String: ");
+        String str = sc.nextLine();
+
+        System.out.print("Enter a word/character to search: ");
+        String search = sc.nextLine();
+
+        int index = str.indexOf(search);
+
+        if (index != -1) {
+            System.out.println("Found at index: " + index);
+        } else {
+            System.out.println("Not Found");
+        }
+
+    }
+}
+
+// 6 - Matching a String Against a Regular Expression With matches()
+import java.util.Scanner;
+
+public class RegexMatch {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a String: ");
+        String str = sc.nextLine();
+
+        // Regular expression: only alphabets allowed
+        String regex = "[a-zA-Z]+";
+
+        if (str.matches(regex)) {
+            System.out.println("String matches the regular expression.");
+        } else {
+            System.out.println("String does not match the regular expression.");
+        }
+    }
+}
+
+// 7 - Comparing strings using the methods equals() 
+import java.util.Scanner;
+
+public class CompareStrings {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter First String: ");
+        String str1 = sc.nextLine();
+
+        System.out.print("Enter Second String: ");
+        String str2 = sc.nextLine();
+
+        if (str1.equals(str2)) {
+            System.out.println("Both strings are equal.");
+        } else {
+            System.out.println("Both strings are not equal.");
+        }
+    }
+}
+
+// 8 - equalsIgnoreCase(), startsWith(), endsWith() and compareTo()
+import java.util.Scanner;
+
+public class StringMethods {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter First String: ");
+        String str1 = sc.nextLine();
+
+        System.out.print("Enter Second String: ");
+        String str2 = sc.nextLine();
+
+        // equalsIgnoreCase()
+        System.out.println("equalsIgnoreCase(): "
+                + str1.equalsIgnoreCase(str2));
+
+        // startsWith()
+        System.out.println("startsWith(\"Java\"): "
+                + str1.startsWith("Java"));
+
+        // endsWith()
+        System.out.println("endsWith(\"Program\"): "
+                + str1.endsWith("Program"));
+
+        // compareTo()
+        System.out.println("compareTo(): "
+                + str1.compareTo(str2));
+
+    }
+}
+
+// 9 - Trimming strings with trim()
+import java.util.Scanner;
+
+public class TrimString {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a String with spaces: ");
+        String str = sc.nextLine();
+
+        System.out.println("Before trim: \"" + str + "\"");
+        System.out.println("After trim: \"" + str.trim() + "\"");
+    }
+}
+
+// 10 - Replacing characters in strings with replace()
+import java.util.Scanner;
+
+public class ReplaceCharacter {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a String: ");
+        String str = sc.nextLine();
+
+        System.out.print("Enter character to replace: ");
+        char oldChar = sc.next().charAt(0);
+
+        System.out.print("Enter new character: ");
+        char newChar = sc.next().charAt(0);
+
+        String result = str.replace(oldChar, newChar);
+
+        System.out.println("Original String: " + str);
+        System.out.println("Modified String: " + result);
+
+        sc.close();
+    }
+}
+
+// 11 - Splitting strings with split()
+import java.util.Scanner;
+
+public class SplitString {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a String: ");
+        String str = sc.nextLine();
+
+        String[] words = str.split(" ");
+
+        System.out.println("After Splitting:");
+
+        for (String word : words) {
+            System.out.println(word);
+        }
+
+        sc.close();
+    }
+}
+
+// 12 - Converting Numbers to Strings with valueOf()
+public class NumberToString {
+    public static void main(String[] args) {
+
+        int num = 100;
+        double d = 25.75;
+
+        // Convert numbers to String
+        String str1 = String.valueOf(num);
+        String str2 = String.valueOf(d);
+
+        System.out.println("Integer String: " + str1);
+        System.out.println("Double String: " + str2);
+
+        System.out.println("Type of str1: " + ((Object)str1).getClass().getSimpleName());
+        System.out.println("Type of str2: " + ((Object)str2).getClass().getSimpleName());
+    }
+}
+
+// 13  - Converting integer objects to Strings
+public class IntegerToString {
+    public static void main(String[] args) {
+
+        Integer num = 100;
+
+        // Convert Integer object to String
+        String str = num.toString();
+
+        System.out.println("Integer Object: " + num);
+        System.out.println("Converted String: " + str);
+    }
+}
+
+// 14  - Converting to uppercase and lowercase
+import java.util.Scanner;
+
+public class UpperLowerCase {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a String: ");
+        String str = sc.nextLine();
+
+        System.out.println("Uppercase: " + str.toUpperCase());
+        System.out.println("Lowercase: " + str.toLowerCase());
+
+        sc.close();
+    }
+}

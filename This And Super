@@ -1,0 +1,157 @@
+// 1 - Print the fields/instance members of the current class using this and without using object
+public class ThisExample {
+
+    // Instance variables
+    int id = 101;
+    String name = "Java";
+
+    // Instance method
+    void display() {
+
+        // Using 'this'
+        System.out.println("Using this:");
+        System.out.println("ID: " + this.id);
+        System.out.println("Name: " + this.name);
+
+        // Without using 'this'
+        System.out.println("\nWithout using this:");
+        System.out.println("ID: " + id);
+        System.out.println("Name: " + name);
+    }
+
+    public static void main(String[] args) {
+
+        // Create object and call method
+        ThisExample obj = new ThisExample();
+        obj.display();
+    }
+}
+
+// 2 - Print the fields/instance members of the parent class using super
+// Parent Class
+class Parent {
+
+    int id = 101;
+    String name = "Java";
+}
+
+// Child Class
+class Child extends Parent {
+
+    int id = 201;
+    String name = "Python";
+
+    void display() {
+
+        // Accessing parent class instance variables using super
+        System.out.println("Parent ID: " + super.id);
+        System.out.println("Parent Name: " + super.name);
+    }
+
+    public static void main(String[] args) {
+
+        Child obj = new Child();
+        obj.display();
+    }
+}
+
+// 3 - Call constructor of the current class using this()
+public class ThisConstructor {
+
+    // Default Constructor
+    ThisConstructor() {
+        this(100); // Calls parameterized constructor
+        System.out.println("Default Constructor");
+    }
+
+    // Parameterized Constructor
+    ThisConstructor(int id) {
+        System.out.println("Parameterized Constructor");
+        System.out.println("ID: " + id);
+    }
+
+    public static void main(String[] args) {
+
+        // Creating object
+        new ThisConstructor();
+    }
+}
+
+// 4 - Call argument constructor of current class using this()
+public class ConstructorDemo {
+
+    // Default Constructor
+    ConstructorDemo() {
+        this(101, "Java");   // Calls parameterized constructor
+        System.out.println("Default Constructor");
+    }
+
+    // Parameterized Constructor
+    ConstructorDemo(int id, String name) {
+        System.out.println("Parameterized Constructor");
+        System.out.println("ID: " + id);
+        System.out.println("Name: " + name);
+    }
+
+    public static void main(String[] args) {
+
+        // Creating object
+        ConstructorDemo obj = new ConstructorDemo();
+    }
+}
+
+// 5 - Call constructor of the parent class using super()
+// Parent Class
+class Parent {
+
+    Parent() {
+        System.out.println("Parent Class Constructor");
+    }
+}
+
+// Child Class
+class Child extends Parent {
+
+    Child() {
+        super();   // Calls Parent class constructor
+        System.out.println("Child Class Constructor");
+    }
+
+    public static void main(String[] args) {
+
+        // Creating object of Child class
+        Child obj = new Child();
+    }
+}
+
+// 6 - Use this() and super() in methods not in constructors
+class Parent {
+
+    int x = 10;
+
+    void display() {
+        System.out.println("Parent Method");
+    }
+}
+
+class Child extends Parent {
+
+    int x = 20;
+
+    void show() {
+
+        // Using this
+        System.out.println("Child x: " + this.x);
+
+        // Using super
+        System.out.println("Parent x: " + super.x);
+
+        super.display();
+    }
+
+    public static void main(String[] args) {
+
+        Child obj = new Child();
+        obj.show();
+    }
+}

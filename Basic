@@ -1,0 +1,88 @@
+// 1 - How to create a class, object, method and its signature
+class Student {
+    void display() {      
+        System.out.println("Hello Java");
+    }
+    public static void main(String[] args) {
+        Student s = new Student(); 
+        s.display();               
+    }
+}
+
+// 2 - Write a program to print your name.
+public class MyName {
+    public static void main(String[] args) {
+        System.out.println("Veena Koti");
+    }
+}
+
+// 3 - Write a program for a Single line comment, multi-line and documentation comments
+public class CommentsDemo {
+
+    // Single-line comment
+
+    /*
+     * Multi-line comment
+     * This program demonstrates different types of comments.
+     */
+
+    /**
+     * Documentation comment
+     * Main method of the program.
+     */
+    public static void main(String[] args) {
+        System.out.println("Comments in Java");
+    }
+}
+
+// 4 - Define variables for different Data Types int, Boolean, char, float, double and print on the Console
+public class DataTypesDemo {
+    public static void main(String[] args) {
+
+        int num = 100;
+        boolean status = true;
+        char grade = 'A';
+        float price = 99.99f;
+        double salary = 55000.75;
+
+        System.out.println("Integer Value: " + num);
+        System.out.println("Boolean Value: " + status);
+        System.out.println("Character Value: " + grade);
+        System.out.println("Float Value: " + price);
+        System.out.println("Double Value: " + salary);
+    }
+}
+
+// 5 - Define the local and Global variables with the same name and print both variables andunderstand the scope of the variables
+public class VariableScope {
+
+    
+    int num = 100;
+
+    public void display() {
+
+        int num = 50;
+
+        System.out.println("Local Variable: " + num);
+        System.out.println("Global Variable: " + this.num);
+    }
+
+    public static void main(String[] args) {
+        VariableScope obj = new VariableScope();
+        obj.display();
+    }
+}
+
+// 6 - Write a function to print your name and call the function from main method
+public class PrintName {
+
+    // Function (Method) to print name
+    static void printName() {
+        System.out.println("Veena Koti");
+    }
+
+    public static void main(String[] args) {
+        // Calling the function
+        printName();
+    }
+}

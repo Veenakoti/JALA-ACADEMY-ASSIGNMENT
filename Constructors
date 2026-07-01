@@ -1,0 +1,178 @@
+/* 1  - Write a class with a default constructor, one argument constructor and two argument
+constructors. Instantiate the class to call all the constructors of that class from a main
+class */
+class ConstructorDemo {
+
+    // Default Constructor
+    ConstructorDemo() {
+        System.out.println("Default Constructor");
+    }
+
+    // One-Argument Constructor
+    ConstructorDemo(int id) {
+        System.out.println("One-Argument Constructor");
+        System.out.println("ID: " + id);
+    }
+
+    // Two-Argument Constructor
+    ConstructorDemo(int id, String name) {
+        System.out.println("Two-Argument Constructor");
+        System.out.println("ID: " + id);
+        System.out.println("Name: " + name);
+    }
+}
+
+//Main Class
+public class MainClass {
+
+    public static void main(String[] args) {
+
+        // Calls Default Constructor
+        ConstructorDemo obj1 = new ConstructorDemo();
+
+        System.out.println();
+
+        // Calls One-Argument Constructor
+        ConstructorDemo obj2 = new ConstructorDemo(101);
+
+        System.out.println();
+
+        // Calls Two-Argument Constructor
+        ConstructorDemo obj3 = new ConstructorDemo(102, "Java");
+    }
+}
+
+// 2 - Call the constructors(both default and argument constructors) of super class from a child class
+// Parent Class
+class Parent {
+
+    // Default Constructor
+    Parent() {
+        System.out.println("Parent Default Constructor");
+    }
+
+    // Parameterized Constructor
+    Parent(int id) {
+        System.out.println("Parent Parameterized Constructor");
+        System.out.println("ID: " + id);
+    }
+}
+
+// child Class
+class Child extends Parent {
+
+    // Calls Parent Default Constructor
+    Child() {
+        super();
+        System.out.println("Child Default Constructor");
+    }
+
+    // Calls Parent Parameterized Constructor
+    Child(int id) {
+        super(id);
+        System.out.println("Child Parameterized Constructor");
+    }
+
+    public static void main(String[] args) {
+
+        // Calls Parent Default Constructor
+        Child obj1 = new Child();
+
+        System.out.println();
+
+        // Calls Parent Parameterized Constructor
+        Child obj2 = new Child(101);
+    }
+}
+
+// 3 - Apply private, public, protected and default access modifiers to the constructor
+public class ConstructorAccess {
+
+    // Public Constructor
+    public ConstructorAccess() {
+        System.out.println("Public Constructor");
+    }
+
+    // Private Constructor
+    private ConstructorAccess(int a) {
+        System.out.println("Private Constructor");
+    }
+
+    // Protected Constructor
+    protected ConstructorAccess(String name) {
+        System.out.println("Protected Constructor");
+    }
+
+    // Default Constructor (No Access Modifier)
+    ConstructorAccess(double value) {
+        System.out.println("Default Constructor");
+    }
+
+    public static void main(String[] args) {
+
+        // All constructors can be accessed within the same class
+        ConstructorAccess obj1 = new ConstructorAccess();
+        ConstructorAccess obj2 = new ConstructorAccess(10);
+        ConstructorAccess obj3 = new ConstructorAccess("Java");
+        ConstructorAccess obj4 = new ConstructorAccess(10.5);
+    }
+}
+
+// 4 - Write constructors with return type int and String
+public class Demo {
+
+    // Constructor
+    Demo() {
+        System.out.println("Constructor Called");
+    }
+
+    // Method returning int
+    int getNumber() {
+        return 100;
+    }
+
+    // Method returning String
+    String getName() {
+        return "Java";
+    }
+
+    public static void main(String[] args) {
+
+        Demo obj = new Demo();
+
+        System.out.println("Number: " + obj.getNumber());
+        System.out.println("Name: " + obj.getName());
+    }
+}
+
+// 5 - Try to call the constructor multiple times with the same object
+class Demo {
+
+    Demo() {
+        System.out.println("Constructor Called");
+    }
+
+    public static void main(String[] args) {
+
+        // Constructor is called once
+        Demo obj = new Demo();
+
+        // This is NOT allowed
+        // obj.Demo();   // Compile-time Error
+    }
+}
+// We cannot call constructor multiple times with same object it throws an exception 
+
+class Demo {
+
+    Demo() {
+        System.out.println("Constructor Called");
+    }
+
+    public static void main(String[] args) {
+
+        Demo obj1 = new Demo();
+        Demo obj2 = new Demo();
+        Demo obj3 = new Demo();
+    }
+}

@@ -1,0 +1,401 @@
+// 1 - Write a program to read text from .txt file using InputStream
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+public class ReadFileUsingInputStream {
+
+    public static void main(String[] args) {
+
+        try {
+            // Open the text file
+            InputStream input = new FileInputStream("sample.txt");
+
+            int data;
+
+            // Read the file character by character
+            while ((data = input.read()) != -1) {
+                System.out.print((char) data);
+            }
+
+            // Close the stream
+            input.close();
+
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+
+// 2 - Write a program to write text to .txt file using OutputStream
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
+public class WriteFileUsingOutputStream {
+
+    public static void main(String[] args) {
+
+        try {
+            // Create/Open the text file
+            OutputStream output = new FileOutputStream("sample.txt");
+
+            // Text to write
+            String text = "Hello Java\nWelcome to File Handling.";
+
+            // Convert String to byte array
+            byte[] bytes = text.getBytes();
+
+            // Write bytes to the file
+            output.write(bytes);
+
+            // Close the stream
+            output.close();
+
+            System.out.println("Text written to file successfully.");
+
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+
+// 3 - Read text from a .txt file using BufferedInputStream
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+public class BufferedInputStreamDemo {
+
+    public static void main(String[] args) {
+
+        try {
+            // Open the file
+            FileInputStream fis = new FileInputStream("sample.txt");
+
+            // Create BufferedInputStream
+            BufferedInputStream bis = new BufferedInputStream(fis);
+
+            int data;
+
+            // Read file character by character
+            while ((data = bis.read()) != -1) {
+                System.out.print((char) data);
+            }
+
+            // Close the streams
+            bis.close();
+            fis.close();
+
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+
+// 4 - Write text to a .txt file using BufferedOutputStream
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class BufferedOutputStreamDemo {
+
+    public static void main(String[] args) {
+
+        try {
+            // Create FileOutputStream
+            FileOutputStream fos = new FileOutputStream("sample.txt");
+
+            // Create BufferedOutputStream
+            BufferedOutputStream bos = new BufferedOutputStream(fos);
+
+            // Text to write
+            String text = "Hello Java\nWelcome to BufferedOutputStream.";
+
+            // Convert String to byte array
+            byte[] bytes = text.getBytes();
+
+            // Write data to the file
+            bos.write(bytes);
+
+            // Flush the buffered data
+            bos.flush();
+
+            // Close the streams
+            bos.close();
+            fos.close();
+
+            System.out.println("Text written to file successfully.");
+
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+
+// 5 - Write a program to read text from .txt file using FileReader
+import java.io.FileReader;
+import java.io.IOException;
+
+public class FileReaderDemo {
+
+    public static void main(String[] args) {
+
+        try {
+            // Open the text file
+            FileReader fr = new FileReader("sample.txt");
+
+            int data;
+
+            // Read the file character by character
+            while ((data = fr.read()) != -1) {
+                System.out.print((char) data);
+            }
+
+            // Close the FileReader
+            fr.close();
+
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+
+// 6 - Write a program to write text to .txt file using FileWriter
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class FileWriterDemo {
+
+    public static void main(String[] args) {
+
+        try {
+            // Create or open the file
+            FileWriter fw = new FileWriter("sample.txt");
+
+            // Write text to the file
+            fw.write("Hello Java\n");
+            fw.write("Welcome to FileWriter.");
+
+            // Close the FileWriter
+            fw.close();
+
+            System.out.println("Text written to file successfully.");
+
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+
+// 7 - Read text from a .txt file using BufferedReader
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class BufferedReaderDemo {
+
+    public static void main(String[] args) {
+
+        try {
+            // Open the file
+            FileReader fr = new FileReader("sample.txt");
+
+            // Create BufferedReader
+            BufferedReader br = new BufferedReader(fr);
+
+            String line;
+
+            // Read the file line by line
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+
+            // Close the streams
+            br.close();
+            fr.close();
+
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+
+// 8 - Write text to a .txt file using BufferedWriter
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class BufferedWriterDemo {
+
+    public static void main(String[] args) {
+
+        try {
+            // Create FileWriter
+            FileWriter fw = new FileWriter("sample.txt");
+
+            // Create BufferedWriter
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            // Write text to the file
+            bw.write("Hello Java");
+            bw.newLine(); // Move to the next line
+            bw.write("Welcome to BufferedWriter.");
+            bw.newLine();
+            bw.write("This is a sample text file.");
+
+            // Flush the buffered data
+            bw.flush();
+
+            // Close the streams
+            bw.close();
+            fw.close();
+
+            System.out.println("Text written to file successfully.");
+
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+
+// 9 - Write a program to read data from properties file.
+
+/* Create a config.properties File
+username=admin
+password=admin123
+url=jdbc:mysql://localhost:3306/testdb */
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
+public class PropertiesFileDemo {
+
+    public static void main(String[] args) {
+
+        try {
+            // Create Properties object
+            Properties prop = new Properties();
+
+            // Load the properties file
+            FileInputStream fis = new FileInputStream("config.properties");
+            prop.load(fis);
+
+            // Read values from properties file
+            System.out.println("Username: " + prop.getProperty("username"));
+            System.out.println("Password: " + prop.getProperty("password"));
+            System.out.println("URL: " + prop.getProperty("url"));
+
+            // Close the stream
+            fis.close();
+
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+
+// 10 -  Write a program to read data from excel
+import java.io.FileInputStream;
+import java.io.IOException;
+
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class ReadExcelDemo {
+
+    public static void main(String[] args) {
+
+        try {
+            // Open Excel file
+            FileInputStream fis = new FileInputStream("data.xlsx");
+
+            // Create Workbook
+            Workbook workbook = new XSSFWorkbook(fis);
+
+            // Get first sheet
+            Sheet sheet = workbook.getSheetAt(0);
+
+            // Read all rows and cells
+            for (Row row : sheet) {
+                for (Cell cell : row) {
+
+                    switch (cell.getCellType()) {
+                        case STRING:
+                            System.out.print(cell.getStringCellValue() + "\t");
+                            break;
+
+                        case NUMERIC:
+                            System.out.print(cell.getNumericCellValue() + "\t");
+                            break;
+
+                        default:
+                            System.out.print("\t");
+                    }
+                }
+                System.out.println();
+            }
+
+            // Close resources
+            workbook.close();
+            fis.close();
+
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+
+// 11 - Write a program to write data to excel
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class WriteExcelDemo {
+
+    public static void main(String[] args) {
+
+        try {
+            // Create Workbook
+            Workbook workbook = new XSSFWorkbook();
+
+            // Create Sheet
+            Sheet sheet = workbook.createSheet("Student Data");
+
+            // Create Header Row
+            Row row1 = sheet.createRow(0);
+            row1.createCell(0).setCellValue("Name");
+            row1.createCell(1).setCellValue("Age");
+            row1.createCell(2).setCellValue("City");
+
+            // Create Second Row
+            Row row2 = sheet.createRow(1);
+            row2.createCell(0).setCellValue("John");
+            row2.createCell(1).setCellValue(25);
+            row2.createCell(2).setCellValue("New York");
+
+            // Create Third Row
+            Row row3 = sheet.createRow(2);
+            row3.createCell(0).setCellValue("Alice");
+            row3.createCell(1).setCellValue(22);
+            row3.createCell(2).setCellValue("London");
+
+            // Write to Excel file
+            FileOutputStream fos = new FileOutputStream("data.xlsx");
+            workbook.write(fos);
+
+            // Close resources
+            fos.close();
+            workbook.close();
+
+            System.out.println("Data written to Excel file successfully.");
+
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+

@@ -1,0 +1,189 @@
+/* 1 -  Create a class with PRIVATE fields, private method and a main method. Print the fields
+in main method. Call the private method in main method.
+Create a sub class and try to access the private fields and methods from sub class. */
+
+class Parent {
+
+    // Private Fields
+    private int id = 101;
+    private String name = "Java";
+
+    // Private Method
+    private void display() {
+        System.out.println("This is a Private Method");
+    }
+
+    public static void main(String[] args) {
+
+        Parent obj = new Parent();
+
+        // Accessing Private Fields
+        System.out.println("ID: " + obj.id);
+        System.out.println("Name: " + obj.name);
+
+        // Calling Private Method
+        obj.display();
+    }
+}
+
+// Subclass Trying to Access Private Fields and Methods
+class Child extends Parent {
+
+    void show() {
+
+        // Not Allowed
+        // System.out.println(id);
+        // System.out.println(name);
+        // display();
+
+        System.out.println("Cannot access private fields and methods of Parent class.");
+    }
+
+    public static void main(String[] args) {
+        Child obj = new Child();
+        obj.show();
+    }
+}
+
+/* 2 - Create a class with DEFAULT fields and methods. Access these fields and methods
+from any other class in the same package */
+package mypackage;
+
+class Class1 {
+
+    // Default Fields
+    int id = 101;
+    String name = "Java";
+
+    // Default Method
+    void display() {
+        System.out.println("ID: " + id);
+        System.out.println("Name: " + name);
+    }
+}
+
+// Accessing Default Fields and Methods from Another Class in the Same Package
+package mypackage;
+
+public class Class2 {
+
+    public static void main(String[] args) {
+
+        Class1 obj = new Class1();
+
+        // Accessing Default Fields
+        System.out.println("ID: " + obj.id);
+        System.out.println("Name: " + obj.name);
+
+        // Calling Default Method
+        obj.display();
+    }
+}
+
+/* 3 - Create a class with PROTECTED fields and methods. Access these fields and methods
+from any other class in the same package.
+Also, Access the PROTECTED fields and methods from child class located in a different
+package
+Access the PROTECTED fields and methods from any class in different package */
+package pack1;
+
+public class Class1 {
+
+    protected int id = 101;
+
+    protected void display() {
+        System.out.println("Protected Method");
+    }
+}
+
+package pack1;
+
+public class Class1 {
+
+    protected int id = 101;
+
+    protected void display() {
+        System.out.println("Protected Method");
+    }
+}
+// Accessing Protected Members from a Child Class in a Different Package
+package pack2;
+
+import pack1.Class1;
+
+public class Child extends Class1 {
+
+    public void show() {
+
+        System.out.println("ID: " + id);
+        display();
+    }
+
+    public static void main(String[] args) {
+
+        Child obj = new Child();
+        obj.show();
+    }
+}
+// Accessing Protected Members from a Non-Subclass in a Different Package
+package pack2;
+
+import pack1.Class1;
+
+public class AnotherClass {
+
+    public static void main(String[] args) {
+
+        Class1 obj = new Class1();
+
+        // Not Allowed
+        // System.out.println(obj.id);
+        // obj.display();
+    }
+}
+
+/* 4 - Create a class with PUBLIC fields and methods.
+Access the public methods and fields from any class in the same package or different
+package. */
+package pack1;
+
+public class Class1 {
+
+    // Public Field
+    public int id = 101;
+
+    // Public Method
+    public void display() {
+        System.out.println("Public Method Called");
+    }
+}
+
+package pack1;
+
+public class Class2 {
+
+    public static void main(String[] args) {
+
+        Class1 obj = new Class1();
+
+        System.out.println("ID: " + obj.id);
+        obj.display();
+    }
+}
+
+package pack2;
+
+import pack1.Class1;
+
+public class Class3 {
+
+    public static void main(String[] args) {
+
+        Class1 obj = new Class1();
+
+        System.out.println("ID: " + obj.id);
+        obj.display();
+    }
+}
+
+

@@ -1,0 +1,209 @@
+// 1 - Write a class with 2 static variables, 2 Instance variables, 2 static methods, 2 instance methods and a main method
+public class Demo {
+
+    // 2 Static Variables
+    static int staticVar1 = 100;
+    static String staticVar2 = "Java";
+
+    // 2 Instance Variables
+    int instanceVar1 = 10;
+    String instanceVar2 = "Programming";
+
+    // Static Method 1
+    static void staticMethod1() {
+        System.out.println("Static Method 1");
+        System.out.println("staticVar1 = " + staticVar1);
+    }
+
+    // Static Method 2
+    static void staticMethod2() {
+        System.out.println("Static Method 2");
+        System.out.println("staticVar2 = " + staticVar2);
+    }
+
+    // Instance Method 1
+    void instanceMethod1() {
+        System.out.println("Instance Method 1");
+        System.out.println("instanceVar1 = " + instanceVar1);
+    }
+
+    // Instance Method 2
+    void instanceMethod2() {
+        System.out.println("Instance Method 2");
+        System.out.println("instanceVar2 = " + instanceVar2);
+    }
+
+    // Main Method
+    public static void main(String[] args) {
+
+        // Calling Static Methods
+        staticMethod1();
+        staticMethod2();
+
+        // Creating Object
+        Demo obj = new Demo();
+
+        // Calling Instance Methods
+        obj.instanceMethod1();
+        obj.instanceMethod2();
+    }
+}
+
+// 2 - Print instance variables in static methods
+public class InstanceInStatic {
+
+    // Instance Variables
+    int num = 100;
+    String name = "Java";
+
+    // Static Method
+    static void display() {
+
+        // Creating object
+        InstanceInStatic obj = new InstanceInStatic();
+
+        System.out.println("Number = " + obj.num);
+        System.out.println("Name = " + obj.name);
+    }
+
+    public static void main(String[] args) {
+
+        display();
+    }
+}
+
+// 3 - Print static variables in Instance methods
+public class StaticInInstance {
+
+    // Static Variables
+    static int number = 100;
+    static String name = "Java";
+
+    // Instance Method
+    void display() {
+        System.out.println("Number = " + number);
+        System.out.println("Name = " + name);
+    }
+
+    public static void main(String[] args) {
+
+        // Creating object
+        StaticInInstance obj = new StaticInInstance();
+
+        // Calling instance method
+        obj.display();
+    }
+}
+
+// 4 - Call instance methods in static methods
+public class InstanceMethodCall {
+
+    // Instance Method 1
+    void display() {
+        System.out.println("This is Instance Method 1");
+    }
+
+    // Instance Method 2
+    void show() {
+        System.out.println("This is Instance Method 2");
+    }
+
+    // Static Method
+    static void callMethods() {
+
+        // Creating object
+        InstanceMethodCall obj = new InstanceMethodCall();
+
+        // Calling instance methods
+        obj.display();
+        obj.show();
+    }
+
+    public static void main(String[] args) {
+
+        callMethods();
+    }
+}
+
+// 5 - Call static methods in instance methods
+public class StaticMethodCall {
+
+    // Static Method 1
+    static void display() {
+        System.out.println("This is Static Method 1");
+    }
+
+    // Static Method 2
+    static void show() {
+        System.out.println("This is Static Method 2");
+    }
+
+    // Instance Method
+    void callStaticMethods() {
+
+        // Calling static methods
+        display();
+        show();
+    }
+
+    public static void main(String[] args) {
+
+        // Creating object
+        StaticMethodCall obj = new StaticMethodCall();
+
+        // Calling instance method
+        obj.callStaticMethods();
+    }
+}
+
+// 6 - Print all the static, instance variables in main method
+public class VariablesDemo {
+
+    // Static Variables
+    static int staticVar1 = 100;
+    static String staticVar2 = "Java";
+
+    // Instance Variables
+    int instanceVar1 = 10;
+    String instanceVar2 = "Programming";
+
+    public static void main(String[] args) {
+
+        // Print Static Variables
+        System.out.println("Static Variable 1: " + staticVar1);
+        System.out.println("Static Variable 2: " + staticVar2);
+
+        // Create Object to Access Instance Variables
+        VariablesDemo obj = new VariablesDemo();
+
+        // Print Instance Variables
+        System.out.println("Instance Variable 1: " + obj.instanceVar1);
+        System.out.println("Instance Variable 2: " + obj.instanceVar2);
+    }
+}
+
+// 7 - Call static methods and instance methods in main method
+public class MethodDemo {
+
+    // Static Method
+    static void staticMethod() {
+        System.out.println("This is a Static Method");
+    }
+
+    // Instance Method
+    void instanceMethod() {
+        System.out.println("This is an Instance Method");
+    }
+
+    public static void main(String[] args) {
+
+        // Calling Static Method
+        staticMethod();
+
+        // Creating Object
+        MethodDemo obj = new MethodDemo();
+
+        // Calling Instance Method
+        obj.instanceMethod();
+    }
+}

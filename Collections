@@ -1,0 +1,251 @@
+/* 1 - Create an ArrayList of type String with 10 string elements. Add 10 string elements to
+ArrayList and perform the below operations
+Add an element to the ArrayList
+Iterate through the ArrayList by using Iterator object
+Add an element at a specific index
+Remove an element from the ArrayList, Remove at an index
+Update the element at a specific index
+Check the element is present at a particular index
+Get an element at a particular index
+Find out the size of the ArrayList
+Check the given element is present in the ArrayList
+Remove all elements of the ArrayList */
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class ArrayListDemo {
+
+    public static void main(String[] args) {
+
+        // Create ArrayList
+        ArrayList<String> list = new ArrayList<>();
+
+        // Add 10 string elements
+        list.add("Apple");
+        list.add("Banana");
+        list.add("Mango");
+        list.add("Orange");
+        list.add("Grapes");
+        list.add("Pineapple");
+        list.add("Cherry");
+        list.add("Watermelon");
+        list.add("Papaya");
+        list.add("Guava");
+
+        System.out.println("Original ArrayList:");
+        System.out.println(list);
+
+        // 1. Add an element
+        list.add("Kiwi");
+        System.out.println("\nAfter adding Kiwi:");
+        System.out.println(list);
+
+        // 2. Iterate using Iterator
+        System.out.println("\nIterating using Iterator:");
+        Iterator<String> itr = list.iterator();
+        while (itr.hasNext()) {
+            System.out.println(itr.next());
+        }
+
+        // 3. Add an element at a specific index
+        list.add(2, "Strawberry");
+        System.out.println("\nAfter adding Strawberry at index 2:");
+        System.out.println(list);
+
+        // 4. Remove an element
+        list.remove("Banana");
+        System.out.println("\nAfter removing Banana:");
+        System.out.println(list);
+
+        // Remove element at index
+        list.remove(3);
+        System.out.println("\nAfter removing element at index 3:");
+        System.out.println(list);
+
+        // 5. Update element at a specific index
+        list.set(1, "Blueberry");
+        System.out.println("\nAfter updating index 1:");
+        System.out.println(list);
+
+        // 6. Check the element present at a particular index
+        System.out.println("\nElement at index 2: " + list.get(2));
+
+        // 7. Get an element at a particular index
+        System.out.println("Element at index 4: " + list.get(4));
+
+        // 8. Find the size of ArrayList
+        System.out.println("\nSize of ArrayList: " + list.size());
+
+        // 9. Check whether an element is present
+        System.out.println("\nIs Mango present? " + list.contains("Mango"));
+        System.out.println("Is Banana present? " + list.contains("Banana"));
+
+        // 10. Remove all elements
+        list.clear();
+        System.out.println("\nAfter removing all elements:");
+        System.out.println(list);
+    }
+}
+
+/* 2 - Create a HashMap with at least 10 key value pairs of the Student ID and Name
+Insert a Key value mapping into the map
+Fetch the value of a Key
+Create a clone/copy of HashMap
+Check if the given Key is in the Map
+Check if the value is in the Map
+Check if the map is empty
+Print the size of the Map to the console
+Print all the Keys of the map to the console
+Print all the Keys of the map to the console
+Remove a specific Key-value pair
+Copy all the elements of the Map to another Map */
+import java.util.HashMap;
+
+public class HashMapDemo {
+
+    public static void main(String[] args) {
+
+        // Create HashMap
+        HashMap<Integer, String> students = new HashMap<>();
+
+        // Add 10 key-value pairs (Student ID, Name)
+        students.put(101, "Alice");
+        students.put(102, "Bob");
+        students.put(103, "Charlie");
+        students.put(104, "David");
+        students.put(105, "Eva");
+        students.put(106, "Frank");
+        students.put(107, "Grace");
+        students.put(108, "Helen");
+        students.put(109, "Ivy");
+        students.put(110, "Jack");
+
+        System.out.println("Original HashMap:");
+        System.out.println(students);
+
+        // 1. Insert a new key-value pair
+        students.put(111, "Kevin");
+        System.out.println("\nAfter inserting (111, Kevin):");
+        System.out.println(students);
+
+        // 2. Fetch the value of a key
+        System.out.println("\nValue for Key 105: " + students.get(105));
+
+        // 3. Create a clone/copy of HashMap
+        HashMap<Integer, String> cloneMap = new HashMap<>(students);
+        System.out.println("\nCloned HashMap:");
+        System.out.println(cloneMap);
+
+        // 4. Check if the given key is present
+        System.out.println("\nContains Key 103? " + students.containsKey(103));
+
+        // 5. Check if the given value is present
+        System.out.println("Contains Value 'Helen'? " + students.containsValue("Helen"));
+
+        // 6. Check if the map is empty
+        System.out.println("\nIs HashMap empty? " + students.isEmpty());
+
+        // 7. Print the size of the map
+        System.out.println("\nSize of HashMap: " + students.size());
+
+        // 8. Print all keys
+        System.out.println("\nKeys:");
+        System.out.println(students.keySet());
+
+        // 9. Print all values
+        System.out.println("\nValues:");
+        System.out.println(students.values());
+
+        // 10. Remove a specific key-value pair
+        students.remove(104);
+        System.out.println("\nAfter removing key 104:");
+        System.out.println(students);
+
+        // 11. Copy all elements to another map
+        HashMap<Integer, String> anotherMap = new HashMap<>();
+        anotherMap.putAll(students);
+
+        System.out.println("\nAnother HashMap after copying:");
+        System.out.println(anotherMap);
+    }
+}
+
+/* 3 -  Create a HashSet with at least 10 elements of type String
+Write program covering all the operations of HashSet */
+import java.util.HashSet;
+import java.util.Iterator;
+
+public class HashSetDemo {
+
+    public static void main(String[] args) {
+
+        // Create HashSet
+        HashSet<String> set = new HashSet<>();
+
+        // Add 10 elements
+        set.add("Apple");
+        set.add("Banana");
+        set.add("Mango");
+        set.add("Orange");
+        set.add("Grapes");
+        set.add("Cherry");
+        set.add("Pineapple");
+        set.add("Papaya");
+        set.add("Guava");
+        set.add("Watermelon");
+
+        System.out.println("Original HashSet:");
+        System.out.println(set);
+
+        // 1. Add a new element
+        set.add("Kiwi");
+        System.out.println("\nAfter adding Kiwi:");
+        System.out.println(set);
+
+        // 2. Add duplicate element
+        set.add("Apple");
+        System.out.println("\nAfter adding duplicate Apple:");
+        System.out.println(set);
+
+        // 3. Iterate using Iterator
+        System.out.println("\nIterating using Iterator:");
+        Iterator<String> itr = set.iterator();
+        while (itr.hasNext()) {
+            System.out.println(itr.next());
+        }
+
+        // 4. Check if an element exists
+        System.out.println("\nContains Mango? " + set.contains("Mango"));
+        System.out.println("Contains Banana? " + set.contains("Banana"));
+
+        // 5. Remove an element
+        set.remove("Banana");
+        System.out.println("\nAfter removing Banana:");
+        System.out.println(set);
+
+        // 6. Find the size
+        System.out.println("\nSize of HashSet: " + set.size());
+
+        // 7. Check if HashSet is empty
+        System.out.println("\nIs HashSet empty? " + set.isEmpty());
+
+        // 8. Clone HashSet
+        HashSet<String> cloneSet = (HashSet<String>) set.clone();
+        System.out.println("\nCloned HashSet:");
+        System.out.println(cloneSet);
+
+        // 9. Copy elements to another HashSet
+        HashSet<String> anotherSet = new HashSet<>();
+        anotherSet.addAll(set);
+        System.out.println("\nAnother HashSet:");
+        System.out.println(anotherSet);
+
+        // 10. Remove all elements
+        set.clear();
+        System.out.println("\nAfter clearing HashSet:");
+        System.out.println(set);
+
+        // 11. Check empty after clear
+        System.out.println("Is HashSet empty now? " + set.isEmpty());
+    }
+}

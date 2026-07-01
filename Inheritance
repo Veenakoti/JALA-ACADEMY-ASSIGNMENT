@@ -1,0 +1,120 @@
+/*  A, B and C are classes
+A is a super class. B is a sub class of A. C is a sub class of B.
+Create three methods in each class, 2 methods are specific to each class and third
+method (override method) should be in all three Classes A, B and C
+Create a class with main method. Create an object for each class A, B and C in main
+method and call every method of each class using its own object/instance.
+Call an overridden method with super class reference to B and C class’s objects
+Runtime Polymorphism with Data Members/Instance variables, Repeat the above
+process only for data members */
+
+// First Class
+class A {
+
+    int value = 10;
+
+    void methodA1() {
+        System.out.println("Method A1");
+    }
+
+    void methodA2() {
+        System.out.println("Method A2");
+    }
+
+    void display() {
+        System.out.println("Display Method in Class A");
+    }
+}
+
+// Second Class
+class B extends A {
+
+    int value = 20;
+
+    void methodB1() {
+        System.out.println("Method B1");
+    }
+
+    void methodB2() {
+        System.out.println("Method B2");
+    }
+
+    @Override
+    void display() {
+        System.out.println("Display Method in Class B");
+    }
+}
+
+// Third Class
+class C extends B {
+
+    int value = 30;
+
+    void methodC1() {
+        System.out.println("Method C1");
+    }
+
+    void methodC2() {
+        System.out.println("Method C2");
+    }
+
+    @Override
+    void display() {
+        System.out.println("Display Method in Class C");
+    }
+}
+
+// Main Class
+public class InheritanceDemo {
+
+    public static void main(String[] args) {
+
+        // Object of A
+        A objA = new A();
+        objA.methodA1();
+        objA.methodA2();
+        objA.display();
+
+        System.out.println();
+
+        // Object of B
+        B objB = new B();
+        objB.methodA1();
+        objB.methodA2();
+        objB.methodB1();
+        objB.methodB2();
+        objB.display();
+
+        System.out.println();
+
+        // Object of C
+        C objC = new C();
+        objC.methodA1();
+        objC.methodA2();
+        objC.methodB1();
+        objC.methodB2();
+        objC.methodC1();
+        objC.methodC2();
+        objC.display();
+
+        System.out.println("\nRuntime Polymorphism:");
+
+        // Super class reference to B object
+        A ref1 = new B();
+        ref1.display();
+
+        // Super class reference to C object
+        A ref2 = new C();
+        ref2.display();
+
+        System.out.println("\nRuntime Polymorphism with Data Members:");
+
+        A a = new A();
+        A b = new B();
+        A c = new C();
+
+        System.out.println("A value = " + a.value);
+        System.out.println("B value = " + b.value);
+        System.out.println("C value = " + c.value);
+    }
+}

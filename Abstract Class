@@ -1,0 +1,129 @@
+// 1 - Create an abstract class with abstract and non-abstract methods
+// Abstract Class
+abstract class Animal {
+
+    // Abstract Method
+    abstract void sound();
+
+    // Non-Abstract Method
+    void sleep() {
+        System.out.println("Animal is sleeping");
+    }
+}
+
+// Subclass
+class Dog extends Animal {
+
+    // Implementing Abstract Method
+    @Override
+    void sound() {
+        System.out.println("Dog barks");
+    }
+}
+
+// Main Class
+public class AbstractDemo {
+    public static void main(String[] args) {
+
+        Dog obj = new Dog();
+
+        obj.sound();  // Abstract method implementation
+        obj.sleep();  // Non-abstract method
+    }
+}
+
+// 2 - Create a sub class for an abstract class. Create an object in the child class for the abstract class and access the non-abstract methods
+abstract class Vehicle {
+
+    // Abstract Method
+    abstract void start();
+
+    // Non-Abstract Method
+    void fuelType() {
+        System.out.println("Vehicle uses fuel");
+    }
+
+    // Non-Abstract Method
+    void stop() {
+        System.out.println("Vehicle stopped");
+    }
+}
+
+class Car extends Vehicle {
+
+    // Implementing Abstract Method
+    @Override
+    void start() {
+        System.out.println("Car started");
+    }
+
+    public static void main(String[] args) {
+
+        // Abstract class reference, Child class object
+        Vehicle obj = new Car();
+
+        // Accessing non-abstract methods
+        obj.fuelType();
+        obj.stop();
+    }
+}
+
+// 3 - Create an instance for the child class in child class and call abstract methods
+abstract class Animal {
+
+    // Abstract Method
+    abstract void sound();
+}
+
+class Dog extends Animal {
+
+    // Implementing Abstract Method
+    @Override
+    void sound() {
+        System.out.println("Dog barks");
+    }
+
+    public static void main(String[] args) {
+
+        // Creating object of child class
+        Dog obj = new Dog();
+
+        // Calling abstract method implementation
+        obj.sound();
+    }
+}
+
+// 4 - Create an instance for the child class in child class and call non-abstract methods
+abstract class Animal {
+
+    // Abstract Method
+    abstract void sound();
+
+    // Non-Abstract Method
+    void eat() {
+        System.out.println("Animal is eating");
+    }
+
+    // Non-Abstract Method
+    void sleep() {
+        System.out.println("Animal is sleeping");
+    }
+}
+
+class Dog extends Animal {
+
+    @Override
+    void sound() {
+        System.out.println("Dog barks");
+    }
+
+    public static void main(String[] args) {
+
+        // Creating object of child class
+        Dog obj = new Dog();
+
+        // Calling non-abstract methods
+        obj.eat();
+        obj.sleep();
+    }
+}

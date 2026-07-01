@@ -1,0 +1,315 @@
+// 1 - Create an interface with only one method and implement it in a class. Call the method implemented.
+// Interface
+interface MyInterface {
+
+    void display();
+}
+
+// Implementing Class
+class Demo implements MyInterface {
+
+    @Override
+    public void display() {
+        System.out.println("Method implemented from Interface");
+    }
+
+    public static void main(String[] args) {
+
+        // Creating object
+        Demo obj = new Demo();
+
+        // Calling implemented method
+        obj.display();
+    }
+}
+
+// *2* - Create an interface with two methods, but implement only one in a class. Call the method implemented.
+//***************************************//
+// Interface
+interface MyInterface {
+
+    void method1();
+
+    void method2();
+}
+
+// Abstract Class implementing only one method
+abstract class Demo implements MyInterface {
+
+    @Override
+    public void method1() {
+        System.out.println("Method 1 implemented");
+    }
+}
+
+// Child Class implementing remaining method
+class Test extends Demo {
+
+    @Override
+    public void method2() {
+        System.out.println("Method 2 implemented");
+    }
+
+    public static void main(String[] args) {
+
+        Test obj = new Test();
+
+        obj.method1();
+    }
+}
+
+// 3 - Use Interface instances to call the implemented method in the implemented class
+// Interface
+interface MyInterface {
+
+    void display();
+}
+
+// Implementing Class
+class Demo implements MyInterface {
+
+    @Override
+    public void display() {
+        System.out.println("Method implemented in Demo class");
+    }
+
+    public static void main(String[] args) {
+
+        // Interface reference, Demo object
+        MyInterface obj = new Demo();
+
+        // Calling implemented method
+        obj.display();
+    }
+}
+
+// 4 - Create two interfaces with one method each. Implement these two interfaces in one class. 
+// First Interface
+interface Interface1 {
+    void method1();
+}
+
+// Second Interface
+interface Interface2 {
+    void method2();
+}
+
+// Class implementing both interfaces
+class Demo implements Interface1, Interface2 {
+
+    @Override
+    public void method1() {
+        System.out.println("Method 1 from Interface1");
+    }
+
+    @Override
+    public void method2() {
+        System.out.println("Method 2 from Interface2");
+    }
+
+    public static void main(String[] args) {
+
+        Demo obj = new Demo();
+
+        obj.method1();
+        obj.method2();
+    }
+}
+
+// 5 - Create two interfaces with the same method (same signature) in both the interfaces. Implement these two interfaces in one class. Call the method.
+// First Interface
+interface Interface1 {
+    void display();
+}
+
+// Second Interface
+interface Interface2 {
+    void display();
+}
+
+// Class implementing both interfaces
+class Demo implements Interface1, Interface2 {
+
+    @Override
+    public void display() {
+        System.out.println("Display method implemented");
+    }
+
+    public static void main(String[] args) {
+
+        Demo obj = new Demo();
+
+        obj.display();
+    }
+}
+
+// 6 - Create an interface with a default method and implement it in a class. Do not provide implementation to the default method and call the method.
+// Interface
+interface MyInterface {
+
+    // Default Method
+    default void display() {
+        System.out.println("Default method in Interface");
+    }
+}
+
+// Implementing Class
+class Demo implements MyInterface {
+
+    public static void main(String[] args) {
+
+        Demo obj = new Demo();
+
+        // Calling default method
+        obj.display();
+    }
+}
+
+// 7 - Create an interface and inherit it from the other interface.
+// Parent Interface
+interface Interface1 {
+
+    void method1();
+}
+
+// Child Interface inheriting Parent Interface
+interface Interface2 extends Interface1 {
+
+    void method2();
+}
+
+// Implementing Class
+class Demo implements Interface2 {
+
+    @Override
+    public void method1() {
+        System.out.println("Method 1 from Interface1");
+    }
+
+    @Override
+    public void method2() {
+        System.out.println("Method 2 from Interface2");
+    }
+
+    public static void main(String[] args) {
+
+        Demo obj = new Demo();
+
+        obj.method1();
+        obj.method2();
+    }
+}
+
+/* 8 - Create a PUBLIC interface with fields and methods, fields should have values assigned.
+Implement this interface to some class and print the values of the interface fields and
+call the interface methods */
+public interface MyInterface {
+
+    // Interface Fields (public, static, final by default)
+    int ID = 101;
+    String NAME = "Java";
+
+    // Abstract Method
+    void display();
+}
+
+class Demo implements MyInterface {
+
+    @Override
+    public void display() {
+        System.out.println("Interface Method Called");
+    }
+
+    public static void main(String[] args) {
+
+        // Printing Interface Fields
+        System.out.println("ID: " + MyInterface.ID);
+        System.out.println("Name: " + MyInterface.NAME);
+
+        // Calling Interface Method
+        Demo obj = new Demo();
+        obj.display();
+    }
+}
+
+// 9 -  Create a PRIVATE or PROTECTED interface and print the values as above scenario
+public class Outer {
+
+    private interface MyInterface {
+        int ID = 101;
+        void display();
+    }
+
+    private static class Demo implements MyInterface {
+
+        public void display() {
+            System.out.println("ID: " + ID);
+            System.out.println("Private Interface Method Called");
+        }
+    }
+
+    public static void main(String[] args) {
+
+        Demo obj = new Demo();
+        obj.display();
+    }
+}
+
+public class Outer {
+
+    protected interface MyInterface {
+        int ID = 101;
+        void display();
+    }
+
+    static class Demo implements MyInterface {
+
+        public void display() {
+            System.out.println("ID: " + ID);
+            System.out.println("Protected Interface Method Called");
+        }
+    }
+
+    public static void main(String[] args) {
+
+        Demo obj = new Demo();
+        obj.display();
+    }
+}
+
+// 10 - Create an interface with private, public and protected fields.
+// Ans - In Java, interface fields cannot be private or protected.
+interface MyInterface {
+
+    int ID = 101;
+    String NAME = "Java";
+}
+
+public class Demo {
+
+    public static void main(String[] args) {
+
+        System.out.println("ID: " + MyInterface.ID);
+        System.out.println("Name: " + MyInterface.NAME);
+    }
+}
+
+// 11 -  Create an interface with static final variable
+// Interface
+interface MyInterface {
+
+    // Static Final Variables
+    static final int ID = 101;
+    static final String NAME = "Java";
+}
+
+// Main Class
+public class Demo {
+
+    public static void main(String[] args) {
+
+        // Accessing Interface Variables
+        System.out.println("ID: " + MyInterface.ID);
+        System.out.println("Name: " + MyInterface.NAME);
+    }
+}

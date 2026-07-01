@@ -1,0 +1,128 @@
+/* 1 - Write two methods with the same name but different number of parameters of same type
+and call the methods from main method */
+public class MethodOverloading {
+
+    // Method with one int parameter
+    void display(int a) {
+        System.out.println("One parameter: " + a);
+    }
+
+    // Method with two int parameters
+    void display(int a, int b) {
+        System.out.println("Two parameters: " + a + " " + b);
+    }
+
+    public static void main(String[] args) {
+
+        MethodOverloading obj = new MethodOverloading();
+
+        // Calling first method
+        obj.display(10);
+
+        // Calling overloaded method
+        obj.display(20, 30);
+    }
+}
+
+/* 2 - Write two methods with the same name but different number of parameters of different
+data type and call the methods from main method */
+public class MethodOverloading {
+
+    // Method with one int parameter
+    void display(int a) {
+        System.out.println("One int parameter: " + a);
+    }
+
+    // Method with two parameters of different data types
+    void display(int a, String name) {
+        System.out.println("Int value: " + a);
+        System.out.println("String value: " + name);
+    }
+
+    public static void main(String[] args) {
+
+        MethodOverloading obj = new MethodOverloading();
+
+        // Calling first method
+        obj.display(10);
+
+        // Calling overloaded method
+        obj.display(20, "Java");
+    }
+}
+
+/* 3 - Write two methods with the same name and same number of parameters of same type
+and call from main method */
+
+/* Two methods cannot have the same name and the same number and type of parameters in the 
+same class because they have the same method signature. This results in a compile-time error. */
+
+public class MethodDemo {
+
+    void display(int a) {
+        System.out.println("First Method");
+    }
+
+    // Compile-time Error
+    void display(int a) {
+        System.out.println("Second Method");
+    }
+
+    public static void main(String[] args) {
+
+        MethodDemo obj = new MethodDemo();
+        obj.display(10);
+    }
+}
+
+/* 4 - Write two methods with the same name and same number of parameters of different
+type and call from main method */
+public class MethodOverloading {
+
+    // Method with int parameter
+    void display(int a) {
+        System.out.println("Integer value: " + a);
+    }
+
+    // Overloaded method with String parameter
+    void display(String name) {
+        System.out.println("String value: " + name);
+    }
+
+    public static void main(String[] args) {
+
+        MethodOverloading obj = new MethodOverloading();
+
+        // Calling method with int parameter
+        obj.display(100);
+
+        // Calling method with String parameter
+        obj.display("Java");
+    }
+}
+
+/* 5 - Write two methods with the same name, number of parameters and data type but
+different return Type */
+
+/* Two methods cannot have the same name, the same number of parameters, and the same 
+parameter types if they differ only in the return type. */
+
+public class MethodDemo {
+
+    int display(int a) {
+        return a;
+    }
+
+    // Compile-time Error
+    String display(int a) {
+        return "Java";
+    }
+
+    public static void main(String[] args) {
+
+        MethodDemo obj = new MethodDemo();
+        System.out.println(obj.display(10));
+    }
+}
+
+
