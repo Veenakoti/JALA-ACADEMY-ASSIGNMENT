@@ -1,0 +1,177 @@
+/* ===== LOGIN PAGE (matches reference screenshot) ===== */
+
+body.login-page {
+  margin: 0;
+  background: #eceff3;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  display: block;
+}
+
+.login-page-inner {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 40px 20px 60px 20px;
+  text-align: center;
+}
+
+.brand-title {
+  font-size: 30px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 6px;
+}
+
+.brand-subtitle {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.demo-creds {
+  font-size: 12.5px;
+  color: #333;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.promo-highlight {
+  background: #ffeb3b;
+  border: 1px solid #e0c000;
+  border-radius: 2px;
+  padding: 8px 14px;
+  margin: 14px 0 20px 0;
+  font-weight: bold;
+  font-size: 13px;
+  color: #333;
+}
+
+.signin-card {
+  background: #fff;
+  border: 1px solid #dfe3e8;
+  border-radius: 4px;
+  padding: 22px 26px 26px 26px;
+  text-align: left;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.signin-title {
+  text-align: center;
+  color: #1a6fa0;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 14px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 9px 34px 9px 10px;
+  font-size: 13.5px;
+  border: 1px solid #c7cdd4;
+  border-radius: 3px;
+  background: #f4f8fc;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #1a6fa0;
+}
+
+.input-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #8a97a3;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.signin-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.remember-label {
+  font-size: 13px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-signin {
+  background: #2f8fd0;
+  color: #fff;
+  border: none;
+  padding: 8px 20px;
+  font-size: 13.5px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-signin:hover {
+  background: #2678b3;
+}
+
+.divider {
+  text-align: center;
+  color: #8a97a3;
+  font-size: 12.5px;
+  margin: 6px 0 14px 0;
+}
+
+.btn-forgot {
+  width: 100%;
+  background: #3d5a8a;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-bottom: 16px;
+  transition: background 0.2s;
+}
+
+.btn-forgot:hover {
+  background: #334973;
+}
+
+.admin-link {
+  text-align: center;
+}
+
+.admin-link a {
+  color: #2f8fd0;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.admin-link a:hover {
+  text-decoration: underline;
+}
+
+/* ===== FOOTER BANNER ===== */
+.site-footer-banner {
+  background: #4a90b8;
+  color: #fff;
+  font-size: 12.5px;
+  padding: 16px 24px;
+  text-align: left;
+  line-height: 1.6;
+}
+
+.site-footer-banner a {
+  color: #fff;
+  text-decoration: underline;
+}
