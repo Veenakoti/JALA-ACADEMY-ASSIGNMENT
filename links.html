@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Links</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page-header { background:#f0f2f5; padding:10px 24px; display:flex; align-items:baseline; justify-content:space-between; }
+    .page-title  { font-size:22px; font-weight:600; color:#333; }
+    .breadcrumb  { font-size:13px; color:#888; }
+    .breadcrumb a { color:#1a6fa0; text-decoration:none; }
+    .breadcrumb span { margin:0 4px; }
+
+    /* Tab card */
+    .tab-card {
+      background:#fff;
+      margin:18px 24px;
+      border-radius:3px;
+      box-shadow:0 1px 4px rgba(0,0,0,.08);
+      overflow:hidden;
+      min-height:200px;
+    }
+    .tab-bar { display:flex; border-bottom:1px solid #dee2e6; }
+    .tab-btn {
+      padding:11px 22px; font-size:13.5px; font-weight:500;
+      border:none; background:transparent; cursor:pointer;
+      color:#1a6fa0; border-bottom:3px solid transparent;
+      margin-bottom:-1px; transition:all .15s; white-space:nowrap;
+    }
+    .tab-btn:hover { background:#f5fbff; }
+    .tab-btn.active {
+      background:#1a6fa0; color:#fff;
+      border-bottom:3px solid #1a6fa0;
+      border-radius:3px 3px 0 0;
+    }
+    .tab-panel { display:none; padding:28px 24px 36px; }
+    .tab-panel.active { display:block; }
+
+    /* ── Centred link rows ── */
+    .link-row {
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:36px;
+      flex-wrap:wrap;
+    }
+
+    /* Working Links — coloured text links */
+    .link-row a.text-link {
+      font-size:14px;
+      text-decoration:none;
+      font-weight:500;
+    }
+    .link-row a.text-link:hover { text-decoration:underline; }
+    .lnk-red   { color:#e53935; }
+    .lnk-blue  { color:#1a6fa0; }
+    .lnk-green { color:#28a745; }
+
+    /* Status code colours */
+    .lnk-200 { color:#28a745; }   /* green  */
+    .lnk-301 { color:#1a6fa0; }   /* blue   */
+    .lnk-404 { color:#e53935; }   /* red    */
+    .lnk-500 { color:#e53935; }   /* red    */
+
+    /* Image Links — clickable logos */
+    .img-link { display:inline-block; cursor:pointer; }
+    .img-link img {
+      height:60px;
+      object-fit:contain;
+      transition:opacity .15s;
+    }
+    .img-link:hover img { opacity:.8; }
+
+    /* Broken Links — strike-through style to signal broken */
+    a.broken-link {
+      color:#e53935;
+      text-decoration:line-through;
+      font-size:14px;
+      cursor:not-allowed;
+      pointer-events:none;   /* truly broken — not clickable */
+    }
+    /* but keep same visual as original (red, no underline on hover) */
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>Magnus</h2>
+    <div class="sidebar-user">
+      <div class="avatar">👤</div>
+      <div class="user-info"><div class="name">Guest User</div><div class="role">🔒 User</div></div>
+    </div>
+    <ul class="menu">
+      <li><button class="menu-btn">Home</button>
+          <ul class="submenu"><li><a href="home.html">Dashboard</a></li></ul></li>
+      <li><button class="menu-btn">Employee</button>
+          <ul class="submenu">
+            <li><a href="employee-create.html">Create</a></li>
+            <li><a href="employee-search.html">Search</a></li>
+          </ul></li>
+      <li>
+        <button class="menu-btn active open">More</button>
+        <ul class="submenu show">
+          <li><a href="tabs.html">Multiple Tabs</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="autocomplete.html">Autocomplete</a></li>
+          <li><a href="collapsible.html">Collapsible Content</a></li>
+          <li><a href="images.html">Images</a></li>
+          <li><a href="slider.html">Slider</a></li>
+          <li><a href="tooltips.html">Tooltips</a></li>
+          <li><a href="popups.html">Popups</a></li>
+          <li><a href="links.html" style="background:#1a6fa0;color:#fff;">Links</a></li>
+          <li><a href="css-properties.html">CSS Properties</a></li>
+          <li><a href="iframes.html">iFrames</a></li>
+        </ul>
+      </li>
+      <li><button class="menu-btn">Settings</button>
+          <ul class="submenu"><li><a href="settings.html">Preferences</a></li></ul></li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="content">
+    <header>
+      <h1>Magnus</h1>
+      <button class="logout" onclick="window.location.href='index.html'">⇒ Logout</button>
+    </header>
+
+    <div class="page-header">
+      <div class="page-title">Links</div>
+      <div class="breadcrumb">
+        <a href="home.html">🏠 Home</a><span>›</span>
+        <a href="tabs.html">More</a><span>›</span> Links
+      </div>
+    </div>
+
+    <div class="tab-card">
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="working">Working Links</button>
+        <button class="tab-btn"        data-tab="broken">Broken Links</button>
+        <button class="tab-btn"        data-tab="image">Image Links</button>
+        <button class="tab-btn"        data-tab="status">Status Codes</button>
+      </div>
+
+      <!-- ── Working Links ── -->
+      <div class="tab-panel active" id="tab-working">
+        <div class="link-row">
+          <a href="https://www.google.com"         target="_blank" class="text-link lnk-red">Link 1</a>
+          <a href="https://www.linkedin.com"       target="_blank" class="text-link lnk-blue">Link 2</a>
+          <a href="https://jalatechnologies.com"   target="_blank" class="text-link lnk-green">Link 3</a>
+        </div>
+      </div>
+
+      <!-- ── Broken Links — same visual as Working but href points nowhere ── -->
+      <div class="tab-panel" id="tab-broken">
+        <div class="link-row">
+          <!-- Magnus shows red Link 1 / blue Link 2 / green Link 3 in same style;
+               broken links navigate to 404 URLs -->
+          <a href="https://this-page-does-not-exist-404.com/broken1"
+             target="_blank" class="text-link lnk-red">Link 1</a>
+          <a href="https://this-page-does-not-exist-404.com/broken2"
+             target="_blank" class="text-link lnk-blue">Link 2</a>
+          <a href="https://this-page-does-not-exist-404.com/broken3"
+             target="_blank" class="text-link lnk-green">Link 3</a>
+        </div>
+      </div>
+
+      <!-- ── Image Links ── -->
+      <div class="tab-panel" id="tab-image">
+        <div class="link-row">
+          <!-- Growic Technologies -->
+          <a href="https://growic.in" target="_blank" class="img-link" title="Growic Technologies">
+            <img src="growic-technologies.jpg"
+                 onerror="this.outerHTML='<span style=\'font-weight:700;color:#333;font-size:14px;\'>Growic</span>'"
+                 alt="Growic Technologies">
+          </a>
+          <!-- LinkedIn -->
+          <a href="https://www.linkedin.com" target="_blank" class="img-link" title="LinkedIn">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png"
+                 alt="LinkedIn">
+          </a>
+          <!-- Google -->
+          <a href="https://www.google.com" target="_blank" class="img-link" title="Google">
+            <img src="google-logo.jpg"
+                 alt="Google">
+          </a>
+          <!-- JALA Technologies -->
+          <a href="https://jalatechnologies.com" target="_blank" class="img-link" title="JALA Technologies">
+            <img src="jala-tech-logo.png"
+                 onerror="this.outerHTML='<span style=\'font-weight:700;color:#1a6fa0;font-size:14px;\'>JALA<br>TECHNOLOGIES</span>'"
+                 alt="JALA Technologies">
+          </a>
+        </div>
+      </div>
+
+      <!-- ── Status Codes ── -->
+      <div class="tab-panel" id="tab-status">
+        <div class="link-row">
+          <a href="https://www.restapitutorial.com/httpstatuscodes" target="_blank" class="text-link lnk-200">200</a>
+          <a href="https://magnus.jalatechnologies.com/ErrorHandler/RedirectPermanently" target="_blank" class="text-link lnk-301">301</a>
+          <a href="https://httpstat.us/404" target="_blank" class="text-link lnk-404">404</a>
+          <a href="https://httpstat.us/500" target="_blank" class="text-link lnk-500">500</a>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Copyright © 2026 <a href="http://jalatechnologies.com" target="_blank">JALA Technologies</a>. All rights reserved.</p>
+    </footer>
+  </main>
+</div>
+
+<script>
+  /* Tab switching */
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  /* Sidebar accordion */
+  document.querySelectorAll('.menu-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const sub = btn.nextElementSibling, isOpen = sub && sub.classList.contains('show');
+      document.querySelectorAll('.submenu').forEach(s => s.classList.remove('show'));
+      document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('open','active'));
+      if (!isOpen && sub) { sub.classList.add('show'); btn.classList.add('open','active'); }
+    });
+  });
+</script>
+</body>
+</html>

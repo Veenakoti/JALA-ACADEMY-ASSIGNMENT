@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slider</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page-header { background:#f0f2f5; padding:10px 24px; display:flex; align-items:baseline; justify-content:space-between; }
+    .page-title { font-size:22px; font-weight:600; color:#333; }
+    .breadcrumb { font-size:13px; color:#888; }
+    .breadcrumb a { color:#1a6fa0; text-decoration:none; }
+    .breadcrumb span { margin:0 4px; }
+    .main-card { background:#fff; margin:18px 24px; border-radius:3px; box-shadow:0 1px 4px rgba(0,0,0,.08); overflow:hidden; }
+    /* Single-tab style header */
+    .single-tab {
+      padding: 11px 22px;
+      font-size:13.5px; font-weight:500;
+      border-bottom: 3px solid #1a6fa0;
+      color:#1a6fa0;
+      display:inline-block;
+    }
+    .tab-bar { border-bottom:1px solid #dee2e6; }
+    .slider-panel { padding:24px 24px 40px; }
+    /* Range slider */
+    .range-wrap { position:relative; margin-bottom:14px; }
+    input[type="range"] {
+      -webkit-appearance:none;
+      width:100%; height:6px;
+      border-radius:3px; outline:none; cursor:pointer;
+      background: linear-gradient(to right, #1a6fa0 0%, #1a6fa0 31%, #d0d0d0 31%, #d0d0d0 100%);
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance:none;
+      width:18px; height:18px;
+      border-radius:50%; background:#555;
+      cursor:pointer; border:none;
+      box-shadow:0 1px 3px rgba(0,0,0,0.3);
+    }
+    input[type="range"]::-moz-range-thumb {
+      width:18px; height:18px;
+      border-radius:50%; background:#555;
+      cursor:pointer; border:none;
+    }
+    .slider-value { font-size:13.5px; color:#333; margin-top:8px; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <h2>Magnus</h2>
+    <div class="sidebar-user">
+      <div class="avatar">👤</div>
+      <div class="user-info"><div class="name">Guest User</div><div class="role">🔒 User</div></div>
+    </div>
+    <ul class="menu">
+      <li><button class="menu-btn">Home</button><ul class="submenu"><li><a href="home.html">Dashboard</a></li></ul></li>
+      <li><button class="menu-btn">Employee</button><ul class="submenu"><li><a href="employee-create.html">Create</a></li><li><a href="employee-search.html">Search</a></li></ul></li>
+      <li>
+        <button class="menu-btn active open">More</button>
+        <ul class="submenu show">
+          <li><a href="tabs.html">Multiple Tabs</a></li><li><a href="menu.html">Menu</a></li>
+          <li><a href="autocomplete.html">Autocomplete</a></li><li><a href="collapsible.html">Collapsible Content</a></li>
+          <li><a href="images.html">Images</a></li>
+          <li><a href="slider.html" style="background:#1a6fa0;color:#fff;">Slider</a></li>
+          <li><a href="tooltips.html">Tooltips</a></li><li><a href="popups.html">Popups</a></li>
+          <li><a href="links.html">Links</a></li><li><a href="css-properties.html">CSS Properties</a></li>
+          <li><a href="iframes.html">iFrames</a></li>
+        </ul>
+      </li>
+      <li><button class="menu-btn">Settings</button><ul class="submenu"><li><a href="settings.html">Preferences</a></li></ul></li>
+    </ul>
+  </aside>
+  <main class="content">
+    <header>
+      <h1>Magnus</h1>
+      <button class="logout" onclick="window.location.href='index.html'">⇒ Logout</button>
+    </header>
+    <div class="page-header">
+      <div class="page-title">Slider</div>
+      <div class="breadcrumb"><a href="home.html">🏠 Home</a><span>›</span><a href="tabs.html">More</a><span>›</span> Slider</div>
+    </div>
+    <div class="main-card">
+      <div class="tab-bar"><div class="single-tab">Slider</div></div>
+      <div class="slider-panel">
+        <div class="range-wrap">
+          <input type="range" id="rangeSlider" min="0" max="100" value="31" oninput="updateSlider(this)">
+        </div>
+        <div class="slider-value" id="sliderVal">Current Slider Value: 31</div>
+      </div>
+    </div>
+    <footer><p>Copyright © 2026 <a href="http://jalatechnologies.com" target="_blank">JALA Technologies</a>. All rights reserved.</p></footer>
+  </main>
+</div>
+<script>
+  function updateSlider(el) {
+    const pct = el.value;
+    el.style.background = `linear-gradient(to right, #1a6fa0 0%, #1a6fa0 ${pct}%, #d0d0d0 ${pct}%, #d0d0d0 100%)`;
+    document.getElementById('sliderVal').textContent = 'Current Slider Value: ' + pct;
+  }
+  document.querySelectorAll('.menu-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const sub=btn.nextElementSibling, isOpen=sub&&sub.classList.contains('show');
+      document.querySelectorAll('.submenu').forEach(s=>s.classList.remove('show'));
+      document.querySelectorAll('.menu-btn').forEach(b=>b.classList.remove('open','active'));
+      if(!isOpen&&sub){sub.classList.add('show');btn.classList.add('open','active');}
+    });
+  });
+</script>
+</body>
+</html>

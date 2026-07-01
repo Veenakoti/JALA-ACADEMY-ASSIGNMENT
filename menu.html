@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page-header {
+      background: #f0f2f5;
+      padding: 10px 24px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+    .page-title { font-size: 22px; font-weight: 600; color: #333; }
+    .breadcrumb { font-size: 13px; color: #888; }
+    .breadcrumb a { color: #1a6fa0; text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb span { margin: 0 4px; }
+
+    /* Tab card */
+    .tab-card {
+      background: #fff;
+      margin: 18px 24px;
+      border-radius: 3px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      overflow: visible;
+      min-height: 300px;
+      padding-bottom: 24px;
+    }
+
+    /* Tab bar */
+    .tab-bar {
+      display: flex;
+      border-bottom: 1px solid #dee2e6;
+    }
+    .tab-btn {
+      padding: 11px 22px;
+      font-size: 13.5px;
+      font-weight: 500;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      color: #1a6fa0;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .tab-btn:hover { background: #f5fbff; }
+    .tab-btn.active {
+      background: #1a6fa0;
+      color: #fff;
+      border-bottom: 3px solid #1a6fa0;
+      border-radius: 3px 3px 0 0;
+    }
+
+    /* Tab panels */
+    .tab-panel { display: none; padding: 22px 24px 10px; }
+    .tab-panel.active { display: block; }
+
+    /* ── SINGLE MENUS ── */
+    .single-wrap {
+      display: flex;
+      align-items: flex-start;
+      gap: 30px;
+    }
+
+    .blue-menu {
+      list-style: none;
+      width: 340px;
+      flex-shrink: 0;
+      border: 1px solid #1779a0;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .blue-menu li {
+      background: #1a6fa0;
+      color: #fff;
+      padding: 11px 16px;
+      font-size: 14px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.25);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .blue-menu li:last-child { border-bottom: none; }
+    .blue-menu li:hover { background: #155d87; }
+    .blue-menu li.selected {
+      background: #aecde0;
+      color: #1a6fa0;
+      font-weight: 500;
+    }
+
+    .selection-msg {
+      font-size: 13.5px;
+      color: #333;
+      padding-top: 6px;
+      min-width: 200px;
+    }
+
+    /* ── SUB MENUS ── */
+    .sub-wrap {
+      display: flex;
+      align-items: flex-start;
+      gap: 30px;
+    }
+
+    /* Left parent list */
+    .sub-parent {
+      list-style: none;
+      width: 340px;
+      flex-shrink: 0;
+      border: 1px solid #1779a0;
+      border-radius: 3px;
+      overflow: visible;
+      position: relative;
+    }
+    .sub-parent > li {
+      background: #1a6fa0;
+      color: #fff;
+      padding: 11px 16px;
+      font-size: 14px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.25);
+      cursor: pointer;
+      transition: background 0.15s;
+      position: relative;
+    }
+    .sub-parent > li:last-child { border-bottom: none; }
+    .sub-parent > li:hover,
+    .sub-parent > li.open { background: #155d87; }
+    .sub-parent > li.selected {
+      background: #aecde0;
+      color: #1a6fa0;
+      font-weight: 500;
+    }
+
+    /* Flyout child list — appears to the RIGHT of the parent list */
+    .child-list {
+      display: none;
+      position: absolute;
+      left: 100%;
+      top: 0;
+      width: 200px;
+      border: 1px solid #1779a0;
+      border-radius: 3px;
+      overflow: hidden;
+      z-index: 10;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.15);
+    }
+    .child-list li {
+      background: #1a6fa0;
+      color: #fff;
+      padding: 10px 14px;
+      font-size: 13.5px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.25);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .child-list li:first-child {
+      background: #aecde0;
+      color: #1a6fa0;
+      font-weight: 500;
+    }
+    .child-list li:last-child { border-bottom: none; }
+    .child-list li:hover { background: #155d87; color:#fff; }
+    .child-list li:first-child:hover { background: #9bbdd4; }
+
+    .sub-parent > li.open .child-list { display: block; }
+
+    /* Right message for sub menus */
+    .sub-msg {
+      font-size: 13.5px;
+      color: #333;
+      padding-top: 6px;
+      min-width: 200px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>Magnus</h2>
+    <div class="sidebar-user">
+      <div class="avatar">👤</div>
+      <div class="user-info">
+        <div class="name">Guest User</div>
+        <div class="role">🔒 User</div>
+      </div>
+    </div>
+    <ul class="menu">
+      <li>
+        <button class="menu-btn">Home</button>
+        <ul class="submenu"><li><a href="home.html">Dashboard</a></li></ul>
+      </li>
+      <li>
+        <button class="menu-btn">Employee</button>
+        <ul class="submenu">
+          <li><a href="employee-create.html">Create</a></li>
+          <li><a href="employee-search.html">Search</a></li>
+        </ul>
+      </li>
+      <li>
+        <button class="menu-btn active open">More</button>
+        <ul class="submenu show">
+          <li><a href="tabs.html">Multiple Tabs</a></li>
+          <li><a href="menu.html" style="background:#1a6fa0;color:#fff;">Menu</a></li>
+          <li><a href="autocomplete.html">Autocomplete</a></li>
+          <li><a href="collapsible.html">Collapsible Content</a></li>
+          <li><a href="image.html">Images</a></li>
+          <li><a href="slider.html">Slider</a></li>
+          <li><a href="tooltips.html">Tooltips</a></li>
+          <li><a href="popups.html">Popups</a></li>
+          <li><a href="links.html">Links</a></li>
+          <li><a href="css-properties.html">CSS Properties</a></li>
+          <li><a href="iframes.html">iFrames</a></li>
+        </ul>
+      </li>
+      <li>
+        <button class="menu-btn">Settings</button>
+        <ul class="submenu"><li><a href="settings.html">Preferences</a></li></ul>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="content">
+    <header>
+      <h1>Magnus</h1>
+      <button class="logout" onclick="window.location.href='index.html'">⇒ Logout</button>
+    </header>
+
+    <div class="page-header">
+      <div class="page-title">Menu</div>
+      <div class="breadcrumb">
+        <a href="home.html">🏠 Home</a>
+        <span>›</span>
+        <a href="tabs.html">More</a>
+        <span>›</span> Menu
+      </div>
+    </div>
+
+    <div class="tab-card">
+      <!-- Tab bar -->
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="single">Single Menus</button>
+        <button class="tab-btn" data-tab="sub">Sub Menus</button>
+      </div>
+
+      <!-- ── Single Menus Panel ── -->
+      <div class="tab-panel active" id="tab-single">
+        <div class="single-wrap">
+          <ul class="blue-menu" id="singleMenu">
+            <li onclick="selectSingle(this, 'Testing')">Testing</li>
+            <li onclick="selectSingle(this, 'Java')">Java</li>
+            <li onclick="selectSingle(this, 'Net')">Net</li>
+            <li onclick="selectSingle(this, 'Data Base')">Data Base</li>
+          </ul>
+          <div class="selection-msg" id="singleMsg"></div>
+        </div>
+      </div>
+
+      <!-- ── Sub Menus Panel ── -->
+      <div class="tab-panel" id="tab-sub">
+        <div class="sub-wrap">
+          <ul class="sub-parent" id="subParent">
+            <li onclick="toggleSub(this, 'Testing')">
+              Testing
+              <ul class="child-list">
+                <li>Selenium</li>
+                <li>Manual Testing</li>
+                <li>DB Testing</li>
+                <li>Unit Testing</li>
+              </ul>
+            </li>
+            <li onclick="toggleSub(this, 'JAVA')">
+              JAVA
+              <ul class="child-list">
+                <li>Core Java</li>
+                <li>Advanced Java</li>
+                <li>Spring Boot</li>
+                <li>Hibernate</li>
+              </ul>
+            </li>
+            <li onclick="toggleSub(this, 'Net')">
+              Net
+              <ul class="child-list">
+                <li>C#</li>
+                <li>ASP.NET</li>
+                <li>.NET Core</li>
+                <li>MVC</li>
+              </ul>
+            </li>
+            <li onclick="toggleSub(this, 'Database')">
+              Database
+              <ul class="child-list">
+                <li>MySQL</li>
+                <li>Oracle</li>
+                <li>SQL Server</li>
+                <li>MongoDB</li>
+              </ul>
+            </li>
+          </ul>
+          <div class="sub-msg" id="subMsg"></div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Copyright © 2026 <a href="http://jalatechnologies.com" target="_blank">JALA Technologies</a>. All rights reserved.</p>
+    </footer>
+  </main>
+</div>
+
+<script>
+  // ── Tab switching ──
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      // Reset selections
+      document.getElementById('singleMsg').textContent = '';
+      document.querySelectorAll('.blue-menu li').forEach(l => l.classList.remove('selected'));
+      closeAllSubs();
+      document.getElementById('subMsg').textContent = '';
+    });
+  });
+
+  // ── Single menu ──
+  function selectSingle(el, name) {
+    document.querySelectorAll('#singleMenu li').forEach(l => l.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('singleMsg').textContent = 'You Have Selected ' + name + ' Menu Option.';
+  }
+
+  // ── Sub menu flyout ──
+  function closeAllSubs() {
+    document.querySelectorAll('#subParent > li').forEach(li => {
+      li.classList.remove('open', 'selected');
+    });
+  }
+
+  function toggleSub(el, name) {
+    const isOpen = el.classList.contains('open');
+    closeAllSubs();
+    if (!isOpen) {
+      el.classList.add('open', 'selected');
+      document.getElementById('subMsg').textContent = 'You Have Selected ' + name + ' Menu Option.';
+    } else {
+      document.getElementById('subMsg').textContent = '';
+    }
+  }
+
+  // Close flyout when clicking outside
+  document.addEventListener('click', e => {
+    if (!e.target.closest('#subParent')) {
+      closeAllSubs();
+    }
+  });
+
+  // ── Sidebar accordion ──
+  document.querySelectorAll('.menu-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const sub    = btn.nextElementSibling;
+      const isOpen = sub && sub.classList.contains('show');
+      document.querySelectorAll('.submenu').forEach(s => s.classList.remove('show'));
+      document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('open', 'active'));
+      if (!isOpen && sub) { sub.classList.add('show'); btn.classList.add('open', 'active'); }
+    });
+  });
+</script>
+</body>
+</html>

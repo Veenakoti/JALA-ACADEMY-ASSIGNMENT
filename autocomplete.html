@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autocomplete</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page-header {
+      background: #f0f2f5;
+      padding: 10px 24px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+    .page-title { font-size: 22px; font-weight: 600; color: #333; }
+    .breadcrumb { font-size: 13px; color: #888; }
+    .breadcrumb a { color: #1a6fa0; text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb span { margin: 0 4px; }
+
+    /* Tab card */
+    .tab-card {
+      background: #fff;
+      margin: 18px 24px;
+      border-radius: 3px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      min-height: 300px;
+      padding-bottom: 30px;
+    }
+    .tab-bar {
+      display: flex;
+      border-bottom: 1px solid #dee2e6;
+    }
+    .tab-btn {
+      padding: 11px 22px;
+      font-size: 13.5px;
+      font-weight: 500;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      color: #1a6fa0;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.15s;
+    }
+    .tab-btn:hover { background: #f5fbff; }
+    .tab-btn.active {
+      background: #1a6fa0;
+      color: #fff;
+      border-bottom: 3px solid #1a6fa0;
+      border-radius: 3px 3px 0 0;
+    }
+    .tab-panel { display: none; padding: 20px 24px 10px; }
+    .tab-panel.active { display: block; }
+
+    /* Tags label */
+    .tags-label {
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 6px;
+    }
+
+    /* Autocomplete wrapper */
+    .ac-wrap {
+      position: relative;
+      width: 550px;
+    }
+
+    /* Single input */
+    .ac-input {
+      width: 100%;
+      padding: 9px 12px;
+      border: 2px solid #17a2b8;
+      border-radius: 3px;
+      font-size: 13.5px;
+      color: #333;
+      outline: none;
+      box-sizing: border-box;
+    }
+    .ac-input:focus { border-color: #1a6fa0; }
+
+    /* Multiple values input — tags inside */
+    .multi-input-box {
+      width: 100%;
+      min-height: 38px;
+      padding: 4px 8px;
+      border: 2px solid #17a2b8;
+      border-radius: 3px;
+      font-size: 13.5px;
+      color: #333;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px;
+      cursor: text;
+      box-sizing: border-box;
+      background: #fff;
+    }
+    .multi-input-box:focus-within { border-color: #1a6fa0; }
+
+    .tag-chip {
+      background: #e3f0fa;
+      color: #1a6fa0;
+      border: 1px solid #b0d0e8;
+      border-radius: 3px;
+      padding: 2px 6px;
+      font-size: 12.5px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+    .tag-chip .remove-chip {
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 1;
+      color: #888;
+    }
+    .tag-chip .remove-chip:hover { color: #e53935; }
+
+    .multi-text-input {
+      border: none;
+      outline: none;
+      font-size: 13.5px;
+      color: #333;
+      flex: 1;
+      min-width: 80px;
+      padding: 2px 0;
+      background: transparent;
+    }
+
+    /* Dropdown */
+    .ac-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-top: none;
+      border-radius: 0 0 3px 3px;
+      max-height: 260px;
+      overflow-y: auto;
+      z-index: 100;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .ac-dropdown.open { display: block; }
+
+    .ac-item {
+      padding: 9px 14px;
+      font-size: 13.5px;
+      color: #333;
+      cursor: pointer;
+      border-bottom: 1px solid #f0f0f0;
+      transition: background 0.1s;
+    }
+    .ac-item:last-child { border-bottom: none; }
+    .ac-item:hover,
+    .ac-item.highlighted { background: #e8f4fb; color: #1a6fa0; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>Magnus</h2>
+    <div class="sidebar-user">
+      <div class="avatar">👤</div>
+      <div class="user-info">
+        <div class="name">Guest User</div>
+        <div class="role">🔒 User</div>
+      </div>
+    </div>
+    <ul class="menu">
+      <li>
+        <button class="menu-btn">Home</button>
+        <ul class="submenu"><li><a href="home.html">Dashboard</a></li></ul>
+      </li>
+      <li>
+        <button class="menu-btn">Employee</button>
+        <ul class="submenu">
+          <li><a href="employee-create.html">Create</a></li>
+          <li><a href="employee-search.html">Search</a></li>
+        </ul>
+      </li>
+      <li>
+        <button class="menu-btn active open">More</button>
+        <ul class="submenu show">
+          <li><a href="tabs.html">Multiple Tabs</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="autocomplete.html" style="background:#1a6fa0;color:#fff;">Autocomplete</a></li>
+          <li><a href="collapsible.html">Collapsible Content</a></li>
+          <li><a href="image.htm">Images</a></li>
+          <li><a href="slider.html">Slider</a></li>
+          <li><a href="tooltips.html">Tooltips</a></li>
+          <li><a href="popups.html">Popups</a></li>
+          <li><a href="links.html">Links</a></li>
+          <li><a href="css-properties.html">CSS Properties</a></li>
+          <li><a href="iframes.html">iFrames</a></li>
+        </ul>
+      </li>
+      <li>
+        <button class="menu-btn">Settings</button>
+        <ul class="submenu"><li><a href="settings.html">Preferences</a></li></ul>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="content">
+    <header>
+      <h1>Magnus</h1>
+      <button class="logout" onclick="window.location.href='index.html'">⇒ Logout</button>
+    </header>
+
+    <div class="page-header">
+      <div class="page-title">Autocomplete</div>
+      <div class="breadcrumb">
+        <a href="home.html">🏠 Home</a>
+        <span>›</span>
+        <a href="tabs.html">More</a>
+        <span>›</span> Autocomplete
+      </div>
+    </div>
+
+    <div class="tab-card">
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="single">Single Values</button>
+        <button class="tab-btn" data-tab="multi">Multiple Values</button>
+      </div>
+
+      <!-- ── Single Values Panel ── -->
+      <div class="tab-panel active" id="tab-single">
+        <div class="tags-label">Tags :</div>
+        <div class="ac-wrap" id="singleWrap">
+          <input
+            type="text"
+            class="ac-input"
+            id="singleInput"
+            placeholder=""
+            autocomplete="off"
+          >
+          <div class="ac-dropdown" id="singleDropdown"></div>
+        </div>
+      </div>
+
+      <!-- ── Multiple Values Panel ── -->
+      <div class="tab-panel" id="tab-multi">
+        <div class="tags-label">Tags :</div>
+        <div class="ac-wrap" id="multiWrap">
+          <div class="multi-input-box" id="multiBox" onclick="document.getElementById('multiText').focus()">
+            <!-- chips inserted here -->
+            <input
+              type="text"
+              class="multi-text-input"
+              id="multiText"
+              autocomplete="off"
+              placeholder=""
+            >
+          </div>
+          <div class="ac-dropdown" id="multiDropdown"></div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Copyright © 2026 <a href="http://jalatechnologies.com" target="_blank">JALA Technologies</a>. All rights reserved.</p>
+    </footer>
+  </main>
+</div>
+
+<script>
+  const ALL_TAGS = [
+    'ActionScript','AppleScript','Asp','BASIC','C','C++','Clojure',
+    'ColdFusion','Erlang','Fortran','Groovy','Haskell','Java',
+    'JavaScript','Lisp','Perl','PHP','Python','Ruby','Scala',
+    'Scheme','Smalltalk','SQL','Swift','TypeScript'
+  ];
+
+  /* ─── Tab switching ─── */
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  /* ─── SINGLE VALUES ─── */
+  const singleInput    = document.getElementById('singleInput');
+  const singleDropdown = document.getElementById('singleDropdown');
+
+  singleInput.addEventListener('input', () => {
+    const q = singleInput.value.trim().toLowerCase();
+    renderDropdown(singleDropdown, q, (val) => {
+      singleInput.value = val;
+      closeDropdown(singleDropdown);
+    });
+  });
+
+  singleInput.addEventListener('focus', () => {
+    const q = singleInput.value.trim().toLowerCase();
+    renderDropdown(singleDropdown, q, (val) => {
+      singleInput.value = val;
+      closeDropdown(singleDropdown);
+    });
+  });
+
+  /* ─── MULTIPLE VALUES ─── */
+  const multiText     = document.getElementById('multiText');
+  const multiDropdown = document.getElementById('multiDropdown');
+  const multiBox      = document.getElementById('multiBox');
+  let selectedTags    = [];
+
+  multiText.addEventListener('input', () => {
+    const q = multiText.value.trim().toLowerCase();
+    renderDropdown(multiDropdown, q, (val) => {
+      if (!selectedTags.includes(val)) {
+        selectedTags.push(val);
+        addChip(val);
+      }
+      multiText.value = '';
+      closeDropdown(multiDropdown);
+    }, selectedTags);
+  });
+
+  multiText.addEventListener('focus', () => {
+    const q = multiText.value.trim().toLowerCase();
+    renderDropdown(multiDropdown, q, (val) => {
+      if (!selectedTags.includes(val)) {
+        selectedTags.push(val);
+        addChip(val);
+      }
+      multiText.value = '';
+      closeDropdown(multiDropdown);
+    }, selectedTags);
+  });
+
+  // Backspace removes last chip
+  multiText.addEventListener('keydown', e => {
+    if (e.key === 'Backspace' && multiText.value === '' && selectedTags.length) {
+      const last = selectedTags.pop();
+      document.getElementById('chip-' + last.replace(/\s+/g,'_')).remove();
+    }
+  });
+
+  function addChip(val) {
+    const chip = document.createElement('span');
+    chip.className = 'tag-chip';
+    chip.id = 'chip-' + val.replace(/\s+/g,'_');
+    chip.innerHTML = `${val} <span class="remove-chip" onclick="removeChip('${val}')">×</span>`;
+    multiBox.insertBefore(chip, multiText);
+  }
+
+  function removeChip(val) {
+    selectedTags = selectedTags.filter(t => t !== val);
+    const chip = document.getElementById('chip-' + val.replace(/\s+/g,'_'));
+    if (chip) chip.remove();
+  }
+
+  /* ─── Shared dropdown renderer ─── */
+  function renderDropdown(dropdown, query, onSelect, exclude = []) {
+    const matches = ALL_TAGS.filter(t =>
+      !exclude.includes(t) &&
+      (!query || t.toLowerCase().includes(query))
+    );
+
+    if (matches.length === 0) { closeDropdown(dropdown); return; }
+
+    dropdown.innerHTML = matches.map(m =>
+      `<div class="ac-item" data-val="${m}">${m}</div>`
+    ).join('');
+
+    dropdown.querySelectorAll('.ac-item').forEach(item => {
+      item.addEventListener('mousedown', e => {
+        e.preventDefault();
+        onSelect(item.dataset.val);
+      });
+      item.addEventListener('mouseover', () => {
+        dropdown.querySelectorAll('.ac-item').forEach(i => i.classList.remove('highlighted'));
+        item.classList.add('highlighted');
+      });
+    });
+
+    dropdown.classList.add('open');
+  }
+
+  function closeDropdown(dropdown) {
+    dropdown.classList.remove('open');
+    dropdown.innerHTML = '';
+  }
+
+  /* Close on outside click */
+  document.addEventListener('click', e => {
+    if (!e.target.closest('#singleWrap')) closeDropdown(singleDropdown);
+    if (!e.target.closest('#multiWrap'))  closeDropdown(multiDropdown);
+  });
+
+  /* ─── Sidebar accordion ─── */
+  document.querySelectorAll('.menu-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const sub    = btn.nextElementSibling;
+      const isOpen = sub && sub.classList.contains('show');
+      document.querySelectorAll('.submenu').forEach(s => s.classList.remove('show'));
+      document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('open','active'));
+      if (!isOpen && sub) { sub.classList.add('show'); btn.classList.add('open','active'); }
+    });
+  });
+</script>
+</body>
+</html>

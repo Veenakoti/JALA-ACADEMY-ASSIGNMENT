@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collapsible Content</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page-header {
+      background: #f0f2f5;
+      padding: 10px 24px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+    .page-title { font-size: 22px; font-weight: 600; color: #333; }
+    .breadcrumb { font-size: 13px; color: #888; }
+    .breadcrumb a { color: #1a6fa0; text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb span { margin: 0 4px; }
+
+    /* Tab card */
+    .tab-card {
+      background: #fff;
+      margin: 18px 24px;
+      border-radius: 3px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      padding-bottom: 30px;
+    }
+    .tab-bar {
+      display: flex;
+      border-bottom: 1px solid #dee2e6;
+    }
+    .tab-btn {
+      padding: 11px 22px;
+      font-size: 13.5px;
+      font-weight: 500;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      color: #1a6fa0;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.15s;
+    }
+    .tab-btn:hover { background: #f5fbff; }
+    .tab-btn.active {
+      background: #1a6fa0;
+      color: #fff;
+      border-bottom: 3px solid #1a6fa0;
+      border-radius: 3px 3px 0 0;
+    }
+    .tab-panel { display: none; padding: 20px 24px 10px; }
+    .tab-panel.active { display: block; }
+
+    /* ── Accordion ── */
+    .accordion { display: flex; flex-direction: column; gap: 6px; }
+
+    .acc-item { border-radius: 3px; overflow: hidden; }
+
+    .acc-header {
+      background: #1a6fa0;
+      color: #fff;
+      padding: 12px 18px;
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    .acc-header:hover { background: #155d87; }
+    .acc-header.open { background: #1a7ab5; }
+
+    .acc-icon {
+      font-size: 20px;
+      font-weight: 300;
+      line-height: 1;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .acc-body {
+      display: none;
+      background: #fff;
+      border: 1px solid #d0dce8;
+      border-top: none;
+      padding: 14px 20px;
+      font-size: 13.5px;
+      color: #333;
+      line-height: 1.7;
+    }
+    .acc-body.open { display: block; }
+
+    /* Paragraph content (Multiple Collapse) */
+    .acc-body p { margin-bottom: 10px; }
+    .acc-body p:last-child { margin-bottom: 0; }
+    .acc-body .hl-blue { color: #1a6fa0; }
+
+    /* List content (Single Collapse) */
+    .acc-body ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .acc-body ul li {
+      padding: 3px 0;
+      font-size: 13.5px;
+      color: #333;
+    }
+    .acc-body ul li .hl-blue { color: #1a6fa0; }
+    .acc-body ul li .hl-bold { font-weight: 600; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>Magnus</h2>
+    <div class="sidebar-user">
+      <div class="avatar">👤</div>
+      <div class="user-info">
+        <div class="name">Guest User</div>
+        <div class="role">🔒 User</div>
+      </div>
+    </div>
+    <ul class="menu">
+      <li>
+        <button class="menu-btn">Home</button>
+        <ul class="submenu"><li><a href="home.html">Dashboard</a></li></ul>
+      </li>
+      <li>
+        <button class="menu-btn">Employee</button>
+        <ul class="submenu">
+          <li><a href="employee-create.html">Create</a></li>
+          <li><a href="employee-search.html">Search</a></li>
+        </ul>
+      </li>
+      <li>
+        <button class="menu-btn active open">More</button>
+        <ul class="submenu show">
+          <li><a href="tabs.html">Multiple Tabs</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="autocomplete.html">Autocomplete</a></li>
+          <li><a href="collapsible.html" style="background:#1a6fa0;color:#fff;">Collapsible Content</a></li>
+          <li><a href="image.htm">Images</a></li>
+          <li><a href="slider.html">Slider</a></li>
+          <li><a href="tooltips.html">Tooltips</a></li>
+          <li><a href="popups.html">Popups</a></li>
+          <li><a href="links.html">Links</a></li>
+          <li><a href="css-properties.html">CSS Properties</a></li>
+          <li><a href="iframes.html">iFrames</a></li>
+        </ul>
+      </li>
+      <li>
+        <button class="menu-btn">Settings</button>
+        <ul class="submenu"><li><a href="settings.html">Preferences</a></li></ul>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="content">
+    <header>
+      <h1>Magnus</h1>
+      <button class="logout" onclick="window.location.href='index.html'">⇒ Logout</button>
+    </header>
+
+    <div class="page-header">
+      <div class="page-title">Collapsible Content</div>
+      <div class="breadcrumb">
+        <a href="home.html">🏠 Home</a>
+        <span>›</span>
+        <a href="tabs.html">More</a>
+        <span>›</span> Collapsible Content
+      </div>
+    </div>
+
+    <div class="tab-card">
+      <div class="tab-bar">
+        <button class="tab-btn" data-tab="single">Single Collapse</button>
+        <button class="tab-btn active" data-tab="multi">Multiple Collapse</button>
+      </div>
+
+      <!-- ── Single Collapse: only one open at a time ── -->
+      <div class="tab-panel" id="tab-single">
+        <div class="accordion" id="singleAcc">
+
+          <div class="acc-item">
+            <div class="acc-header open" onclick="toggleSingle(this)">
+              <span>Collaborate with Colleagues</span>
+              <span class="acc-icon">−</span>
+            </div>
+            <div class="acc-body open">
+              <ul>
+                <li>Teach and learn from each other</li>
+                <li><span class="hl-blue">Collaborate on lesson plans</span>-Two minds are better than one.</li>
+                <li>Build your own social network</li>
+                <li><span class="hl-blue">Get feedback regularly</span></li>
+                <li>Work together to solve problems</li>
+                <li>Become a teacher-leader</li>
+                <li><span class="hl-blue">Adopt a team mentality</span></li>
+                <li>Ask for help</li>
+                <li>Find a mentor</li>
+                <li>Be open to new ideas</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="acc-item">
+            <div class="acc-header" onclick="toggleSingle(this)">
+              <span>Learn Anything Quickly</span>
+              <span class="acc-icon">+</span>
+            </div>
+            <div class="acc-body">
+              <ul>
+                <li><span class="hl-blue">Break the topic</span> into small chunks</li>
+                <li>Use the <span class="hl-bold">Feynman Technique</span> — teach it to learn it</li>
+                <li><span class="hl-blue">Practice deliberately</span> every single day</li>
+                <li>Use spaced repetition for memory retention</li>
+                <li>Apply what you learn immediately through projects</li>
+                <li><span class="hl-blue">Find a mentor</span> who has already mastered it</li>
+                <li>Remove distractions during deep-work sessions</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="acc-item">
+            <div class="acc-header" onclick="toggleSingle(this)">
+              <span>Reasons People Give Up on Their Goals Too Early</span>
+              <span class="acc-icon">+</span>
+            </div>
+            <div class="acc-body">
+              <ul>
+                <li><span class="hl-blue">They want the outcome</span> more than they want to obtain a skill</li>
+                <li>They do not have the <span class="hl-blue">discipline</span> to stick with their idea long enough to see it live</li>
+                <li>They get distracted by <span class="hl-blue">what someone else is doing</span></li>
+                <li>They don't believe in themselves enough.</li>
+                <li><span class="hl-blue">They fail once</span>—and never try again</li>
+                <li>They don't learn how to <span class="hl-blue">discipline themselves</span></li>
+                <li>They focus on the goal and not the process</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── Multiple Collapse: any number open at once ── -->
+      <div class="tab-panel active" id="tab-multi">
+        <div class="accordion" id="multiAcc">
+
+          <div class="acc-item">
+            <div class="acc-header open" onclick="toggleMulti(this)">
+              <span>Know your goals and Prioritize Wisely</span>
+              <span class="acc-icon">−</span>
+            </div>
+            <div class="acc-body open">
+              <p>What are your priorities for the day? Make a list of your priorities and plan your day. The tasks of the day must be outlined with the most important and urgent ones on top.</p>
+              <p><span class="hl-blue">Likewise, determine your short-term and long-term goals and evaluate your progress frequently.</span></p>
+            </div>
+          </div>
+
+          <div class="acc-item">
+            <div class="acc-header" onclick="toggleMulti(this)">
+              <span>Be focused and Eliminate Distractions</span>
+              <span class="acc-icon">+</span>
+            </div>
+            <div class="acc-body">
+              <p>Distractions are the biggest enemy of productivity. <span class="hl-blue">Turn off notifications, close unnecessary browser tabs,</span> and create a dedicated workspace.</p>
+              <p>Use techniques like the <strong>Pomodoro Method</strong> — 25 minutes of focused work followed by a 5-minute break — to maintain concentration throughout the day.</p>
+            </div>
+          </div>
+
+          <div class="acc-item">
+            <div class="acc-header" onclick="toggleMulti(this)">
+              <span>Chose the right mentor to Succeed in career</span>
+              <span class="acc-icon">+</span>
+            </div>
+            <div class="acc-body">
+              <p><span class="hl-blue">A great mentor accelerates your career by years.</span> Look for someone who has achieved what you want to achieve and is willing to guide you.</p>
+              <p>Be proactive — come prepared with specific questions, act on their advice quickly, and always show gratitude for their time.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Copyright © 2026 <a href="http://jalatechnologies.com" target="_blank">JALA Technologies</a>. All rights reserved.</p>
+    </footer>
+  </main>
+</div>
+
+<script>
+  /* ── Tab switching ── */
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  /* ── Multiple Collapse: any number open ── */
+  function toggleMulti(header) {
+    const body   = header.nextElementSibling;
+    const isOpen = body.classList.contains('open');
+    const icon   = header.querySelector('.acc-icon');
+
+    if (isOpen) {
+      body.classList.remove('open');
+      header.classList.remove('open');
+      icon.textContent = '+';
+    } else {
+      body.classList.add('open');
+      header.classList.add('open');
+      icon.textContent = '−';
+    }
+  }
+
+  /* ── Single Collapse: only one open ── */
+  function toggleSingle(header) {
+    const acc    = document.getElementById('singleAcc');
+    const body   = header.nextElementSibling;
+    const isOpen = body.classList.contains('open');
+
+    // Close all
+    acc.querySelectorAll('.acc-header').forEach(h => {
+      h.classList.remove('open');
+      h.querySelector('.acc-icon').textContent = '+';
+    });
+    acc.querySelectorAll('.acc-body').forEach(b => b.classList.remove('open'));
+
+    // Open clicked (if it was closed)
+    if (!isOpen) {
+      body.classList.add('open');
+      header.classList.add('open');
+      header.querySelector('.acc-icon').textContent = '−';
+    }
+  }
+
+  /* ── Sidebar accordion ── */
+  document.querySelectorAll('.menu-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const sub    = btn.nextElementSibling;
+      const isOpen = sub && sub.classList.contains('show');
+      document.querySelectorAll('.submenu').forEach(s => s.classList.remove('show'));
+      document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('open', 'active'));
+      if (!isOpen && sub) { sub.classList.add('show'); btn.classList.add('open', 'active'); }
+    });
+  });
+</script>
+</body>
+</html>

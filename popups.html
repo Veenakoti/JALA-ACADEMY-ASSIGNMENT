@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Popup</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page-header { background:#f0f2f5; padding:10px 24px; display:flex; align-items:baseline; justify-content:space-between; }
+    .page-title  { font-size:22px; font-weight:600; color:#333; }
+    .breadcrumb  { font-size:13px; color:#888; }
+    .breadcrumb a { color:#1a6fa0; text-decoration:none; }
+    .breadcrumb span { margin:0 4px; }
+
+    .main-card { background:#fff; margin:18px 24px; border-radius:3px; box-shadow:0 1px 4px rgba(0,0,0,.08); overflow:hidden; min-height:220px; }
+    .tab-bar   { border-bottom:1px solid #dee2e6; }
+    .single-tab { padding:11px 22px; font-size:13.5px; font-weight:500; border-bottom:3px solid #1a6fa0; color:#1a6fa0; display:inline-block; }
+
+    /* Button grid — 3 columns */
+    .popup-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 220px);
+      gap: 12px 30px;
+      padding: 28px 30px 36px;
+    }
+
+    .pop-btn {
+      background: #1a6fa0;
+      color: #fff;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 3px;
+      font-size: 13.5px;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.15s;
+      width: 100%;
+    }
+    .pop-btn:hover { background: #155d87; }
+
+    /* ── Custom Modal Overlay ── */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal-box {
+      background: #fff;
+      border-radius: 4px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+      min-width: 320px;
+      max-width: 480px;
+      overflow: hidden;
+      animation: fadeIn 0.15s ease;
+    }
+    @keyframes fadeIn { from { transform:scale(0.93); opacity:0; } to { transform:scale(1); opacity:1; } }
+
+    .modal-header {
+      background: #1a6fa0;
+      color: #fff;
+      padding: 12px 18px;
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-close { cursor:pointer; font-size:20px; line-height:1; opacity:0.8; }
+    .modal-close:hover { opacity:1; }
+
+    .modal-body { padding: 20px 18px; font-size:14px; color:#333; line-height:1.6; }
+
+    .modal-footer {
+      padding: 12px 18px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      border-top: 1px solid #eee;
+    }
+    .modal-footer button {
+      padding: 7px 20px; border:none; border-radius:3px;
+      font-size:13px; cursor:pointer;
+    }
+    .btn-ok     { background:#1a6fa0; color:#fff; }
+    .btn-ok:hover { background:#155d87; }
+    .btn-cancel { background:#e53935; color:#fff; }
+    .btn-cancel:hover { background:#c62828; }
+
+    /* Prompt input */
+    .prompt-input {
+      width:100%; margin-top:10px; padding:8px 10px;
+      border:1px solid #ccc; border-radius:3px; font-size:13px;
+      outline:none;
+    }
+    .prompt-input:focus { border-color:#1a6fa0; }
+
+    /* Result message */
+    .result-msg { margin-top:14px; font-size:13px; color:#1a6fa0; min-height:18px; }
+
+    /* Child window simulation (iframe-style popup) */
+    .child-win {
+      display:none;
+      position:fixed;
+      top:100px; left:50%;
+      transform:translateX(-50%);
+      width:340px;
+      background:#fff;
+      border:1px solid #aaa;
+      border-radius:4px;
+      box-shadow:0 6px 24px rgba(0,0,0,0.3);
+      z-index:1100;
+      overflow:hidden;
+      resize:both;
+    }
+    .child-win.open { display:block; }
+    .child-win-bar {
+      background:#1a6fa0; color:#fff;
+      padding:8px 14px;
+      display:flex; justify-content:space-between; align-items:center;
+      cursor:move; user-select:none;
+      font-size:13px; font-weight:600;
+    }
+    .child-win-close { cursor:pointer; font-size:18px; }
+    .child-win-body { padding:16px; font-size:13.5px; }
+    .child-win-body a { color:#1a6fa0; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>Magnus</h2>
+    <div class="sidebar-user">
+      <div class="avatar">👤</div>
+      <div class="user-info"><div class="name">Guest User</div><div class="role">🔒 User</div></div>
+    </div>
+    <ul class="menu">
+      <li><button class="menu-btn">Home</button><ul class="submenu"><li><a href="home.html">Dashboard</a></li></ul></li>
+      <li><button class="menu-btn">Employee</button><ul class="submenu">
+        <li><a href="employee-create.html">Create</a></li>
+        <li><a href="employee-search.html">Search</a></li>
+      </ul></li>
+      <li>
+        <button class="menu-btn active open">More</button>
+        <ul class="submenu show">
+          <li><a href="tabs.html">Multiple Tabs</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="autocomplete.html">Autocomplete</a></li>
+          <li><a href="collapsible.html">Collapsible Content</a></li>
+          <li><a href="images.html">Images</a></li>
+          <li><a href="slider.html">Slider</a></li>
+          <li><a href="tooltips.html">Tooltips</a></li>
+          <li><a href="popups.html" style="background:#1a6fa0;color:#fff;">Popups</a></li>
+          <li><a href="links.html">Links</a></li>
+          <li><a href="css-properties.html">CSS Properties</a></li>
+          <li><a href="iframes.html">iFrames</a></li>
+        </ul>
+      </li>
+      <li><button class="menu-btn">Settings</button><ul class="submenu"><li><a href="settings.html">Preferences</a></li></ul></li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="content">
+    <header>
+      <h1>Magnus</h1>
+      <button class="logout" onclick="window.location.href='index.html'">⇒ Logout</button>
+    </header>
+
+    <div class="page-header">
+      <div class="page-title">Popup</div>
+      <div class="breadcrumb">
+        <a href="home.html">🏠 Home</a><span>›</span>
+        <a href="tabs.html">More</a><span>›</span> Popup
+      </div>
+    </div>
+
+    <div class="main-card">
+      <div class="tab-bar"><div class="single-tab">Popups</div></div>
+
+      <div class="popup-grid">
+        <!-- Row 1 -->
+        <button class="pop-btn" onclick="openModal('popup1')">Popup One</button>
+        <button class="pop-btn" onclick="openModal('popup2')">Popup Two</button>
+        <button class="pop-btn" onclick="openChildWin('win3','Popup Three','magnus.jalatechnologies.com/Home/Tabs')">Popup Three</button>
+
+        <!-- Row 2 -->
+        <button class="pop-btn" onclick="openModal('dupModal')">Popup Duplicate</button>
+        <button class="pop-btn" onclick="openNewTab('https://www.google.com')">Duplicate Tab</button>
+        <button class="pop-btn" onclick="openChildWin('winChild','In Window Popup','google.com')">In Window Popup</button>
+
+        <!-- Row 3 -->
+        <button class="pop-btn" onclick="doAlert()">Alert Box</button>
+        <button class="pop-btn" onclick="doConfirm()">Confirm Box</button>
+        <button class="pop-btn" onclick="doPrompt()">Prompt Box</button>
+      </div>
+
+      <div class="result-msg" id="resultMsg"></div>
+    </div>
+
+    <footer>
+      <p>Copyright © 2026 <a href="http://jalatechnologies.com" target="_blank">JALA Technologies</a>. All rights reserved.</p>
+    </footer>
+  </main>
+</div>
+
+<!-- ── Modals ── -->
+
+<!-- Popup One -->
+<div class="modal-overlay" id="popup1">
+  <div class="modal-box">
+    <div class="modal-header">
+      Popup One
+      <span class="modal-close" onclick="closeModal('popup1')">×</span>
+    </div>
+    <div class="modal-body">
+      This is <strong>Popup One</strong>.<br>
+      You can use this popup to display important information or form content.
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ok" onclick="closeModal('popup1')">OK</button>
+    </div>
+  </div>
+</div>
+
+<!-- Popup Two -->
+<div class="modal-overlay" id="popup2">
+  <div class="modal-box">
+    <div class="modal-header">
+      Popup Two
+      <span class="modal-close" onclick="closeModal('popup2')">×</span>
+    </div>
+    <div class="modal-body">
+      This is <strong>Popup Two</strong>.<br>
+      Another modal dialog for testing purposes.
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ok" onclick="closeModal('popup2')">OK</button>
+      <button class="btn-cancel" onclick="closeModal('popup2')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Popup Duplicate -->
+<div class="modal-overlay" id="dupModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      Popup Duplicate
+      <span class="modal-close" onclick="closeModal('dupModal')">×</span>
+    </div>
+    <div class="modal-body">
+      This is the <strong>Duplicate Popup</strong>.<br>
+      It mirrors Popup One's structure — useful for testing duplicate element handling.
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ok" onclick="closeModal('dupModal')">OK</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Modal -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      Confirm
+      <span class="modal-close" onclick="closeModal('confirmModal')">×</span>
+    </div>
+    <div class="modal-body" id="confirmMsg">Are you sure you want to proceed?</div>
+    <div class="modal-footer">
+      <button class="btn-ok" onclick="confirmYes()">OK</button>
+      <button class="btn-cancel" onclick="confirmNo()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Prompt Modal -->
+<div class="modal-overlay" id="promptModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      Prompt
+      <span class="modal-close" onclick="closeModal('promptModal')">×</span>
+    </div>
+    <div class="modal-body">
+      Please enter your name:
+      <input type="text" class="prompt-input" id="promptInput" placeholder="Your name...">
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ok" onclick="promptOk()">OK</button>
+      <button class="btn-cancel" onclick="closeModal('promptModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Child / In-Window Popup -->
+<div class="child-win" id="childWin">
+  <div class="child-win-bar" id="childWinBar">
+    <span id="childWinTitle">Popup</span>
+    <span class="child-win-close" onclick="closeChildWin()">×</span>
+  </div>
+  <div class="child-win-body" id="childWinBody"></div>
+</div>
+
+<script>
+  /* ── Modal helpers ── */
+  function openModal(id)  { document.getElementById(id).classList.add('open'); }
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+  /* Close on backdrop click */
+  document.querySelectorAll('.modal-overlay').forEach(el => {
+    el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
+  });
+
+  /* ── Popup Three / In Window ── */
+  function openChildWin(id, title, url) {
+    const win = document.getElementById('childWin');
+    document.getElementById('childWinTitle').textContent = title;
+    document.getElementById('childWinBody').innerHTML =
+      `<p>Simulated child window for:</p>
+       <p><a href="https://${url}" target="_blank">${url}</a></p>
+       <p style="margin-top:10px;font-size:12px;color:#888;">In the real Magnus app this opens a native browser popup window.</p>`;
+    win.classList.add('open');
+    makeDraggable(win, document.getElementById('childWinBar'));
+  }
+  function closeChildWin() { document.getElementById('childWin').classList.remove('open'); }
+
+  /* ── Duplicate Tab ── */
+  function openNewTab(url) { window.open(url, '_blank'); }
+
+  /* ── Alert ── */
+  function doAlert() {
+    openCustomAlert('Alert', 'This is a JavaScript Alert Box!', false);
+  }
+
+  /* ── Confirm ── */
+  function doConfirm() {
+    document.getElementById('confirmMsg').textContent = 'Do you want to proceed with this action?';
+    openModal('confirmModal');
+  }
+  function confirmYes() {
+    closeModal('confirmModal');
+    showResult('✔ You pressed OK on the Confirm Box.');
+  }
+  function confirmNo() {
+    closeModal('confirmModal');
+    showResult('✘ You pressed Cancel on the Confirm Box.');
+  }
+
+  /* ── Prompt ── */
+  function doPrompt() {
+    document.getElementById('promptInput').value = '';
+    openModal('promptModal');
+  }
+  function promptOk() {
+    const val = document.getElementById('promptInput').value.trim();
+    closeModal('promptModal');
+    showResult(val ? `Hello, ${val}! Your input was recorded.` : 'No input provided.');
+  }
+
+  /* Alert reuse with confirm modal */
+  function openCustomAlert(title, msg) {
+    document.getElementById('confirmMsg').textContent = msg;
+    const footer = document.querySelector('#confirmModal .modal-footer');
+    footer.innerHTML = '<button class="btn-ok" onclick="closeModal(\'confirmModal\')">OK</button>';
+    document.querySelector('#confirmModal .modal-header').firstChild.textContent = title + ' ';
+    openModal('confirmModal');
+    // Restore confirm buttons after close
+    document.getElementById('confirmModal').addEventListener('click', restoreConfirm, {once:true});
+  }
+  function restoreConfirm() {
+    document.querySelector('#confirmModal .modal-footer').innerHTML =
+      '<button class="btn-ok" onclick="confirmYes()">OK</button>' +
+      '<button class="btn-cancel" onclick="confirmNo()">Cancel</button>';
+    document.querySelector('#confirmModal .modal-header').firstChild.textContent = 'Confirm ';
+  }
+
+  function showResult(msg) {
+    const el = document.getElementById('resultMsg');
+    el.textContent = msg;
+    setTimeout(() => el.textContent = '', 5000);
+  }
+
+  /* ── Draggable child window ── */
+  function makeDraggable(el, handle) {
+    let ox=0, oy=0, mx=0, my=0;
+    handle.onmousedown = e => {
+      e.preventDefault();
+      mx = e.clientX; my = e.clientY;
+      document.onmouseup   = () => { document.onmouseup = null; document.onmousemove = null; };
+      document.onmousemove = e2 => {
+        ox = mx - e2.clientX; oy = my - e2.clientY;
+        mx = e2.clientX; my = e2.clientY;
+        el.style.top  = (el.offsetTop  - oy) + 'px';
+        el.style.left = (el.offsetLeft - ox) + 'px';
+        el.style.transform = 'none';
+      };
+    };
+  }
+
+  /* ── Sidebar accordion ── */
+  document.querySelectorAll('.menu-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const sub = btn.nextElementSibling, isOpen = sub && sub.classList.contains('show');
+      document.querySelectorAll('.submenu').forEach(s => s.classList.remove('show'));
+      document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('open','active'));
+      if (!isOpen && sub) { sub.classList.add('show'); btn.classList.add('open','active'); }
+    });
+  });
+</script>
+</body>
+</html>

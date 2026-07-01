@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uploading/Downloading Image</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f2f5; display: flex; flex-direction: column; min-height: 100vh; }
+
+  /* Top navbar */
+  .navbar {
+    background: #3a8fb5;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    height: 50px;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  }
+  .navbar .brand { font-weight: 700; font-size: 18px; }
+  .navbar .logout { color: #fff; text-decoration: none; font-size: 14px; display: flex; align-items: center; gap: 5px; }
+  .navbar .logout:hover { text-decoration: underline; }
+
+  /* Sidebar */
+  .sidebar {
+    position: fixed; top: 50px; left: 0; bottom: 0;
+    width: 170px; background: #2c3e50; color: #ccc;
+    overflow-y: auto; z-index: 99;
+  }
+  .sidebar .user-info {
+    padding: 16px 14px 12px;
+    border-bottom: 1px solid #3d5166;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sidebar .avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: #555; display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: #aaa;
+  }
+  .sidebar .user-info .name { font-size: 13px; color: #ddd; font-weight: 600; }
+  .sidebar .user-info .role { font-size: 11px; color: #aaa; }
+
+  .sidebar nav a {
+    display: flex; align-items: center; gap: 8px;
+    padding: 9px 16px; color: #bbb; text-decoration: none; font-size: 13px;
+    transition: background .15s;
+  }
+  .sidebar nav a:hover, .sidebar nav a.active { background: #3d5166; color: #fff; }
+  .sidebar nav a .icon { font-size: 14px; width: 16px; text-align: center; }
+
+  .sidebar .section-header {
+    padding: 9px 16px; color: #7f8c8d; font-size: 11px; text-transform: uppercase;
+    letter-spacing: .5px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+  }
+  .sidebar .section-header:hover { color: #bbb; }
+
+  /* Main content */
+  .main {
+    margin-top: 50px; margin-left: 170px;
+    padding: 20px 24px; flex: 1;
+  }
+
+  /* Breadcrumb */
+  .breadcrumb {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: #888; margin-bottom: 14px; justify-content: space-between;
+  }
+  .breadcrumb .page-title { font-size: 20px; color: #333; font-weight: 600; }
+  .breadcrumb .path { display: flex; align-items: center; gap: 6px; }
+  .breadcrumb .path a { color: #3a8fb5; text-decoration: none; }
+  .breadcrumb .path a:hover { text-decoration: underline; }
+  .breadcrumb .path .sep { color: #aaa; }
+
+  /* Upload card */
+  .card {
+    background: #fff; border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.1); padding: 20px 24px;
+  }
+
+  .upload-row {
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 20px;
+  }
+  .field-group { display: flex; flex-direction: column; gap: 4px; }
+  .field-group label { font-size: 13px; color: #555; }
+
+  .file-input-wrapper {
+    display: flex; align-items: center; border: 1px solid #ccc; border-radius: 3px;
+    overflow: hidden; background: #fff;
+  }
+  .file-btn {
+    padding: 6px 10px; background: #e9ecef; border: none; border-right: 1px solid #ccc;
+    font-size: 13px; cursor: pointer; color: #333; white-space: nowrap;
+  }
+  .file-name-display {
+    padding: 6px 10px; font-size: 13px; color: #888; min-width: 160px;
+  }
+  #fileInput { display: none; }
+
+  .text-input {
+    padding: 6px 12px; border: 1px solid #ccc; border-radius: 3px;
+    font-size: 13px; width: 340px; outline: none;
+    color: #333;
+  }
+  .text-input:focus { border-color: #3a8fb5; box-shadow: 0 0 0 2px rgba(58,143,181,.15); }
+  .text-input::placeholder { color: #bbb; }
+
+  .btn-upload {
+    padding: 7px 18px; background: #28a745; color: #fff;
+    border: none; border-radius: 3px; font-size: 14px;
+    cursor: pointer; transition: background .15s;
+  }
+  .btn-upload:hover { background: #218838; }
+
+  /* Image list */
+  .list-label { font-size: 15px; color: #333; font-weight: 600; margin-bottom: 10px; }
+  .divider { border: none; border-top: 2px solid #3a8fb5; margin-bottom: 14px; }
+
+  .image-grid { display: flex; flex-wrap: wrap; gap: 14px; }
+
+  .image-card {
+    border: 1px solid #ddd; border-radius: 4px; width: 270px;
+    overflow: hidden; background: #fff; position: relative;
+  }
+  .image-card .img-header {
+    padding: 6px 10px; font-size: 13px; color: #333;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid #eee;
+  }
+  .image-card .img-header .filename { flex: 1; }
+  .image-card .delete-btn {
+    background: none; border: none; cursor: pointer;
+    color: #e74c3c; font-size: 16px; line-height: 1; padding: 0 2px;
+    transition: transform .1s;
+  }
+  .image-card .delete-btn:hover { transform: scale(1.2); }
+  .image-card .img-body {
+    padding: 10px; min-height: 120px; display: flex; align-items: center; justify-content: center;
+  }
+  .image-card .img-body img {
+    max-width: 100%; max-height: 160px; display: block; object-fit: contain;
+    border: 1px solid #eee;
+  }
+  .image-card .img-actions {
+    padding: 6px 10px; border-top: 1px solid #eee; display: flex; gap: 8px;
+  }
+  .btn-download {
+    padding: 4px 12px; background: #3a8fb5; color: #fff;
+    border: none; border-radius: 3px; font-size: 12px; cursor: pointer;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-download:hover { background: #2d7a9a; }
+
+  .empty-msg { color: #aaa; font-size: 13px; padding: 10px 0; }
+
+  /* Footer */
+  footer {
+    margin-left: 170px; padding: 14px 24px;
+    font-size: 12px; color: #888; border-top: 1px solid #ddd; background: #fff;
+  }
+  footer a { color: #3a8fb5; text-decoration: none; }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: #2c3e50; color: #fff; padding: 10px 18px;
+    border-radius: 4px; font-size: 13px; opacity: 0;
+    transition: opacity .3s; pointer-events: none; z-index: 999;
+  }
+  .toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+  <div class="brand">Magnus</div>
+  <a href="#" class="logout">⇒ Logout</a>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <div class="user-info">
+    <div class="avatar">👤</div>
+    <div>
+      <div class="name">Guest User</div>
+      <div class="role">🔒 User</div>
+    </div>
+  </div>
+  <nav>
+    <a href="#" class="icon-link"><span class="icon">🏠</span> Home</a>
+    <a href="#" class="icon-link"><span class="icon">👥</span> Employee</a>
+    <div class="section-header"><span>☰ More</span><span>▾</span></div>
+    <a href="#"><span class="icon">📑</span> Multiple Tabs</a>
+    <a href="#"><span class="icon">☰</span> Menu</a>
+    <a href="#"><span class="icon">✏️</span> Autocomplete</a>
+    <a href="#"><span class="icon">📄</span> Collapsible Content</a>
+    <a href="#" class="active"><span class="icon">🖼️</span> Images</a>
+    <a href="slider.html"><span class="icon">🎚️</span> Slider</a>
+    <a href="tooltip.html"><span class="icon">💬</span> Tooltips</a>
+    <a href="#"><span class="icon">🔲</span> Popups</a>
+    <a href="#"><span class="icon">🔗</span> Links</a>
+    <a href="#"><span class="icon">🎨</span> CSS Properties</a>
+    <a href="#"><span class="icon">🗔</span> iFrames</a>
+    <div class="section-header"><span>⚙️ Settings</span><span>◂</span></div>
+  </nav>
+</div>
+
+<!-- Main -->
+<div class="main">
+  <div class="breadcrumb">
+    <div class="page-title">Uploading/Downloading Image</div>
+    <div class="path">
+      <span class="icon">🏠</span>
+      <a href="#">Home</a><span class="sep">›</span>
+      <a href="#">More</a><span class="sep">›</span>
+      <span>Uploading/Downloading Image</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="upload-row">
+      <div class="field-group">
+        <label>Select File :</label>
+        <div class="file-input-wrapper">
+          <button class="file-btn" onclick="document.getElementById('fileInput').click()">Choose File</button>
+          <span class="file-name-display" id="chosenFileName">No file chosen</span>
+          <input type="file" id="fileInput" accept="image/*" onchange="onFileChosen(this)">
+        </div>
+      </div>
+      <div class="field-group">
+        <label>File Name :</label>
+        <input type="text" class="text-input" id="fileNameInput" placeholder="File Name">
+      </div>
+      <div class="field-group" style="margin-top:18px">
+        <button class="btn-upload" onclick="uploadImage()">Upload</button>
+      </div>
+    </div>
+
+    <div class="list-label">List Of Images :</div>
+    <hr class="divider">
+
+    <div class="image-grid" id="imageGrid">
+      <div class="empty-msg" id="emptyMsg">No images uploaded yet.</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Copyright © 2026 <a href="#">JALA Technologies.</a> All rights reserved.
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  let images = [];
+  let selectedFile = null;
+
+  // Pre-load a demo image
+  window.onload = () => {
+    images.push({ name: "api's participation.jpg", url: null, isDemo: true });
+    renderImages();
+  };
+
+  function onFileChosen(input) {
+    if (input.files && input.files[0]) {
+      selectedFile = input.files[0];
+      document.getElementById('chosenFileName').textContent = selectedFile.name;
+      if (!document.getElementById('fileNameInput').value) {
+        document.getElementById('fileNameInput').value = selectedFile.name;
+      }
+    }
+  }
+
+  function uploadImage() {
+    if (!selectedFile) { showToast('Please select a file first.'); return; }
+    const name = document.getElementById('fileNameInput').value.trim() || selectedFile.name;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      images.push({ name, url: e.target.result });
+      renderImages();
+      document.getElementById('chosenFileName').textContent = 'No file chosen';
+      document.getElementById('fileNameInput').value = '';
+      document.getElementById('fileInput').value = '';
+      selectedFile = null;
+      showToast('Image uploaded successfully!');
+    };
+    reader.readAsDataURL(selectedFile);
+  }
+
+  function deleteImage(idx) {
+    images.splice(idx, 1);
+    renderImages();
+  }
+
+  function renderImages() {
+    const grid = document.getElementById('imageGrid');
+    const empty = document.getElementById('emptyMsg');
+    if (images.length === 0) {
+      grid.innerHTML = '<div class="empty-msg" id="emptyMsg">No images uploaded yet.</div>';
+      return;
+    }
+    grid.innerHTML = images.map((img, i) => `
+      <div class="image-card">
+        <div class="img-header">
+          <span class="filename">${escHtml(img.name)}</span>
+          <button class="delete-btn" onclick="deleteImage(${i})" title="Delete">✕</button>
+        </div>
+        <div class="img-body">
+          ${img.url
+            ? `<img src="${img.url}" alt="${escHtml(img.name)}">`
+            : `<span style="color:#aaa;font-size:12px;">api</span>`}
+        </div>
+        ${img.url ? `<div class="img-actions"><a class="btn-download" href="${img.url}" download="${escHtml(img.name)}">⬇ Download</a></div>` : ''}
+      </div>
+    `).join('');
+  }
+
+  function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+</script>
+</body>
+</html>

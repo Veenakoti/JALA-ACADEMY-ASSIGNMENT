@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uploading/Downloading Image</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page-header { background:#f0f2f5; padding:10px 24px; display:flex; align-items:baseline; justify-content:space-between; }
+    .page-title { font-size:22px; font-weight:600; color:#333; }
+    .breadcrumb { font-size:13px; color:#888; }
+    .breadcrumb a { color:#1a6fa0; text-decoration:none; }
+    .breadcrumb span { margin:0 4px; }
+    .main-card { background:#fff; margin:18px 24px; border-radius:3px; box-shadow:0 1px 4px rgba(0,0,0,.08); padding:20px 24px 30px; }
+    .upload-row { display:flex; align-items:flex-end; gap:16px; flex-wrap:wrap; }
+    .upload-group { display:flex; flex-direction:column; gap:5px; }
+    .upload-group label { font-size:13px; color:#555; }
+    .file-input-wrap { display:flex; align-items:center; border:1px solid #ccc; border-radius:3px; overflow:hidden; width:440px; }
+    .file-input-wrap input[type="file"] { padding:6px 8px; font-size:13px; border:none; outline:none; flex:1; background:#fff; color:#555; }
+    .file-name-input { border:1px solid #ccc; border-radius:3px; padding:7px 10px; font-size:13px; width:440px; color:#333; outline:none; }
+    .file-name-input:focus { border-color:#17a2b8; }
+    .btn-upload { background:#28a745; color:#fff; border:none; padding:8px 22px; border-radius:3px; font-size:13px; cursor:pointer; white-space:nowrap; }
+    .btn-upload:hover { background:#218838; }
+    .list-label { font-size:14px; font-weight:600; color:#333; margin:24px 0 8px; }
+    .list-label::after { content:''; display:block; width:280px; height:2px; background:#28a745; margin-top:4px; }
+    .image-grid { display:flex; flex-wrap:wrap; gap:16px; }
+    .image-card { border:1px solid #d0d8e4; border-radius:3px; width:270px; overflow:hidden; }
+    .image-card-header { display:flex; justify-content:space-between; align-items:center; padding:6px 10px; background:#f9f9f9; border-bottom:1px solid #e0e0e0; font-size:13px; color:#333; }
+    .remove-btn { color:#e53935; cursor:pointer; font-size:18px; font-weight:bold; }
+    .remove-btn:hover { color:#b71c1c; }
+    .image-card img { width:100%; height:160px; object-fit:contain; display:block; background:#fff; cursor:pointer; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <h2>Magnus</h2>
+    <div class="sidebar-user">
+      <div class="avatar">👤</div>
+      <div class="user-info"><div class="name">Guest User</div><div class="role">🔒 User</div></div>
+    </div>
+    <ul class="menu">
+      <li><button class="menu-btn">Home</button><ul class="submenu"><li><a href="home.html">Dashboard</a></li></ul></li>
+      <li><button class="menu-btn">Employee</button><ul class="submenu"><li><a href="employee-create.html">Create</a></li><li><a href="employee-search.html">Search</a></li></ul></li>
+      <li>
+        <button class="menu-btn active open">More</button>
+        <ul class="submenu show">
+          <li><a href="tabs.html">Multiple Tabs</a></li><li><a href="menu.html">Menu</a></li>
+          <li><a href="autocomplete.html">Autocomplete</a></li><li><a href="collapsible.html">Collapsible Content</a></li>
+          <li><a href="images.html" style="background:#1a6fa0;color:#fff;">Images</a></li>
+          <li><a href="slider.html">Slider</a></li><li><a href="tooltips.html">Tooltips</a></li>
+          <li><a href="popups.html">Popups</a></li><li><a href="links.html">Links</a></li>
+          <li><a href="css-properties.html">CSS Properties</a></li><li><a href="iframes.html">iFrames</a></li>
+        </ul>
+      </li>
+      <li><button class="menu-btn">Settings</button><ul class="submenu"><li><a href="settings.html">Preferences</a></li></ul></li>
+    </ul>
+  </aside>
+  <main class="content">
+    <header>
+      <h1>Magnus</h1>
+      <button class="logout" onclick="window.location.href='index.html'">⇒ Logout</button>
+    </header>
+    <div class="page-header">
+      <div class="page-title">Uploading/Downloading Image</div>
+      <div class="breadcrumb"><a href="home.html">🏠 Home</a><span>›</span><a href="tabs.html">More</a><span>›</span> Uploading/Downloading Image</div>
+    </div>
+    <div class="main-card">
+      <div class="upload-row">
+        <div class="upload-group">
+          <label>Select File :</label>
+          <div class="file-input-wrap"><input type="file" id="fileInput" accept="image/*"></div>
+        </div>
+        <div class="upload-group">
+          <label>File Name :</label>
+          <input type="text" class="file-name-input" id="fileName" placeholder="File Name">
+        </div>
+        <button class="btn-upload" onclick="uploadImage()">Upload</button>
+      </div>
+      <div class="list-label">List Of Images :</div>
+      <div class="image-grid" id="imageGrid"></div>
+    </div>
+    <footer><p>Copyright © 2026 <a href="http://jalatechnologies.com" target="_blank">JALA Technologies</a>. All rights reserved.</p></footer>
+  </main>
+</div>
+<script>
+  let images = [];
+  function uploadImage() {
+    const fi = document.getElementById('fileInput');
+    const fn = document.getElementById('fileName').value.trim();
+    if (!fi.files[0]) { alert('Please select a file.'); return; }
+    const name = fn || fi.files[0].name;
+    const url  = URL.createObjectURL(fi.files[0]);
+    images.push({ name, url, id: Date.now() });
+    renderGrid(); fi.value=''; document.getElementById('fileName').value='';
+  }
+  function removeImage(id) { images = images.filter(i=>i.id!==id); renderGrid(); }
+  function renderGrid() {
+    document.getElementById('imageGrid').innerHTML = images.map(img=>`
+      <div class="image-card">
+        <div class="image-card-header"><span>${img.name}</span><span class="remove-btn" onclick="removeImage(${img.id})">✕</span></div>
+        <img src="${img.url}" alt="${img.name}" onclick="window.open('${img.url}','_blank')">
+      </div>`).join('');
+  }
+  document.querySelectorAll('.menu-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const sub=btn.nextElementSibling, isOpen=sub&&sub.classList.contains('show');
+      document.querySelectorAll('.submenu').forEach(s=>s.classList.remove('show'));
+      document.querySelectorAll('.menu-btn').forEach(b=>b.classList.remove('open','active'));
+      if(!isOpen&&sub){sub.classList.add('show');btn.classList.add('open','active');}
+    });
+  });
+</script>
+</body>
+</html>

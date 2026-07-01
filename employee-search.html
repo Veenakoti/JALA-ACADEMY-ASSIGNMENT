@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Employee</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ── Page header bar ── */
+    .page-header {
+      background: #f0f2f5;
+      border-bottom: 2px solid #17a2b8;
+      padding: 10px 24px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+    .page-header .page-title { font-size: 22px; font-weight: 600; color: #333; }
+    .page-header .page-title span { font-size: 14px; color: #888; margin-left: 8px; font-weight: 400; }
+    .breadcrumb { font-size: 13px; color: #888; }
+    .breadcrumb a { color: #1a6fa0; text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb span { margin: 0 4px; }
+
+    /* ── Search card ── */
+    .search-card {
+      background: #fff;
+      margin: 18px 24px 0;
+      border-radius: 3px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      padding: 16px 24px 20px;
+    }
+    .search-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .search-card-header h3 { font-size: 15px; font-weight: 600; color: #333; }
+
+    .btn-add {
+      background: #17a2b8; color: #fff; border: none;
+      padding: 7px 16px; border-radius: 3px; font-size: 13px;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .btn-add:hover { background: #138496; }
+
+    /* Search fields row */
+    .search-row { display: flex; gap: 16px; align-items: flex-end; flex-wrap: wrap; }
+    .search-group { display: flex; flex-direction: column; flex: 1; min-width: 200px; }
+    .search-group label { font-size: 13px; font-weight: 600; color: #444; margin-bottom: 5px; }
+    .search-group input {
+      border: 1px solid #ccc; border-radius: 3px;
+      padding: 7px 10px; font-size: 13px; color: #333;
+    }
+    .search-group input:focus { outline: none; border-color: #17a2b8; box-shadow: 0 0 0 2px rgba(23,162,184,0.12); }
+
+    .btn-search {
+      background: #28a745; color: #fff; border: none;
+      padding: 8px 20px; border-radius: 3px; font-size: 13px;
+      cursor: pointer; white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .btn-search:hover { background: #218838; }
+    .btn-clear {
+      background: #e53935; color: #fff; border: none;
+      padding: 8px 20px; border-radius: 3px; font-size: 13px;
+      cursor: pointer; white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .btn-clear:hover { background: #c62828; }
+
+    /* ── Results table ── */
+    .table-card {
+      background: #fff;
+      margin: 12px 24px 18px;
+      border-radius: 3px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    thead tr {
+      background: #f8f9fa;
+      border-bottom: 2px solid #dee2e6;
+    }
+    thead th {
+      padding: 11px 12px;
+      text-align: left;
+      font-weight: 600;
+      color: #444;
+      white-space: nowrap;
+      user-select: none;
+    }
+    thead th .sort-icon { color: #aaa; margin-left: 4px; font-size: 11px; }
+    tbody tr { border-bottom: 1px solid #f0f0f0; transition: background 0.1s; }
+    tbody tr:hover { background: #f5fbff; }
+    tbody td { padding: 10px 12px; color: #333; vertical-align: middle; }
+
+    /* Gender icon */
+    .gender-icon { font-size: 18px; }
+    .gender-m { color: #1a6fa0; }
+    .gender-f { color: #e91e63; }
+
+    /* Action buttons */
+    .btn-edit {
+      background: #28a745; color: #fff; border: none;
+      padding: 4px 12px; border-radius: 3px; font-size: 12px;
+      cursor: pointer; margin-right: 4px;
+    }
+    .btn-edit:hover { background: #218838; }
+    .btn-delete {
+      background: #e53935; color: #fff; border: none;
+      padding: 4px 12px; border-radius: 3px; font-size: 12px;
+      cursor: pointer;
+    }
+    .btn-delete:hover { background: #c62828; }
+
+    /* No results */
+    .no-results { padding: 30px; text-align: center; color: #888; font-size: 14px; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>Magnus</h2>
+    <div class="sidebar-user">
+      <div class="avatar">👤</div>
+      <div class="user-info">
+        <div class="name">Guest User</div>
+        <div class="role">🔒 User</div>
+      </div>
+    </div>
+    <ul class="menu">
+      <li>
+        <button class="menu-btn">Home</button>
+        <ul class="submenu"><li><a href="home.html">Dashboard</a></li></ul>
+      </li>
+      <li>
+        <button class="menu-btn active open">Employee</button>
+        <ul class="submenu show">
+          <li><a href="employee-create.html">Create</a></li>
+          <li><a href="employee-search.html" class="active-link">Search</a></li>
+        </ul>
+      </li>
+      <li>
+        <button class="menu-btn">More</button>
+        <ul class="submenu">
+          <li><a href="tabs.html">Multiple Tabs</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="autocomplete.html">Autocomplete</a></li>
+          <li><a href="collapsible.html">Collapsible Content</a></li>
+          <li><a href="image.htm">Images</a></li>
+          <li><a href="slider.html">Slider</a></li>
+          <li><a href="tooltips.html">Tooltips</a></li>
+          <li><a href="popups.html">Popups</a></li>
+          <li><a href="links.html">Links</a></li>
+          <li><a href="css-properties.html">CSS Properties</a></li>
+          <li><a href="iframes.html">iFrames</a></li>
+        </ul>
+      </li>
+      <li>
+        <button class="menu-btn">Settings</button>
+        <ul class="submenu"><li><a href="settings.html">Preferences</a></li></ul>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="content">
+    <header>
+      <h1>Magnus</h1>
+      <button class="logout" onclick="window.location.href='index.html'">⇒ Logout</button>
+    </header>
+
+    <!-- Page header -->
+    <div class="page-header">
+      <div>
+        <span class="page-title">Employee <span>Search</span></span>
+      </div>
+      <div class="breadcrumb">
+        <a href="home.html">🏠 Home</a>
+        <span>›</span> <a href="employee-search.html">Employee</a>
+        <span>›</span> Search
+      </div>
+    </div>
+
+    <!-- Search filters card -->
+    <div class="search-card">
+      <div class="search-card-header">
+        <h3>Search Employee</h3>
+        <button class="btn-add" onclick="window.location.href='employee-create.html'">+ Add Employee</button>
+      </div>
+      <div class="search-row">
+        <div class="search-group">
+          <label for="searchName">Name</label>
+          <input type="text" id="searchName" placeholder="Employee Name">
+        </div>
+        <div class="search-group">
+          <label for="searchMobile">Mobile No</label>
+          <input type="text" id="searchMobile" placeholder="Mobile No">
+        </div>
+        <button class="btn-search" onclick="filterTable()">Search</button>
+        <button class="btn-clear" onclick="clearSearch()">Clear</button>
+      </div>
+    </div>
+
+    <!-- Results table -->
+    <div class="table-card">
+      <table id="empTable">
+        <thead>
+          <tr>
+            <th>First Name <span class="sort-icon">⇅</span></th>
+            <th>Last Name <span class="sort-icon">⇅</span></th>
+            <th>Mobile No <span class="sort-icon">⇅</span></th>
+            <th>Email Id <span class="sort-icon">⇅</span></th>
+            <th>Gender</th>
+            <th>Birth Date <span class="sort-icon">⇅</span></th>
+            <th>Country <span class="sort-icon">⇅</span></th>
+            <th>City <span class="sort-icon">⇅</span></th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="empBody">
+          <!-- Rows injected by JS -->
+        </tbody>
+      </table>
+      <div id="noResults" class="no-results" style="display:none;">No employees found.</div>
+    </div>
+
+    <footer>
+      <p>Copyright © 2026 <a href="http://jalatechnologies.com" target="_blank">JALA Technologies</a>. All rights reserved.</p>
+    </footer>
+  </main>
+</div>
+
+<script>
+  // ── Sample data ──
+  const employees = [
+    { first:'Shantanu', last:'Shukla',   mobile:'8218543772', email:'shantanu.shukla2k3@gmail.com', gender:'M', dob:'11/11/2003', country:'India', city:'Bareilly'  },
+    { first:'Shivleela',last:'Dattatrya',mobile:'8884879258', email:'shivleela024@gmail.com',       gender:'F', dob:'10/09/1996', country:'India', city:'Bangalore' },
+    { first:'Do',       last:'Yyf',      mobile:'9333224678', email:'Kkgdd@gmail.com',              gender:'M', dob:'24/05/2024', country:'Nepal', city:''          },
+    { first:'L',        last:'Samyuktha',mobile:'8341853188', email:'lsamyuktha99@gmail.com',       gender:'F', dob:'06/10/1999', country:'India', city:'Hyderabad' },
+    { first:'hema',     last:'singh',    mobile:'7865434324', email:'hema@gmail.com',               gender:'M', dob:'07/09/1998', country:'India', city:''          },
+    { first:'Raghav',   last:'kuar',     mobile:'7653402912', email:'raghav@gmail.com',             gender:'M', dob:'07/09/1998', country:'India', city:''          },
+    { first:'nutan',    last:'jha',      mobile:'9876543234', email:'nutan@gmail.com',              gender:'M', dob:'07/09/1998', country:'India', city:''          },
+  ];
+
+  function renderTable(data) {
+    const tbody = document.getElementById('empBody');
+    const noRes = document.getElementById('noResults');
+    tbody.innerHTML = '';
+    if (data.length === 0) { noRes.style.display = 'block'; return; }
+    noRes.style.display = 'none';
+    data.forEach((e, i) => {
+      const gIcon = e.gender === 'F'
+        ? '<span class="gender-icon gender-f">🚺</span>'
+        : '<span class="gender-icon gender-m">🚹</span>';
+      tbody.innerHTML += `
+        <tr>
+          <td>${e.first}</td>
+          <td>${e.last}</td>
+          <td>${e.mobile}</td>
+          <td>${e.email}</td>
+          <td>${gIcon}</td>
+          <td>${e.dob}</td>
+          <td>${e.country}</td>
+          <td>${e.city}</td>
+          <td>
+            <button class="btn-edit" onclick="editRow(${i})">Edit</button>
+            <button class="btn-delete" onclick="deleteRow(${i})">Delete</button>
+          </td>
+        </tr>`;
+    });
+  }
+
+  function filterTable() {
+    const name   = document.getElementById('searchName').value.trim().toLowerCase();
+    const mobile = document.getElementById('searchMobile').value.trim();
+    const filtered = employees.filter(e => {
+      const fullName = (e.first + ' ' + e.last).toLowerCase();
+      return (!name   || fullName.includes(name)) &&
+             (!mobile || e.mobile.includes(mobile));
+    });
+    renderTable(filtered);
+  }
+
+  function clearSearch() {
+    document.getElementById('searchName').value = '';
+    document.getElementById('searchMobile').value = '';
+    renderTable(employees);
+  }
+
+  function editRow(i) {
+    alert(`Edit: ${employees[i].first} ${employees[i].last}\n(Wire up to employee-create.html with query params)`);
+  }
+
+  function deleteRow(i) {
+    if (confirm(`Delete ${employees[i].first} ${employees[i].last}?`)) {
+      employees.splice(i, 1);
+      renderTable(employees);
+    }
+  }
+
+  // Sidebar accordion
+  document.querySelectorAll('.menu-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const sub = btn.nextElementSibling;
+      const isOpen = sub && sub.classList.contains('show');
+      document.querySelectorAll('.submenu').forEach(s => s.classList.remove('show'));
+      document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('open', 'active'));
+      if (!isOpen && sub) { sub.classList.add('show'); btn.classList.add('open', 'active'); }
+    });
+  });
+
+  // Initial render
+  renderTable(employees);
+</script>
+</body>
+</html>

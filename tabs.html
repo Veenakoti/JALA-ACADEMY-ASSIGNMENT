@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multiple Tabs</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ── Page header ── */
+    .page-header {
+      background: #f0f2f5;
+      padding: 10px 24px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+    .page-title { font-size: 22px; font-weight: 600; color: #333; }
+    .breadcrumb { font-size: 13px; color: #888; }
+    .breadcrumb a { color: #1a6fa0; text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb span { margin: 0 4px; }
+
+    /* ── Tab card ── */
+    .tab-card {
+      background: #fff;
+      margin: 18px 24px;
+      border-radius: 3px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    /* ── Tab bar ── */
+    .tab-bar {
+      display: flex;
+      border-bottom: 1px solid #dee2e6;
+    }
+    .tab-btn {
+      padding: 11px 22px;
+      font-size: 13.5px;
+      font-weight: 500;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      color: #1a6fa0;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .tab-btn:hover { background: #f5fbff; }
+    .tab-btn.active {
+      background: #1a6fa0;
+      color: #fff;
+      border-bottom: 3px solid #1a6fa0;
+      border-radius: 3px 3px 0 0;
+    }
+
+    /* ── Tab panels ── */
+    .tab-panel { display: none; padding: 22px 24px 28px; }
+    .tab-panel.active { display: block; }
+
+    .tab-panel p {
+      font-size: 13.5px;
+      color: #333;
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    /* Highlight spans matching the original */
+    .hl-blue  { color: #1a6fa0; }
+    .hl-bold  { font-weight: 700; }
+
+    /* Two empty input boxes shown in screenshot */
+    .input-row {
+      display: flex;
+      gap: 20px;
+      margin-top: 16px;
+    }
+    .input-row input {
+      flex: 1;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      padding: 8px 10px;
+      font-size: 13px;
+      color: #333;
+      background: #fff;
+    }
+    .input-row input:focus {
+      outline: none;
+      border-color: #17a2b8;
+      box-shadow: 0 0 0 2px rgba(23,162,184,0.12);
+    }
+
+    /* ── Sidebar "More" flat list style (as in screenshot) ── */
+    .submenu-flat li a {
+      padding-left: 20px;
+    }
+    .submenu-flat li a.active-link {
+      background: #1a6fa0;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>Magnus</h2>
+    <div class="sidebar-user">
+      <div class="avatar">👤</div>
+      <div class="user-info">
+        <div class="name">Guest User</div>
+        <div class="role">🔒 User</div>
+      </div>
+    </div>
+    <ul class="menu">
+      <li>
+        <button class="menu-btn">Home</button>
+        <ul class="submenu">
+          <li><a href="home.html">Dashboard</a></li>
+        </ul>
+      </li>
+      <li>
+        <button class="menu-btn">Employee</button>
+        <ul class="submenu">
+          <li><a href="employee-create.html">Create</a></li>
+          <li><a href="employee-search.html">Search</a></li>
+        </ul>
+      </li>
+      <li>
+        <!-- More — expanded by default on this page, flat list style -->
+        <button class="menu-btn active open">More</button>
+        <ul class="submenu show submenu-flat">
+          <li><a href="tabs.html" class="active-link">Multiple Tabs</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="autocomplete.html">Autocomplete</a></li>
+          <li><a href="collapsible.html">Collapsible Content</a></li>
+          <li><a href="image.htm">Images</a></li>
+          <li><a href="slider.html">Slider</a></li>
+          <li><a href="tooltips.html">Tooltips</a></li>
+          <li><a href="popups.html">Popups</a></li>
+          <li><a href="links.html">Links</a></li>
+          <li><a href="css-properties.html">CSS Properties</a></li>
+          <li><a href="iframes.html">iFrames</a></li>
+        </ul>
+      </li>
+      <li>
+        <button class="menu-btn">Settings</button>
+        <ul class="submenu">
+          <li><a href="settings.html">Preferences</a></li>
+        </ul>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="content">
+    <header>
+      <h1>Magnus</h1>
+      <button class="logout" onclick="window.location.href='index.html'">⇒ Logout</button>
+    </header>
+
+    <!-- Page header -->
+    <div class="page-header">
+      <div class="page-title">Tabs</div>
+      <div class="breadcrumb">
+        <a href="home.html">🏠 Home</a>
+        <span>›</span>
+        <a href="tabs.html">More</a>
+        <span>›</span> Tabs
+      </div>
+    </div>
+
+    <!-- Tab card -->
+    <div class="tab-card">
+      <!-- Tab bar -->
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="plan">Plan to Succeed</button>
+        <button class="tab-btn" data-tab="unlearn">UnLearning</button>
+        <button class="tab-btn" data-tab="ways">Ways of Unlearning</button>
+      </div>
+
+      <!-- Panel 1: Plan to Succeed -->
+      <div class="tab-panel active" id="tab-plan">
+        <p>
+          Congratulations, <span class="hl-blue">You are in the best place to learn the technologies for JOB.</span>
+          Please strictly follow the plan for the first <span class="hl-blue">45 days</span> to see the unbelievable results.
+        </p>
+        <p>
+          You must <span class="hl-bold">UNLEARN to LEARN</span> new things every day as technologies are changing faster
+          than ever and Because the old rules will no longer apply.. and so your old knowledge is.
+          It's time for us to think beyond.
+        </p>
+        <p>
+          It's not just learning technologies, Also
+          <span class="hl-blue">You learn how to use your knowledge and experience to get a job in less than
+          <span class="hl-bold">100 days</span></span>.
+        </p>
+        <div class="input-row">
+          <input type="text" placeholder="">
+          <input type="text" placeholder="">
+        </div>
+      </div>
+
+      <!-- Panel 2: UnLearning -->
+      <div class="tab-panel" id="tab-unlearn">
+        <p>
+          <span class="hl-blue">UnLearning</span> is the process of letting go of outdated beliefs, habits, and knowledge
+          to make room for new, more relevant information.
+        </p>
+        <p>
+          In today's fast-paced tech world, what you learned <span class="hl-bold">5 years ago</span> may already be obsolete.
+          The ability to unlearn and relearn quickly is the most important skill you can develop.
+        </p>
+        <p>
+          Start by <span class="hl-blue">questioning assumptions</span> you've held for years and be open to entirely
+          new ways of thinking about problems.
+        </p>
+        <div class="input-row">
+          <input type="text" placeholder="">
+          <input type="text" placeholder="">
+        </div>
+      </div>
+
+      <!-- Panel 3: Ways of Unlearning -->
+      <div class="tab-panel" id="tab-ways">
+        <p>
+          There are several proven <span class="hl-blue">Ways of Unlearning</span> that can accelerate your growth
+          as a technology professional.
+        </p>
+        <p>
+          <span class="hl-bold">1. Practice daily reflection</span> — spend 15 minutes each evening identifying one
+          belief or habit you challenged that day.
+        </p>
+        <p>
+          <span class="hl-bold">2. Seek feedback actively</span> — <span class="hl-blue">ask mentors and peers to
+          challenge your assumptions</span> regularly rather than waiting for annual reviews.
+        </p>
+        <p>
+          <span class="hl-bold">3. Learn by doing projects</span> — hands-on work forces you to adapt and unlearn
+          faster than any classroom can.
+        </p>
+        <div class="input-row">
+          <input type="text" placeholder="">
+          <input type="text" placeholder="">
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Copyright © 2026 <a href="http://jalatechnologies.com" target="_blank">JALA Technologies</a>. All rights reserved.</p>
+    </footer>
+  </main>
+</div>
+
+<script>
+  // ── Tab switching ──
+  const tabBtns   = document.querySelectorAll('.tab-btn');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabPanels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // ── Sidebar accordion ──
+  document.querySelectorAll('.menu-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const sub   = btn.nextElementSibling;
+      const isOpen = sub && sub.classList.contains('show');
+      document.querySelectorAll('.submenu').forEach(s => s.classList.remove('show'));
+      document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('open', 'active'));
+      if (!isOpen && sub) { sub.classList.add('show'); btn.classList.add('open', 'active'); }
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tooltip</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page-header { background:#f0f2f5; padding:10px 24px; display:flex; align-items:baseline; justify-content:space-between; }
+    .page-title { font-size:22px; font-weight:600; color:#333; }
+    .breadcrumb { font-size:13px; color:#888; }
+    .breadcrumb a { color:#1a6fa0; text-decoration:none; }
+    .breadcrumb span { margin:0 4px; }
+    .main-card { background:#fff; margin:18px 24px; border-radius:3px; box-shadow:0 1px 4px rgba(0,0,0,.08); overflow:hidden; min-height:200px; }
+    .tab-bar { border-bottom:1px solid #dee2e6; }
+    .single-tab { padding:11px 22px; font-size:13.5px; font-weight:500; border-bottom:3px solid #1a6fa0; color:#1a6fa0; display:inline-block; }
+    .tooltip-panel { padding:30px 24px 40px; display:flex; justify-content:center; align-items:flex-start; padding-top:40px; }
+
+    /* Tooltip button + popup */
+    .tooltip-wrap { position:relative; display:inline-block; }
+
+    .tt-btn {
+      background:#1a6fa0; color:#fff; border:none;
+      padding:9px 18px; border-radius:3px; font-size:13.5px;
+      cursor:pointer; transition:background 0.15s;
+    }
+    .tt-btn:hover { background:#155d87; }
+
+    .tt-popup {
+      position:absolute;
+      top:calc(100% + 4px);
+      left:50%; transform:translateX(-50%);
+      background:#333; color:#fff;
+      padding:10px 14px;
+      border-radius:4px;
+      font-size:12.5px;
+      text-align:center;
+      width:200px;
+      line-height:1.5;
+      z-index:100;
+      pointer-events:none;
+    }
+    /* Arrow on top of popup */
+    .tt-popup::before {
+      content:'';
+      position:absolute;
+      bottom:100%; left:50%; transform:translateX(-50%);
+      border:6px solid transparent;
+      border-bottom-color:#333;
+    }
+    /* States */
+    .tt-popup.before-click { display:block; }
+    .tt-popup.after-click  { display:block; background:#1a6fa0; }
+    .tt-popup.after-click::before { border-bottom-color:#1a6fa0; }
+    .tt-popup.hidden { display:none; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <h2>Magnus</h2>
+    <div class="sidebar-user">
+      <div class="avatar">👤</div>
+      <div class="user-info"><div class="name">Guest User</div><div class="role">🔒 User</div></div>
+    </div>
+    <ul class="menu">
+      <li><button class="menu-btn">Home</button><ul class="submenu"><li><a href="home.html">Dashboard</a></li></ul></li>
+      <li><button class="menu-btn">Employee</button><ul class="submenu"><li><a href="employee-create.html">Create</a></li><li><a href="employee-search.html">Search</a></li></ul></li>
+      <li>
+        <button class="menu-btn active open">More</button>
+        <ul class="submenu show">
+          <li><a href="tabs.html">Multiple Tabs</a></li><li><a href="menu.html">Menu</a></li>
+          <li><a href="autocomplete.html">Autocomplete</a></li><li><a href="collapsible.html">Collapsible Content</a></li>
+          <li><a href="images.html">Images</a></li><li><a href="slider.html">Slider</a></li>
+          <li><a href="tooltips.html" style="background:#1a6fa0;color:#fff;">Tooltips</a></li>
+          <li><a href="popups.html">Popups</a></li><li><a href="links.html">Links</a></li>
+          <li><a href="css-properties.html">CSS Properties</a></li><li><a href="iframes.html">iFrames</a></li>
+        </ul>
+      </li>
+      <li><button class="menu-btn">Settings</button><ul class="submenu"><li><a href="settings.html">Preferences</a></li></ul></li>
+    </ul>
+  </aside>
+  <main class="content">
+    <header>
+      <h1>Magnus</h1>
+      <button class="logout" onclick="window.location.href='index.html'">⇒ Logout</button>
+    </header>
+    <div class="page-header">
+      <div class="page-title">Tooltip</div>
+      <div class="breadcrumb"><a href="home.html">🏠 Home</a><span>›</span><a href="tabs.html">More</a><span>›</span> Tooltip</div>
+    </div>
+    <div class="main-card">
+      <div class="tab-bar"><div class="single-tab">Tooltips</div></div>
+      <div class="tooltip-panel">
+        <div class="tooltip-wrap">
+          <button class="tt-btn" id="ttBtn" onclick="handleClick()">Check the Tooltip Before You Click.</button>
+          <div class="tt-popup before-click" id="ttPopup">
+            You have not clicked this BUTTON yet. Please Click me and check the tooltip
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer><p>Copyright © 2026 <a href="http://jalatechnologies.com" target="_blank">JALA Technologies</a>. All rights reserved.</p></footer>
+  </main>
+</div>
+<script>
+  let clicked = false;
+  function handleClick() {
+    const popup = document.getElementById('ttPopup');
+    if (!clicked) {
+      clicked = true;
+      popup.className = 'tt-popup after-click';
+      popup.textContent = 'You have clicked this BUTTON. The tooltip has changed after your click!';
+    } else {
+      clicked = false;
+      popup.className = 'tt-popup before-click';
+      popup.textContent = 'You have not clicked this BUTTON yet. Please Click me and check the tooltip';
+    }
+  }
+  document.querySelectorAll('.menu-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const sub=btn.nextElementSibling, isOpen=sub&&sub.classList.contains('show');
+      document.querySelectorAll('.submenu').forEach(s=>s.classList.remove('show'));
+      document.querySelectorAll('.menu-btn').forEach(b=>b.classList.remove('open','active'));
+      if(!isOpen&&sub){sub.classList.add('show');btn.classList.add('open','active');}
+    });
+  });
+</script>
+</body>
+</html>
